@@ -1,0 +1,304 @@
+{
+  "suite": "limpopo-of-backlog",
+  "root": "..",
+  "data_note": "Six fictional jobs over three month-ends in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "check-totals",
+      "tool": "limpopo_check",
+      "args": {
+        "history": "fixtures/history.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.jobs": 6,
+          "result.latest_period": "2026-10",
+          "result.backlog": 661756.1,
+          "result.backlog_gross_profit": 106156.1,
+          "result.fade_amount": 28000,
+          "result.fade": 1,
+          "result.review": 2,
+          "result.ok": 3
+        }
+      }
+    },
+    {
+      "id": "every-planted-issue",
+      "tool": "limpopo_check",
+      "args": {
+        "history": "fixtures/history.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "contains": [
+          "loss_forecast",
+          "margin_fade",
+          "fade_since_last",
+          "margin_gain",
+          "estimate_not_updated"
+        ]
+      }
+    },
+    {
+      "id": "explain-faded-job",
+      "tool": "limpopo_explain",
+      "args": {
+        "history": "fixtures/history.csv",
+        "job": "24-103"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "Margin has faded from 7% (2026-08) to -7% (2026-10), 14 points: estimated gross profit down 28000",
+          "Down 8 points since 2026-09 alone"
+        ],
+        "equals": {
+          "result.item.backlog": 50000
+        }
+      }
+    },
+    {
+      "id": "explain-stale-estimate",
+      "tool": "limpopo_explain",
+      "args": {
+        "history": "fixtures/history.csv",
+        "job": "24-104"
+      },
+      "expect": {
+        "contains": [
+          "stayed at 240000 for three periods while the job went from 0% to 25% complete"
+        ]
+      }
+    },
+    {
+      "id": "small-moves-are-not-fade",
+      "tool": "limpopo_explain",
+      "args": {
+        "history": "fixtures/history.csv",
+        "job": "24-101"
+      },
+      "expect": {
+        "equals": {
+          "result.item.status": "ok",
+          "result.item.fade_pts": 0.71
+        }
+      }
+    },
+    {
+      "id": "wide-thresholds",
+      "tool": "limpopo_check",
+      "args": {
+        "history": "fixtures/history.csv",
+        "settings": "fixtures/settings-wide.json"
+      },
+      "expect": {
+        "equals": {
+          "result.fade": 1,
+          "result.review": 0
+        },
+        "not_contains": [
+          "margin_fade",
+          "margin_gain",
+          "estimate_not_updated"
+        ]
+      }
+    },
+    {
+      "id": "settings-typo-is-named",
+      "tool": "limpopo_check",
+      "args": {
+        "history": "fixtures/history.csv",
+        "settings": "fixtures/settings-typo.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "fade_settings"
+        ]
+      }
+    },
+    {
+      "id": "write-report-writes-files",
+      "tool": "limpopo_write_report",
+      "args": {
+        "history": "fixtures/history.csv"
+      },
+      "expect": {
+        "status": "executed",
+        "length": {
+          "result.files": 2
+        }
+      }
+    },
+    {
+      "id": "draft-memo",
+      "tool": "limpopo_draft_memo",
+      "mode": "auto",
+      "auto_actions": [
+        "limpopo_draft_memo"
+      ],
+      "args": {
+        "history": "fixtures/history.csv"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.id": "2026-10",
+          "result.amount": 661756.1
+        },
+        "contains": [
+          "Nothing was sent"
+        ]
+      }
+    },
+    {
+      "id": "policy-invented-tool",
+      "tool": "limpopo_pay_everything_now",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-file-outside-root",
+      "tool": "limpopo_check",
+      "args": {
+        "history": "../../../outside-the-root.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside"
+        ]
+      }
+    },
+    {
+      "id": "policy-missing-argument-named",
+      "tool": "limpopo_check",
+      "args": {},
+      "expect": {
+        "status": "error",
+        "contains": [
+          "history"
+        ]
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reads",
+      "tool": "limpopo_check",
+      "mode": "review",
+      "args": {
+        "history": "fixtures/history.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reports",
+      "tool": "limpopo_write_report",
+      "mode": "review",
+      "args": {
+        "history": "fixtures/history.csv"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-blocks-draft",
+      "tool": "limpopo_draft_memo",
+      "mode": "review",
+      "args": {
+        "history": "fixtures/history.csv"
+      },
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-limpopo-request-send-one-click-in-auto",
+      "tool": "limpopo_request_send",
+      "mode": "auto",
+      "args": {
+        "draft": "fairbuild-out/drafts/example.md",
+        "draft_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expect": {
+        "status": "needs_approval"
+      }
+    },
+    {
+      "id": "policy-refuses-estimate-update",
+      "tool": "estimate_update",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-gl-post",
+      "tool": "gl_post",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-email-send",
+      "tool": "email_send",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "intl-de-check-totals",
+      "tool": "limpopo_check",
+      "args": {
+        "history": "fixtures/intl/de/history.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.jobs": 6,
+          "result.latest_period": "2026-10",
+          "result.backlog": 661756.1,
+          "result.backlog_gross_profit": 106156.1,
+          "result.fade_amount": 28000,
+          "result.fade": 1,
+          "result.review": 2,
+          "result.ok": 3
+        }
+      },
+      "note": "German export of the same data (fixtures/intl/de); must match the English case \"check-totals\"."
+    },
+    {
+      "id": "intl-ja-check-totals",
+      "tool": "limpopo_check",
+      "args": {
+        "history": "fixtures/intl/ja/history.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.jobs": 6,
+          "result.latest_period": "2026-10",
+          "result.backlog": 661756.1,
+          "result.backlog_gross_profit": 106156.1,
+          "result.fade_amount": 28000,
+          "result.fade": 1,
+          "result.review": 2,
+          "result.ok": 3
+        }
+      },
+      "note": "Japanese export of the same data (fixtures/intl/ja); must match the English case \"check-totals\"."
+    }
+  ]
+}
