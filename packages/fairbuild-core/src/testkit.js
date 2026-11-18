@@ -162,6 +162,8 @@ export function agentContract({ manifest, casesFile }) {
     'a byte-order mark and Windows line endings': (rows) => rows,
     'spaces around every value': (rows) => rows.map((r, i) => (i ? r.map((v) => (v === '' ? v : ` ${v} `)) : r)),
     'blank lines at the end': (rows) => [...rows, [''], ['']],
+    // A header that is the agent's own name in another case (Vendor for vendor) must be read, not left blank.
+    'headers in title case': (rows) => [rows[0].map((h) => h.replace(/(^|[_ ])([a-z])/g, (m, p, c) => p + c.toUpperCase())), ...rows.slice(1)],
   };
   async function rerun(c, change, opts) {
     const root = sandbox();

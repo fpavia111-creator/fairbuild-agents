@@ -46,18 +46,18 @@ Columbia of Timecards demo (fictional workers and jobs; names are masked in resu
 ▶ Check a week of timecards
   status: executed  decision: allow
   8 worker-day(s) for 4 worker(s), 70 hour(s): 3 with hours on the wrong job, a closed job or an unbudgeted code (23 hour(s)), 2 to review.
-    2026-11-10 PERSON-9c7086a0     8h  misallocated  not_assigned
-    2026-11-10 PERSON-3f179a86    16h  misallocated  closed_job, not_assigned, long_day
-    2026-11-11 PERSON-d4cf23ea     8h  misallocated  invalid_cost_code
-    2026-11-12 PERSON-d4cf23ea     8h  review        duplicate_entry
-    2026-11-14 PERSON-9d969684     6h  review        weekend
-    2026-11-09 PERSON-9d969684     8h  ok            
-    2026-11-10 PERSON-9d969684     8h  ok            
-    2026-11-16 PERSON-9c7086a0     8h  ok            
+    2026-11-10 PERSON-c2ee1776     8h  misallocated  not_assigned
+    2026-11-10 PERSON-98f3d42a    16h  misallocated  closed_job, not_assigned, long_day
+    2026-11-11 PERSON-e6c73483     8h  misallocated  invalid_cost_code
+    2026-11-12 PERSON-e6c73483     8h  review        duplicate_entry
+    2026-11-14 PERSON-528ec080     6h  review        weekend
+    2026-11-09 PERSON-528ec080     8h  ok            
+    2026-11-10 PERSON-528ec080     8h  ok            
+    2026-11-16 PERSON-c2ee1776     8h  ok            
 
 ▶ Explain the first worker-day
   status: executed  decision: allow
-  PERSON-9c7086a0 on 2026-11-10: misallocated. 8 hour(s): 24-102 07-500 8h. PERSON-9c7086a0 was not assigned to job 24-102 on 2026-11-10; 8 hour(s) charged to it.
+  PERSON-c2ee1776 on 2026-11-10: misallocated. 8 hour(s): 24-102 07-500 8h. PERSON-c2ee1776 was not assigned to job 24-102 on 2026-11-10; 8 hour(s) charged to it.
 
 ▶ Write the worklist (the files keep the real names)
   status: executed  decision: allow

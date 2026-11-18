@@ -70,6 +70,13 @@ test('a file in the agent\'s own columns comes back untouched; a required column
   assert.deepEqual(adapt([['who']]).report.warnings, [], 'an empty file is not a missing column');
 });
 
+test("the agent's own column names in another letter case are re-keyed, not left blank", () => {
+  const r = adapt([['Name', 'EMAIL', 'Start'], ['Ana', 'ana@example.test', '2026-11-03']]);
+  assert.equal(r.report.adapted, true);
+  assert.equal(r.rows[0].name, 'Ana'); assert.equal(r.rows[0].email, 'ana@example.test'); assert.equal(r.rows[0].start, '2026-11-03');
+  assert.equal(r.rows[0].Name, undefined);
+});
+
 test('aliases rename columns in place, typed columns are normalised, other columns pass through', () => {
   const r = adapt([['Dept', 'Full Name', 'Work Email', 'Hire Date', 'Salary', 'Is Active', 'State'], ['Ops', ' Ana ', 'ANA@Example.test', '25/10/2026', '1.200,50 €', 'Y', 'T'], ['Ops', 'Ben', '', '01/11/2026', '900,00', 'no', 'x']]);
   assert.equal(r.report.adapted, true); assert.equal(r.report.profile, null);

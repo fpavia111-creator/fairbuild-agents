@@ -201,8 +201,10 @@ export function adaptRecords(table, def, { override = null, kind = '', arg = '',
       }
     }
     const uf = !!unitOf(f, fd);
-    // The agent's own name (any letter case or punctuation) is not a rename.
-    if (has(f)) { const k = index.get(normHeader(f)); plan.push({ f, fd, spec: {}, from: [f] }); if (k !== f) consumed.add(k); continue; }
+    // The agent's own name in exactly that spelling is not a rename. In another letter case or
+    // punctuation ("Vendor", "Invoice_Number") it is: the rows must be re-keyed, or the agent reads
+    // a blank column (bug found by the Fairmake session in the Lodestar core; Platte read 0 invoices).
+    if (has(f)) { const k = index.get(normHeader(f)); plan.push({ f, fd, spec: {}, from: [k === undefined ? f : k] }); if (k !== undefined && k !== f) { consumed.add(k); renamed++; } continue; }
     if (uf && col(f, true) !== undefined) { const k = col(f, true); plan.push({ f, fd, spec: {}, from: [k] }); mapped[f] = k; consumed.add(k); renamed++; continue; }
     // A nested JSON object is never taken for a column by its name alone.
     const alias = (fd.aliases || []).find((a) => { const k = col(a, uf); return k !== undefined && !nested.has(k) && !consumed.has(k); });

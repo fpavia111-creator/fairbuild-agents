@@ -105,7 +105,7 @@ Table inputs can be CSV, TSV, semicolon- or pipe-separated text, Excel `.xlsx`, 
 | `description` | text | Description, Reason, Work Performed | Beschreibung, Description, 摘要, 摘要 |
 | `amount` | amount | Amount, Backcharge Amount, Cost | Betrag, Montant, 金額, 金额 |
 | `status` | text | Status, State | Status, Statut, ステータス, 状态 |
-| `notice_date` | date | Notice Date, Notified, Date Notified, Notice Sent | - |
+| `notice_date` | date | Notice Date, Notified, Date Notified, Notice Sent | Anzeigedatum, Date de notification, 通知日, 通知日期 |
 | `deducted_amount` | amount | Deducted Amount, Deducted, Recovered, Amount Recovered | - |
 | `backup` | yes/no | Backup, Backup Attached, Support, Documentation | - |
 

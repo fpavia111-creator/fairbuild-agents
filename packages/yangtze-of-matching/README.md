@@ -167,7 +167,7 @@ Where a layout says "checked", its column names were compared with the vendor's 
 | `commitment` (required) | text | Commitment, PO, PO Number, Subcontract, Contract Number | Auftragsnummer NU, N° de commande, 発注番号, 合同编号 |
 | `date` | date | Date, Approved Date, Receipt Date, Received Date, Period | Datum, Date, 日付, 日期 |
 | `approved_to_date` | amount | Approved to Date, Approved Amount, Received Value, Work in Place, Received to Date, Approved | - |
-| `approved_by` | text | Approved By, Approver, Received By | - |
+| `approved_by` | text | Approved By, Approver, Received By | Freigegeben durch, Validé par, 承認者名, 批准人 |
 
 ### Files from other countries
 

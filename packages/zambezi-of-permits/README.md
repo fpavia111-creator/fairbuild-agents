@@ -124,7 +124,7 @@ Table inputs can be CSV, TSV, semicolon- or pipe-separated text, Excel `.xlsx`, 
 | `inspection_type` (required) | text | Inspection Type, Inspection, Type, Description | Abnahme, Contrôle, 検査, 验收 |
 | `scheduled_date` | date | Scheduled Date, Scheduled, Inspection Date, Date, Requested Date | Datum, Date, 日付, 日期 |
 | `result` | text | Result, Outcome, Status, Inspection Result | Ergebnis, Résultat, 結果, 结果 |
-| `completed_date` | date | Completed Date, Completed, Result Date, Inspected On | - |
+| `completed_date` | date | Completed Date, Completed, Result Date, Inspected On | Fertiggestellt am, Terminé le, 完了日, 完成日期 |
 
 ### Files from other countries
 

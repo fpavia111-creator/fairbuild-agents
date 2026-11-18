@@ -99,8 +99,8 @@ Table inputs can be CSV, TSV, semicolon- or pipe-separated text, Excel `.xlsx`, 
 
 | Column | Type | Also read as | For example, in other languages |
 |---|---|---|---|
-| `submittal` (required) | text | Submittal, Submittal Number, Number, #, Submittal # | Referenz, Référence, 参照番号, 参考号 |
-| `revision` | number | Revision, Rev, Revision Number | Referenz, Référence, 参照番号, 参考号 |
+| `submittal` (required) | text | Submittal, Submittal Number, Number, #, Submittal # | Vorlage-Nr., N° de visa, 提出物番号, 报审编号 |
+| `revision` | number | Revision, Rev, Revision Number | Revision, Révision, 版数, 版本 |
 | `spec_section` | text | Spec Section, Specification Section, Spec, Section | LV-Abschnitt, Article du CCTP, 仕様書項目, 技术规格章节 |
 | `title` | text | Title, Description, Name | - |
 | `vendor` | text | Vendor, Responsible Contractor, Subcontractor, Submitted By | Lieferant, Fournisseur, 仕入先, 供应商 |

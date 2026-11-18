@@ -134,7 +134,7 @@ Where a layout says "checked", its column names were compared with the vendor's 
 | Column | Type | Also read as | For example, in other languages |
 |---|---|---|---|
 | `job` (required) | text | Job, Job Number, Project | Projekt, Chantier, 工事番号, 项目编号 |
-| `period` | text | Period, Month, Billing Period, Application Period | - |
+| `period` | text | Period, Month, Billing Period, Application Period | Zeitraum, Période, 期間, 期间 |
 | `received` | yes/no | Received, Paid, Owner Paid, Collected | - |
 
 ### Lien waiver log (`waivers`)
@@ -151,8 +151,8 @@ Where a layout says "checked", its column names were compared with the vendor's 
 | Column | Type | Also read as | For example, in other languages |
 |---|---|---|---|
 | `vendor` (required) | text | Vendor, Subcontractor, Company | Lieferant, Fournisseur, 仕入先, 供应商 |
-| `coi_expires` | date | COI Expires, Insurance Expires, Certificate Expires, Insurance Expiry | - |
-| `w9_on_file` | yes/no | W-9 on File, W9 on File, W-9, W9 | - |
+| `coi_expires` | date | COI Expires, Insurance Expires, Certificate Expires, Insurance Expiry | Versicherungsnachweis gültig bis, Attestation valable jusqu'au, 保険証明期限, 保险证明到期 |
+| `w9_on_file` | yes/no | W-9 on File, W9 on File, W-9, W9 | Steuerformular vorhanden, Formulaire fiscal reçu, 税務書類受領, 税表已收 |
 | `retainage_pct` | number | Retainage %, Retainage Percent, Retainage Rate | Einbehalt %, Retenue de garantie %, 保留率, 质保金比例 |
 
 ### Files from other countries

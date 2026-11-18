@@ -44,18 +44,18 @@ Hudson of Wages demo (fictional workers and rates; names are masked in results),
 ▶ Check two weeks of certified payroll against the determination
   status: executed  decision: allow
   8 payroll line(s), 5 worker(s), 2 week(s), 302 hour(s): 3 line(s) paid below the determination (450 short), 4 to review.
-    2026-11-07 PERSON-c51998d8  Roofer              short     69  underpaid underpaid
-    2026-11-07 PERSON-3148f757  Laborer Group 1     short    318  underpaid underpaid
-    2026-11-14 PERSON-8953c043  Roofer              short     63  underpaid ot_not_paid
-    2026-11-07 PERSON-0388e59f  Roofer              short      0  review    missing_worker_id
-    2026-11-14 PERSON-c51998d8  Sheet Metal Worker  short      0  review    no_rate
-    2026-11-14 PERSON-3148f757  Laborer Group 1     short      0  review    full_ssn_on_report
-    2026-11-14 PERSON-f1942445  Roofer              short      0  review    duplicate_line
-    2026-11-07 PERSON-8953c043  Roofer              short      0  ok        
+    2026-11-07 PERSON-34d0551c  Roofer              short     69  underpaid underpaid
+    2026-11-07 PERSON-10aed2a5  Laborer Group 1     short    318  underpaid underpaid
+    2026-11-14 PERSON-1cb37342  Roofer              short     63  underpaid ot_not_paid
+    2026-11-07 PERSON-fe7b55cd  Roofer              short      0  review    missing_worker_id
+    2026-11-14 PERSON-34d0551c  Sheet Metal Worker  short      0  review    no_rate
+    2026-11-14 PERSON-10aed2a5  Laborer Group 1     short      0  review    full_ssn_on_report
+    2026-11-14 PERSON-a98ed95a  Roofer              short      0  review    duplicate_line
+    2026-11-07 PERSON-1cb37342  Roofer              short      0  ok        
 
 ▶ Explain one line by its masked key
   status: executed  decision: allow
-  PERSON-c51998d8 week ending 2026-11-07 (Roofer): underpaid. 40 straight + 4 overtime hour(s) at 30 + 12.5; rate 31.5 + 12.5; short 69. Paid 30 + 12.5 fringe per hour; the determination for Roofer is 31.5 + 12.5 (overtime 47.25 + 12.5). Short 69 for 40 straight and 4 overtime hour(s).
+  PERSON-34d0551c week ending 2026-11-07 (Roofer): underpaid. 40 straight + 4 overtime hour(s) at 30 + 12.5; rate 31.5 + 12.5; short 69. Paid 30 + 12.5 fringe per hour; the determination for Roofer is 31.5 + 12.5 (overtime 47.25 + 12.5). Short 69 for 40 straight and 4 overtime hour(s).
 
 ▶ Write the worklist (the files keep the real names)
   status: executed  decision: allow

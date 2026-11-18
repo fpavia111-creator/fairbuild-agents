@@ -103,7 +103,7 @@ Table inputs can be CSV, TSV, semicolon- or pipe-separated text, Excel `.xlsx`, 
 | `supplier` | text | Supplier, Vendor, Vendor Name | Lieferant, Fournisseur, 仕入先, 供应商 |
 | `job` | text | Job, Job Number, Project | Projekt, Chantier, 工事番号, 项目编号 |
 | `date` | date | Date, Delivery Date, Delivered, Received Date | Datum, Date, 日付, 日期 |
-| `material` | text | Material, Item, Product, Description, Mix | - |
+| `material` | text | Material, Item, Product, Description, Mix | Material, Matériau, 資材, 材料 |
 | `quantity` | number | Quantity, Qty, Qty Delivered, Delivered Qty | Menge, Quantité, 数量, 数量 |
 | `uom` | text | UOM, Unit, Units | Einheit, Unité, 単位, 单位 |
 
@@ -115,7 +115,7 @@ Table inputs can be CSV, TSV, semicolon- or pipe-separated text, Excel `.xlsx`, 
 | `supplier` | text | Supplier, Vendor, Vendor Name | Lieferant, Fournisseur, 仕入先, 供应商 |
 | `job` | text | Job, Job Number, Project | Projekt, Chantier, 工事番号, 项目编号 |
 | `ticket` | text | Ticket, Ticket Number, Delivery Ticket, Delivery Note, Reference | Lieferschein, Bon de livraison, 納品書番号, 送货单号 |
-| `material` | text | Material, Item, Product, Description | - |
+| `material` | text | Material, Item, Product, Description | Material, Matériau, 資材, 材料 |
 | `quantity` | number | Quantity, Qty, Qty Billed | Menge, Quantité, 数量, 数量 |
 | `unit_price` | amount | Unit Price, Price, Rate | Einzelpreis, Prix unitaire, 単価, 单价 |
 | `amount` | amount | Amount, Extended, Line Total, Extension | Betrag, Montant, 金額, 金额 |
@@ -126,7 +126,7 @@ Table inputs can be CSV, TSV, semicolon- or pipe-separated text, Excel `.xlsx`, 
 | Column | Type | Also read as | For example, in other languages |
 |---|---|---|---|
 | `supplier` (required) | text | Supplier, Vendor | Lieferant, Fournisseur, 仕入先, 供应商 |
-| `material` (required) | text | Material, Item, Product, Description | - |
+| `material` (required) | text | Material, Item, Product, Description | Material, Matériau, 資材, 材料 |
 | `unit_price` | amount | Unit Price, Price, Agreed Price, Contract Price | Einzelpreis, Prix unitaire, 単価, 单价 |
 
 ### Files from other countries

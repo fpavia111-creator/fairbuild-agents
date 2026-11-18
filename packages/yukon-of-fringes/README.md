@@ -99,17 +99,17 @@ Table inputs can be CSV, TSV, semicolon- or pipe-separated text, Excel `.xlsx`, 
 
 | Column | Type | Also read as | For example, in other languages |
 |---|---|---|---|
-| `union` (required) | text | Union, Local, Union Local, Local Union | Kasse, Caisse, 基金, 基金 |
+| `union` (required) | text | Union, Local, Union Local, Local Union | Gewerkschaft, Syndicat, 労働組合, 工会 |
 | `worker` | text | Worker, Employee, Employee Name, Name | Mitarbeiter, Salarié, 作業員, 工人 |
 | `worker_id` | text | Worker ID, Employee ID, Employee Number | Personalnummer, Matricule, 社員番号, 工号 |
-| `month` | text | Month, Work Month, Period, Pay Period, Date, Week Ending | - |
+| `month` | text | Month, Work Month, Period, Pay Period, Date, Week Ending | Monat, Mois, 対象月, 月份 |
 | `hours` | number | Hours, Hours Worked, Total Hours, Reportable Hours | Stunden, Heures, 時間, 工时 |
 
 ### Fund contribution rates (`rates`)
 
 | Column | Type | Also read as | For example, in other languages |
 |---|---|---|---|
-| `union` (required) | text | Union, Local, Union Local | Kasse, Caisse, 基金, 基金 |
+| `union` (required) | text | Union, Local, Union Local | Gewerkschaft, Syndicat, 労働組合, 工会 |
 | `union_fund` (required) | text | Fund, Fund Name, Benefit, Benefit Fund | Kasse, Caisse, 基金, 基金 |
 | `rate` | amount | Rate, Rate per Hour, Contribution Rate, Hourly Rate | Stundenlohn, Taux, 単価, 单价 |
 
@@ -117,12 +117,12 @@ Table inputs can be CSV, TSV, semicolon- or pipe-separated text, Excel `.xlsx`, 
 
 | Column | Type | Also read as | For example, in other languages |
 |---|---|---|---|
-| `union` (required) | text | Union, Local, Union Local | Kasse, Caisse, 基金, 基金 |
+| `union` (required) | text | Union, Local, Union Local | Gewerkschaft, Syndicat, 労働組合, 工会 |
 | `union_fund` | text | Fund, Fund Name, Benefit | Kasse, Caisse, 基金, 基金 |
-| `month` | text | Month, Work Month, Period, Contribution Month | - |
-| `hours_reported` | number | Hours Reported, Hours, Reported Hours | - |
+| `month` | text | Month, Work Month, Period, Contribution Month | Monat, Mois, 対象月, 月份 |
+| `hours_reported` | number | Hours Reported, Hours, Reported Hours | Gemeldete Stunden, Heures déclarées, 申告時間, 申报工时 |
 | `amount` | amount | Amount, Amount Remitted, Remitted, Contribution, Paid | Betrag, Montant, 金額, 金额 |
-| `remitted_date` | date | Remitted Date, Date Paid, Paid Date, Date Remitted, Payment Date | - |
+| `remitted_date` | date | Remitted Date, Date Paid, Paid Date, Date Remitted, Payment Date | Überwiesen am, Versé le, 納付日, 缴款日期 |
 
 ### Files from other countries
 

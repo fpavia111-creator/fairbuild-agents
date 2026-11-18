@@ -98,7 +98,7 @@ Table inputs can be CSV, TSV, semicolon- or pipe-separated text, Excel `.xlsx`, 
 |---|---|---|---|
 | `callback_id` (required) | text | Callback ID, Callback, Ticket, Service Request, Warranty Request, ID | - |
 | `job` | text | Job, Job Number, Project, Lot | Projekt, Chantier, 工事番号, 项目编号 |
-| `homeowner` | text | Homeowner, Owner, Customer, Caller, Contact Name | - |
+| `homeowner` | text | Homeowner, Owner, Customer, Caller, Contact Name | Bauherr, Propriétaire, 施主, 业主 |
 | `contact_phone` | text | Contact Phone, Phone, Homeowner Phone | - |
 | `date_reported` | date | Date Reported, Reported, Date, Opened, Created | - |
 | `trade` | text | Trade, Category, Item, Type | Gewerk, Corps d'état, 職種, 专业 |
@@ -114,7 +114,7 @@ Table inputs can be CSV, TSV, semicolon- or pipe-separated text, Excel `.xlsx`, 
 |---|---|---|---|
 | `job` (required) | text | Job, Job Number, Project, Lot | Projekt, Chantier, 工事番号, 项目编号 |
 | `completion_date` | date | Completion Date, Closing Date, Substantial Completion, Handover | Fertigstellung, Date de réception, 竣工日, 竣工日期 |
-| `warranty_months` | number | Warranty Months, Warranty Term, Warranty | - |
+| `warranty_months` | number | Warranty Months, Warranty Term, Warranty | Gewährleistung Monate, Garantie (mois), 保証期間（月）, 保修期（月） |
 
 ### Files from other countries
 

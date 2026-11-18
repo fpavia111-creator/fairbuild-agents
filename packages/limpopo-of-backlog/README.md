@@ -96,7 +96,7 @@ Table inputs can be CSV, TSV, semicolon- or pipe-separated text, Excel `.xlsx`, 
 | Column | Type | Also read as | For example, in other languages |
 |---|---|---|---|
 | `job` (required) | text | Job, Job Number, Project, Project Number | Projekt, Chantier, 工事番号, 项目编号 |
-| `period` (required) | text | Period, Month, Period End, As Of, Fiscal Period | - |
+| `period` (required) | text | Period, Month, Period End, As Of, Fiscal Period | Zeitraum, Période, 期間, 期间 |
 | `contract_amount` | amount | Contract Amount, Revised Contract, Contract Value | Auftragssumme, Montant du marché, 請負金額, 合同金额 |
 | `estimated_cost` | amount | Estimated Cost, Revised Estimated Cost, Estimated Cost at Completion, EAC | Kalkulierte Kosten, Coût prévisionnel, 実行予算, 预计总成本 |
 | `cost_to_date` | amount | Cost to Date, JTD Cost, Actual Cost | Ist-Kosten, Réalisé, 実績, 实际成本 |

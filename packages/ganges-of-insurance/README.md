@@ -104,8 +104,8 @@ Table inputs can be CSV, TSV, semicolon- or pipe-separated text, Excel `.xlsx`, 
 | `policy_number` | text | Policy Number, Policy No, Policy #, Policy | Policennummer, N° de police, 証券番号, 保单号 |
 | `effective` | date | Effective, Effective Date, Policy Effective, Start | Gültig ab, Date d'effet, 適用開始日, 生效日期 |
 | `expires` | date | Expires, Expiration, Expiration Date, Expiry, Policy Expiration, End | Ablaufdatum, Date d'expiration, 有効期限, 到期日 |
-| `each_occurrence` | amount | Each Occurrence, Per Occurrence, Each Accident, Limit, Each Occurrence Limit, Combined Single Limit | Deckungssumme, Plafond, 補償限度額, 保险金额 |
-| `aggregate` | amount | Aggregate, General Aggregate, Aggregate Limit | Deckungssumme, Plafond, 補償限度額, 保险金额 |
+| `each_occurrence` | amount | Each Occurrence, Per Occurrence, Each Accident, Limit, Each Occurrence Limit, Combined Single Limit | Je Schadenfall, Par sinistre, 1事故あたり, 每次事故限额 |
+| `aggregate` | amount | Aggregate, General Aggregate, Aggregate Limit | Jahreshöchstleistung, Plafond annuel, 総支払限度額, 累计限额 |
 | `additional_insured` | yes/no | Additional Insured, Addl Insured, AI, Addl Insd | - |
 | `waiver_of_subrogation` | yes/no | Waiver of Subrogation, Subrogation Waived, WOS, Subr Wvd | - |
 | `primary_noncontributory` | yes/no | Primary and Non-Contributory, Primary Non-Contributory, Primary, PNC | - |

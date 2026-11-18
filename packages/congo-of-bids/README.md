@@ -97,11 +97,11 @@ Table inputs can be CSV, TSV, semicolon- or pipe-separated text, Excel `.xlsx`, 
 
 | Column | Type | Also read as | For example, in other languages |
 |---|---|---|---|
-| `bid_package` (required) | text | Bid Package, Package, Trade, Scope Package, Division | - |
+| `bid_package` (required) | text | Bid Package, Package, Trade, Scope Package, Division | Vergabepaket, Lot, 入札パッケージ, 招标包 |
 | `bidder` (required) | text | Bidder, Subcontractor, Company, Vendor | Bieter, Soumissionnaire, 入札者, 投标人 |
-| `base_bid` | amount | Base Bid, Bid Amount, Bid, Amount, Price | - |
+| `base_bid` | amount | Base Bid, Bid Amount, Bid, Amount, Price | Angebotssumme, Offre de base, 基本入札額, 基本报价 |
 | `includes` | text | Includes, Included Scope, Scope Included, Inclusions | - |
-| `exclusions` | text | Exclusions, Excludes, Qualifications | - |
+| `exclusions` | text | Exclusions, Excludes, Qualifications | Ausschlüsse, Exclusions, 除外項目, 不含项目 |
 | `bond` | yes/no | Bond, Bid Bond, Bond Included | - |
 | `addenda_acknowledged` | number | Addenda Acknowledged, Addenda, Addenda Received | - |
 | `received_at` | date and time | Received At, Received, Submitted At, Time Received | - |
@@ -110,7 +110,7 @@ Table inputs can be CSV, TSV, semicolon- or pipe-separated text, Excel `.xlsx`, 
 
 | Column | Type | Also read as | For example, in other languages |
 |---|---|---|---|
-| `bid_package` (required) | text | Bid Package, Package, Trade | - |
+| `bid_package` (required) | text | Bid Package, Package, Trade | Vergabepaket, Lot, 入札パッケージ, 招标包 |
 | `item` (required) | text | Item, Scope Item, Scope | Position, Ligne, 明細番号, 行号 |
 | `plug_value` | amount | Plug Value, Plug, Estimate, Allowance | - |
 

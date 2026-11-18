@@ -111,8 +111,8 @@ Table inputs can be CSV, TSV, semicolon- or pipe-separated text, Excel `.xlsx`, 
 | `retainage_pct` | number | Retainage Percent, Retainage Rate, Retention Rate, Retainage % | Einbehalt %, Retenue de garantie %, 保留率, 质保金比例 |
 | `retainage_held` | amount | Retainage Held, Retainage, Retention, Retainage Balance, Retainage Receivable | Einbehalt, Retenue de garantie, 保留金, 质保金 |
 | `stop_at_percent` | number | Retainage Stops At, Stop At Percent, Retainage Cap Percent | - |
-| `retainage_billed` | amount | Retainage Billed, Release Billed, Retainage Invoiced | - |
-| `retainage_collected` | amount | Retainage Collected, Retainage Received, Release Received | - |
+| `retainage_billed` | amount | Retainage Billed, Release Billed, Retainage Invoiced | Einbehalt abgerechnet, Retenue facturée, 保留金請求額, 已开票保留金 |
+| `retainage_collected` | amount | Retainage Collected, Retainage Received, Release Received | Einbehalt erhalten, Retenue encaissée, 保留金入金額, 已收保留金 |
 | `completion_date` | date | Completion Date, Substantial Completion, Final Completion, Completed | Fertigstellung, Date de réception, 竣工日, 竣工日期 |
 | `percent_complete` | number | Percent Complete, % Complete, Pct Complete | Fertigstellungsgrad, Avancement %, 出来高率, 完工百分比 |
 
@@ -137,7 +137,7 @@ Table inputs can be CSV, TSV, semicolon- or pipe-separated text, Excel `.xlsx`, 
 | `retainage_held` | amount | Retainage Held, Retainage, Retention Held, Retainage Withheld | Einbehalt, Retenue de garantie, 保留金, 质保金 |
 | `retainage_pct` | number | Retainage %, Retainage Percent, Retention % | Einbehalt %, Retenue de garantie %, 保留率, 质保金比例 |
 | `executed` | yes/no | Executed, Signed, Fully Executed, Contract Signed | Unterschrieben, Signé, 契約締結, 已签订 |
-| `retainage_released` | amount | Retainage Released, Retainage Paid, Released | - |
+| `retainage_released` | amount | Retainage Released, Retainage Paid, Released | Einbehalt freigegeben, Retenue libérée, 保留金解除額, 已释放保留金 |
 
 Named exports recognised by their column names:
 
