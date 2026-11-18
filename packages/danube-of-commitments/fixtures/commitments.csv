@@ -1,0 +1,9 @@
+commitment,commitment_type,job,vendor,cost_code,description,date,status,original_amount,approved_changes,revised_amount,invoiced,paid,retainage_held,retainage_pct,executed
+SC-101,Subcontract,24-101,Example Concrete LLC,03-300,Cast-in-place concrete,2026-06-01,Open,120000,11500,131500,96000,86400,9600,10,Yes
+SC-102,Subcontract,24-101,Test Drywall Co,09-250,Drywall and framing,2026-08-15,Open,64000,0,64000,18000,0,1800,10,No
+SC-103,Subcontract,24-101,Example Electric Inc,26-000,Electrical,2026-06-10,Open,85000,5000,92000,45000,40500,4500,10,Yes
+PO-201,Purchase order,24-101,Sample Lumber Supply,06-100,Framing lumber,2026-09-01,Open,9000,0,9000,25400,25400,0,0,Yes
+PO-202,Purchase order,24-102,Sample Rebar Co,03-200,Rebar,2026-03-02,Open,15000,0,15000,11000,11000,0,0,Yes
+SC-104,Subcontract,24-102,Example Roofing LLC,07-500,Membrane roofing,2026-05-01,Open,205000,0,205000,150000,135000,13500,10,Yes
+PO-203,Purchase order,24-102,Sample Sheet Metal,07-600,Flashing,2026-07-01,Closed,12000,0,12000,9500,9500,0,0,Yes
+SC-105,Subcontract,24-102,Sample Painting Co,09-900,Painting,2026-10-01,Open,30000,0,30000,6000,10000,0,0,Yes

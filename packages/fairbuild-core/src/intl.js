@@ -20,7 +20,8 @@ const headerCache = new Map();
  * (such as "#") is kept.
  */
 export function normHeader(h) {
-  const t0 = String(h ?? '').trim();
+  // '%' is a word in a header: 'Retainage %' is not the column 'Retainage'.
+  const t0 = String(h ?? '').trim().replace(/%/g, ' pct ');
   if (!NON_ASCII.test(t0)) { const t = t0.toLowerCase(); const k = t.replace(/[^a-z0-9]/g, ''); return k || (t.length <= 3 ? t : ''); }
   const hit = headerCache.get(t0);
   if (hit !== undefined) return hit;

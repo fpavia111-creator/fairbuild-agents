@@ -1,0 +1,398 @@
+{
+  "suite": "danube-of-commitments",
+  "root": "..",
+  "data_note": "Fictional jobs, vendors and commitments in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "check-totals",
+      "tool": "danube_check",
+      "args": {
+        "commitments": "fixtures/commitments.csv",
+        "invoices": "fixtures/invoices.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.commitments": 8,
+          "result.revised": 558500,
+          "result.invoiced": 363900,
+          "result.open_balance": 208500,
+          "result.over": 2,
+          "result.review": 5,
+          "result.unmatched": 1,
+          "result.ok": 1,
+          "result.over_invoiced": 16400,
+          "result.overpaid": 1000,
+          "result.unmatched_invoices": 8800
+        }
+      }
+    },
+    {
+      "id": "every-planted-issue",
+      "tool": "danube_check",
+      "args": {
+        "commitments": "fixtures/commitments.csv",
+        "invoices": "fixtures/invoices.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "contains": [
+          "over_invoiced",
+          "paid_over_invoiced",
+          "not_executed",
+          "invoiced_does_not_tie",
+          "retainage_off",
+          "closed_with_balance",
+          "stale_open",
+          "unknown_commitment",
+          "revised_math"
+        ]
+      }
+    },
+    {
+      "id": "explain-lumber-po",
+      "tool": "danube_explain",
+      "args": {
+        "commitments": "fixtures/commitments.csv",
+        "invoices": "fixtures/invoices.csv",
+        "as_of": "2026-11-16",
+        "commitment": "PO-201"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "Invoiced 25400 is more than the commitment's value 9000 by 16400"
+        ],
+        "equals": {
+          "result.item.status": "over",
+          "result.item.open": 0
+        }
+      }
+    },
+    {
+      "id": "roofing-retainage-rate",
+      "tool": "danube_explain",
+      "args": {
+        "commitments": "fixtures/commitments.csv",
+        "invoices": "fixtures/invoices.csv",
+        "as_of": "2026-11-16",
+        "commitment": "SC-104"
+      },
+      "expect": {
+        "contains": [
+          "Retainage held is 13500; 10% of 150000 invoiced is 15000"
+        ],
+        "equals": {
+          "result.item.findings.0.amount": 1500
+        }
+      }
+    },
+    {
+      "id": "stale-days-setting",
+      "tool": "danube_check",
+      "args": {
+        "commitments": "fixtures/commitments.csv",
+        "invoices": "fixtures/invoices.csv",
+        "as_of": "2026-11-16",
+        "settings": "fixtures/settings-lenient.json"
+      },
+      "expect": {
+        "equals": {
+          "result.review": 4,
+          "result.settings_used.stale_days": 365
+        },
+        "not_contains": [
+          "stale_open"
+        ]
+      }
+    },
+    {
+      "id": "commitments-alone",
+      "tool": "danube_check",
+      "args": {
+        "commitments": "fixtures/commitments.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "equals": {
+          "result.invoiced": 360900,
+          "result.unmatched": 0,
+          "result.over": 2,
+          "result.overpaid": 4000
+        },
+        "not_contains": [
+          "invoiced_does_not_tie"
+        ]
+      }
+    },
+    {
+      "id": "procore-commitments-export",
+      "tool": "danube_check",
+      "args": {
+        "commitments": "fixtures/exports/procore-commitments.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "equals": {
+          "result.commitments": 3,
+          "result.review": 2,
+          "result.ok": 1
+        },
+        "contains": [
+          "procore_commitments",
+          "not_executed"
+        ]
+      }
+    },
+    {
+      "id": "settings-typo-is-named",
+      "tool": "danube_check",
+      "args": {
+        "commitments": "fixtures/commitments.csv",
+        "settings": "fixtures/settings-typo.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "commitment_settings"
+        ]
+      }
+    },
+    {
+      "id": "write-report-writes-files",
+      "tool": "danube_write_report",
+      "args": {
+        "commitments": "fixtures/commitments.csv",
+        "invoices": "fixtures/invoices.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "length": {
+          "result.files": 2
+        }
+      }
+    },
+    {
+      "id": "draft-letter",
+      "tool": "danube_draft_letter",
+      "mode": "auto",
+      "auto_actions": [
+        "danube_draft_letter"
+      ],
+      "args": {
+        "commitments": "fixtures/commitments.csv",
+        "invoices": "fixtures/invoices.csv",
+        "as_of": "2026-11-16",
+        "vendor": "Sample Lumber Supply"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.id": "Sample Lumber Supply",
+          "result.commitments": 1
+        },
+        "contains": [
+          "Nothing was sent"
+        ]
+      }
+    },
+    {
+      "id": "draft-letter-clean-vendor",
+      "tool": "danube_draft_letter",
+      "mode": "auto",
+      "auto_actions": [
+        "danube_draft_letter"
+      ],
+      "args": {
+        "commitments": "fixtures/commitments.csv",
+        "invoices": "fixtures/invoices.csv",
+        "as_of": "2026-11-16",
+        "vendor": "Example Concrete LLC"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "nothing to ask"
+        ]
+      }
+    },
+    {
+      "id": "policy-invented-tool",
+      "tool": "danube_pay_everything_now",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-file-outside-root",
+      "tool": "danube_check",
+      "args": {
+        "commitments": "../../../outside-the-root.csv",
+        "invoices": "fixtures/invoices.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside"
+        ]
+      }
+    },
+    {
+      "id": "policy-missing-argument-named",
+      "tool": "danube_check",
+      "args": {},
+      "expect": {
+        "status": "error",
+        "contains": [
+          "commitments"
+        ]
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reads",
+      "tool": "danube_check",
+      "mode": "review",
+      "args": {
+        "commitments": "fixtures/commitments.csv",
+        "invoices": "fixtures/invoices.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reports",
+      "tool": "danube_write_report",
+      "mode": "review",
+      "args": {
+        "commitments": "fixtures/commitments.csv",
+        "invoices": "fixtures/invoices.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-blocks-draft",
+      "tool": "danube_draft_letter",
+      "mode": "review",
+      "args": {
+        "commitments": "fixtures/commitments.csv",
+        "invoices": "fixtures/invoices.csv",
+        "as_of": "2026-11-16",
+        "vendor": "Sample Lumber Supply"
+      },
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-danube-request-send-one-click-in-auto",
+      "tool": "danube_request_send",
+      "mode": "auto",
+      "args": {
+        "draft": "fairbuild-out/drafts/example.md",
+        "draft_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expect": {
+        "status": "needs_approval"
+      }
+    },
+    {
+      "id": "policy-refuses-po-close",
+      "tool": "po_close",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-po-change",
+      "tool": "po_change",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-ap-pay-invoice",
+      "tool": "ap_pay_invoice",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-email-send",
+      "tool": "email_send",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "intl-de-check-totals",
+      "tool": "danube_check",
+      "args": {
+        "commitments": "fixtures/intl/de/commitments.csv",
+        "invoices": "fixtures/intl/de/invoices.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.commitments": 8,
+          "result.revised": 558500,
+          "result.invoiced": 363900,
+          "result.open_balance": 208500,
+          "result.over": 2,
+          "result.review": 5,
+          "result.unmatched": 1,
+          "result.ok": 1,
+          "result.over_invoiced": 16400,
+          "result.overpaid": 1000,
+          "result.unmatched_invoices": 8800
+        }
+      },
+      "note": "German export of the same data (fixtures/intl/de); must match the English case \"check-totals\"."
+    },
+    {
+      "id": "intl-ja-check-totals",
+      "tool": "danube_check",
+      "args": {
+        "commitments": "fixtures/intl/ja/commitments.csv",
+        "invoices": "fixtures/intl/ja/invoices.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.commitments": 8,
+          "result.revised": 558500,
+          "result.invoiced": 363900,
+          "result.open_balance": 208500,
+          "result.over": 2,
+          "result.review": 5,
+          "result.unmatched": 1,
+          "result.ok": 1,
+          "result.over_invoiced": 16400,
+          "result.overpaid": 1000,
+          "result.unmatched_invoices": 8800
+        }
+      },
+      "note": "Japanese export of the same data (fixtures/intl/ja); must match the English case \"check-totals\"."
+    }
+  ]
+}

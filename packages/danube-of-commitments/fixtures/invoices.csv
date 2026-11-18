@@ -1,0 +1,13 @@
+invoice_number,vendor,job,commitment,invoice_date,amount,retainage
+EC-2210,Example Concrete LLC,24-101,SC-101,2026-10-20,56000,5600
+EC-2231,Example Concrete LLC,24-101,SC-101,2026-11-10,40000,4000
+TD-101,Test Drywall Co,24-101,SC-102,2026-11-12,18000,1800
+EE-5501,Example Electric Inc,24-101,SC-103,2026-10-28,45000,4500
+SL-88120,Sample Lumber Supply,24-101,PO-201,2026-10-12,14400,0
+SL-88341,Sample Lumber Supply,24-101,PO-201,2026-11-03,11000,0
+SR-310,Sample Rebar Co,24-102,PO-202,2026-04-10,11000,0
+ER-7001,Example Roofing LLC,24-102,SC-104,2026-11-07,150000,13500
+SM-41,Sample Sheet Metal,24-102,PO-203,2026-08-20,9500,0
+SP-12,Sample Painting Co,24-102,SC-105,2026-11-01,6000,0
+SP-13,Sample Painting Co,24-102,SC-105,2026-11-14,3000,0
+EX-77,Example Glazing LLC,24-102,SC-199,2026-11-05,8800,0

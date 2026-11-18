@@ -1,0 +1,4 @@
+Number,Type,Project Number,Contract Company,Title,Status,Original Contract Amount,Approved Change Orders,Revised Contract Amount,Invoiced,Payments Issued,Retainage,Executed
+SC-101,Subcontract,24-101,Example Concrete LLC,Cast-in-place concrete,Approved,120000,11500,131500,96000,86400,9600,Yes
+SC-102,Subcontract,24-101,Test Drywall Co,Drywall and framing,Draft,64000,0,64000,18000,0,1800,No
+SC-103,Subcontract,24-101,Example Electric Inc,Electrical,Approved,85000,5000,92000,45000,40500,4500,Yes
