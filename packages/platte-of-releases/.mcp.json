@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "platte-of-releases": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "platte-of-releases@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

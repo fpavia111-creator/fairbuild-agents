@@ -1,0 +1,22 @@
+{
+  "name": "shannon-of-service",
+  "version": "0.1.0",
+  "description": "Service and trade tickets with technician timesheets (ServiceTitan layouts recognised): utilisation per technician from working against paid hours, revenue per paid hour, recall rate, completed tickets not invoiced and zero-dollar tickets. Technician names are masked in what the AI model sees. Drafts billing follow-ups. Never invoices a customer or runs payroll.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/shannon-of-service#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "construction",
+    "contractors",
+    "construction-accounting",
+    "fairbuild",
+    "service-tickets",
+    "technician-utilization",
+    "servicetitan",
+    "field-service"
+  ]
+}

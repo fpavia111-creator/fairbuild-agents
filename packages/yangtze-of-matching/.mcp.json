@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "yangtze-of-matching": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "yangtze-of-matching@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

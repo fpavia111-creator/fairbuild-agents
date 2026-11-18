@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "columbia-of-timecards": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "columbia-of-timecards@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

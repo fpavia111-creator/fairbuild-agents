@@ -1,0 +1,21 @@
+{
+  "name": "colorado-of-equipment",
+  "version": "0.1.0",
+  "description": "Equipment rental invoices against the agreed day, week and month rates, the off-rent date and the hours the machine was used: billed above the cheapest rate combination, billed after it was called off, the same days billed twice, rentals sitting idle, and rentals with no job. Drafts credit requests. Never calls a rental off or pays.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/colorado-of-equipment#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "construction",
+    "contractors",
+    "construction-accounting",
+    "fairbuild",
+    "equipment-rental",
+    "equipment-costs",
+    "rental-invoices"
+  ]
+}

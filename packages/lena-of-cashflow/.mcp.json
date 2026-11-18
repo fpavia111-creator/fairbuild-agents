@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "lena-of-cashflow": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "lena-of-cashflow@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

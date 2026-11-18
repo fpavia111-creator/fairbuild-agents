@@ -1,0 +1,22 @@
+{
+  "name": "loire-of-wip",
+  "version": "0.1.0",
+  "description": "The work-in-progress schedule for month end by the cost-to-cost method: percent complete, earned revenue, over and under billings by job, the anticipated loss to recognise on loss jobs, cost past the estimate and jobs with no estimate. Drafts the over/under billing journal for review. Never posts to the ledger.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/loire-of-wip#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "construction",
+    "contractors",
+    "construction-accounting",
+    "fairbuild",
+    "wip",
+    "work-in-progress",
+    "over-under-billing",
+    "percentage-of-completion"
+  ]
+}

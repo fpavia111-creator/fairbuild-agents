@@ -1,4 +1,4 @@
-Lieferant;Versicherungsart;Versicherer;Policennummer;Gültig ab;Ablaufdatum;Deckungssumme;Versicherungssumme;additional_insured;waiver_of_subrogation;primary_noncontributory
+Lieferant;Versicherungsart;Versicherer;Policennummer;Gültig ab;Ablaufdatum;Je Schadenfall;Jahreshöchstleistung;additional_insured;waiver_of_subrogation;primary_noncontributory
 Example Concrete LLC;General Liability;Example Mutual Insurance;GL-1001;01.05.2026;01.05.2027;1.000.000,00;2.000.000,00;yes;yes;yes
 Example Concrete LLC;Auto;Example Mutual Insurance;CA-1002;01.05.2026;01.05.2027;1.000.000,00;;yes;;
 Example Concrete LLC;Workers Compensation;Sample Casualty Co;WC-1003;01.01.2026;01.01.2027;500.000,00;;;yes;

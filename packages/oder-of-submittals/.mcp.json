@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "oder-of-submittals": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "oder-of-submittals@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

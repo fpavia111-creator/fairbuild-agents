@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "tagus-of-salestax": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "tagus-of-salestax@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "congo-of-bids": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "congo-of-bids@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

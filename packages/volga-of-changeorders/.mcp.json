@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "volga-of-changeorders": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "volga-of-changeorders@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

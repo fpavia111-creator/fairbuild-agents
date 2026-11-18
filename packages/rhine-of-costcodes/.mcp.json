@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "rhine-of-costcodes": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "rhine-of-costcodes@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

@@ -52,6 +52,10 @@ for (const n of agents) {
       const kinds = kindsByArg(manifest, c.tool);
       for (const [arg, file] of argFiles(c.args)) {
         if (done.has(file)) continue;
+        // fixtures/exports/ holds a named product's own export layout (Procore, Sage 300, ServiceTitan,
+        // Buildertrend, the WH-347 layout). Those cases check that the layout is recognised by its
+        // fixed headers; with translated headers the file is no longer that layout, so it is kept as is.
+        if (/(^|[\\/])exports[\\/]/.test(file)) { done.set(file, null); continue; }
         const kind = kinds.get(arg); const def = kind && manifest.sources[kind];
         const src = join(PK, n, file); if (!def || !existsSync(src)) { done.set(file, null); continue; }
         const out = localise(readFileSync(src, 'utf8'), def, lang, lang === 'de' ? missing : null); if (!out) { done.set(file, null); continue; }

@@ -1,0 +1,21 @@
+{
+  "name": "congo-of-bids",
+  "version": "0.1.0",
+  "description": "Subcontractor bids tabulated and leveled by bid package: scope items a bidder left out priced at your plug values, bids missing addenda or a bid bond, late bids, and bids far below or above the others. Shows the lowest responsive leveled bid per package. Drafts scope clarification letters. Never awards, rejects or notifies a bidder.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/congo-of-bids#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "construction",
+    "contractors",
+    "construction-accounting",
+    "fairbuild",
+    "bid-leveling",
+    "bid-tabulation",
+    "subcontractor-bids"
+  ]
+}

@@ -1,4 +1,4 @@
-Lieferschein;Lieferant;Projekt;Datum;material;Menge;Einheit
+Lieferschein;Lieferant;Projekt;Datum;Werkstoff;Menge;Einheit
 DT-501;Sample Ready Mix;24-101;20.10.2026;Concrete 4000 psi;40;CY
 DT-502;Sample Ready Mix;24-101;27.10.2026;Concrete 4000 psi;36;CY
 DT-503;Sample Lumber Supply;24-101;12.10.2026;2x6 studs;600;EA

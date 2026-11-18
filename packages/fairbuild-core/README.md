@@ -1,6 +1,6 @@
 # fairbuild-core
 
-The shared core for **Fairbuild Machine domain agents**: small MCP agents that each own one business process and cannot act outside it.
+The shared core for the **Fairbuild construction agents**: small MCP agents that each own one business process and cannot act outside it.
 
 - **Pack manifest** — name, version, a declared model pin, the tool allowlist and the policy. `defineManifest()` fails closed: an unpinned model (`latest`), a tool without a rule, a write marked `allow`, or a one-click action marked `allow` are rejected at load time.
 - **Talos-style policy** — every tool call gets `allow`, `ask` or `block`. Unknown tools are blocked. The default is block.
@@ -16,6 +16,8 @@ The shared core for **Fairbuild Machine domain agents**: small MCP agents that e
 - **Approvals people can actually use** — CLI, a local approvals page on 127.0.0.1, or an HMAC-signed webhook callback. Approvals are single-use, bound to the exact arguments, expire after 24 h by default, and can be rejected.
 - **Caps that survive restarts** — per session, per day and per tool, persisted in `.fairbuild/usage.json`.
 - **Domain memory (opt-in per agent)** — an agent can remember facts about one customer's setup in its own specialty (a column name, an extra privileged role). Learning only proposes; a fact applies after a named person accepts it, every result says which facts it used, and the file is hash-chained like the audit log. See [Domain memory](#domain-memory).
+- **Construction helpers** — job, cost code, cost type and party keys, aging buckets and as-of dates; source adapters with the field names of Procore, Sage 100 and 300 Contractor, Foundation, Vista, QuickBooks, Buildertrend and ServiceTitan exports and the WH-347 payroll layout (written from public documentation, not yet checked against real exports).
+- **Personal-data masking** — worker names, worker ids, Social Security numbers and homeowner contacts are replaced by stable pseudonyms (`PERSON-3f9a1c2e`) in everything returned to the model, including errors and approval previews (`--personal mask|strict|off`, default mask). Files written locally keep the real values.
 - **Private evals** — fixture-based, deterministic test cases, with an offline HTML report and regression highlighting against a baseline.
 - **Shared helpers** — JSON Schema validation, iCalendar, SARIF 2.1.0, unified diff/patch, Jaro-Winkler and name/address normalisation, entropy, a small ZIP/DOCX reader, and a self-contained HTML page template.
 
@@ -260,7 +262,7 @@ A tool marked `tier: 'pro'` (optionally with a `feature` name) runs only with a 
 A key is `FAIRBUILD1.<payload>.<Ed25519 signature>` with licensee, plan, agents (`*` or package names), features, issue and expiry dates. It is checked offline against the public keys in `src/license-keys.js` (empty in this release, so nothing can be unlocked yet). There is no environment variable or config file that adds a trusted key.
 
 - Customer: `<pack> license install key.txt` (copies it to `.fairbuild/license.key`), `<pack> license status`, or set `FAIRBUILD_LICENSE` / `FAIRBUILD_LICENSE_FILE`. `fairbuild_info` shows the plan, expiry and which tools are unlocked, never the key.
-- Seller, on their own computer: `npx -p fairbuild-core fairbuild-license keygen --out ~/fairbuild-licence-keys`, paste the printed public key into `LICENSE_PUBLIC_KEYS`, release, then `fairbuild-license issue --key ~/fairbuild-licence-keys/private.pem --licensee "Customer" --plan pro --days 365 [--agents polaris-of-bills] --out customer.key` and `fairbuild-license verify customer.key --pubkey ~/fairbuild-licence-keys/public.pem`. Withdrawn licence ids go in `LICENSE_REVOKED_IDS` and take effect from the next release.
+- Seller, on their own computer: `npx -p fairbuild-core fairbuild-license keygen --out ~/fairbuild-licence-keys`, paste the printed public key into `LICENSE_PUBLIC_KEYS`, release, then `fairbuild-license issue --key ~/fairbuild-licence-keys/private.pem --licensee "Customer" --plan pro --days 365 [--agents rhine-of-costcodes] --out customer.key` and `fairbuild-license verify customer.key --pubkey ~/fairbuild-licence-keys/public.pem`. Withdrawn licence ids go in `LICENSE_REVOKED_IDS` and take effect from the next release.
 - `ctx.license` gives a handler `{ status, valid, plan, features, has(feature) }`.
 
 This is not copy protection: the packages are MIT-licensed source and anyone can remove the check. It draws a clear line for honest customers.
@@ -271,7 +273,7 @@ The manifest declares which host model a pack's prompts and evals target. An MCP
 
 ## Packs built on this core
 
-All 30 Fairbuild domain agents in the monorepo, from `achernar-of-returns` to `vega-of-detention`. Source: <https://github.com/fpavia111-creator/fairbuild-agents>.
+All 30 Fairbuild domain agents in the monorepo, from `brazos-of-backcharges` to `zambezi-of-permits`. Source: <https://github.com/fpavia111-creator/fairbuild-agents>.
 
 ## License
 

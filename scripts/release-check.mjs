@@ -95,7 +95,8 @@ secretHits.length ? add('secret scan', 'fail', `${secretHits.length} possible se
 
 // ---------- copy that must stay honest ----------
 // A banned phrase counts only when the sentence does not negate it ("does not make you compliant" is fine).
-const BANNED = [/complete ERP/i, /makes? (?:you|your \w+) compliant/i, /\bcertified\b/i, /fully autonomous/i, /cleared for distribution/i, /guarantee[sd]? (?:compliance|accuracy|that)/i, /\b(?:GDPR|CCPA|SOC ?2|HIPAA)[- ]compliant\b/i, /\blegal advice\b/i, /replaces? (?:a |your )?lawyer/i];
+// "Certified payroll" is the name of the prevailing-wage report (WH-347), not a claim, so it is allowed.
+const BANNED = [/complete ERP/i, /makes? (?:you|your \w+) compliant/i, /\bcertified\b(?! payroll)/i, /fully autonomous/i, /cleared for distribution/i, /guarantee[sd]? (?:compliance|accuracy|that)/i, /\b(?:GDPR|CCPA|SOC ?2|HIPAA)[- ]compliant\b/i, /\blegal advice\b/i, /replaces? (?:a |your )?lawyer/i];
 const NEG = /\b(?:not|no|never|nor|without|isn't|doesn't|does not|do not|cannot|can't|won't|is not|are not|none)\b/i;
 const claimFiles = [join(ROOT, 'README.md'), ...pkgs.flatMap((p) => [join(p.dir, 'README.md'), join(p.dir, 'package.json'), join(p.dir, 'src', 'manifest.js')])].filter(existsSync);
 const claimHits = [];

@@ -1,0 +1,21 @@
+{
+  "name": "zambezi-of-permits",
+  "version": "0.1.0",
+  "description": "Permits and inspections by job: permits expired or expiring, failed inspections with no re-inspection booked, inspections past their date with no result, inspections on permits you have no record of, and what is coming up. Writes a calendar file for permit expirations and inspections. Drafts notices to the project manager. Never applies to, renews with or schedules with a jurisdiction.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/zambezi-of-permits#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "construction",
+    "contractors",
+    "construction-accounting",
+    "fairbuild",
+    "permits",
+    "inspections",
+    "building-permits"
+  ]
+}

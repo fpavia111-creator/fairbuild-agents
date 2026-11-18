@@ -1,4 +1,4 @@
-納品書番号,仕入先,工事番号,日付,material,数量,単位
+納品書番号,仕入先,工事番号,日付,資材,数量,単位
 DT-501,Sample Ready Mix,24-101,2026/10/20,Concrete 4000 psi,40,CY
 DT-502,Sample Ready Mix,24-101,2026/10/27,Concrete 4000 psi,36,CY
 DT-503,Sample Lumber Supply,24-101,2026/10/12,2x6 studs,600,EA

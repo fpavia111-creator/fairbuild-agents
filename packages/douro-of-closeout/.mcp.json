@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "douro-of-closeout": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "douro-of-closeout@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

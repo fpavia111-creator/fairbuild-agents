@@ -1,0 +1,469 @@
+{
+  "name": "fairbuild-construction",
+  "owner": {
+    "name": "Fairbuild"
+  },
+  "metadata": {
+    "description": "Thirty construction and trades back-office agents. Each reads your exported files, writes reports locally and waits for a named person before anything that moves money, sends a message or changes a live system."
+  },
+  "plugins": [
+    {
+      "name": "brazos-of-backcharges",
+      "source": "./packages/brazos-of-backcharges",
+      "description": "Backcharges to subcontractors from notice to recovery: notices sent late or not at all, agreed backcharges never deducted, deductions that differ from what was agreed, disputes dragging on, backcharges with no backup, and backcharges larger than what you still owe or hold on that subcontractor. Drafts backcharge notices and records one-click approvals to deduct. Never deducts or pays.",
+      "version": "0.1.0",
+      "category": "construction",
+      "keywords": [
+        "construction",
+        "contractors",
+        "construction-accounting",
+        "backcharges",
+        "subcontractor-claims",
+        "cost-recovery"
+      ]
+    },
+    {
+      "name": "colorado-of-equipment",
+      "source": "./packages/colorado-of-equipment",
+      "description": "Equipment rental invoices against the agreed day, week and month rates, the off-rent date and the hours the machine was used: billed above the cheapest rate combination, billed after it was called off, the same days billed twice, rentals sitting idle, and rentals with no job. Drafts credit requests. Never calls a rental off or pays.",
+      "version": "0.1.0",
+      "category": "construction",
+      "keywords": [
+        "construction",
+        "contractors",
+        "construction-accounting",
+        "equipment-rental",
+        "equipment-costs",
+        "rental-invoices"
+      ]
+    },
+    {
+      "name": "columbia-of-timecards",
+      "source": "./packages/columbia-of-timecards",
+      "description": "Field timecards against crew assignments, job status and the cost codes in each job budget: hours on a job the worker was not assigned to that day, on a closed job, or on a cost code the job has no budget for; days longer than your limit; weekend work; and entries made twice. Worker names are masked in what the AI model sees. Drafts recode requests. Never edits a timecard or runs payroll.",
+      "version": "0.1.0",
+      "category": "construction",
+      "keywords": [
+        "construction",
+        "contractors",
+        "construction-accounting",
+        "timecards",
+        "labor-allocation",
+        "job-costing"
+      ]
+    },
+    {
+      "name": "congo-of-bids",
+      "source": "./packages/congo-of-bids",
+      "description": "Subcontractor bids tabulated and leveled by bid package: scope items a bidder left out priced at your plug values, bids missing addenda or a bid bond, late bids, and bids far below or above the others. Shows the lowest responsive leveled bid per package. Drafts scope clarification letters. Never awards, rejects or notifies a bidder.",
+      "version": "0.1.0",
+      "category": "construction",
+      "keywords": [
+        "construction",
+        "contractors",
+        "construction-accounting",
+        "bid-leveling",
+        "bid-tabulation",
+        "subcontractor-bids"
+      ]
+    },
+    {
+      "name": "danube-of-commitments",
+      "source": "./packages/danube-of-commitments",
+      "description": "Subcontracts and purchase orders against invoices and payments: committed cost still open, commitments billed past their value, unsigned subcontracts being billed, stale open POs, closed POs with a balance, retainage held at the wrong rate and invoices that name no commitment. Drafts vendor letters. Never closes or changes a PO.",
+      "version": "0.1.0",
+      "category": "construction",
+      "keywords": [
+        "construction",
+        "contractors",
+        "construction-accounting",
+        "commitments",
+        "subcontracts",
+        "purchase-orders"
+      ]
+    },
+    {
+      "name": "douro-of-closeout",
+      "source": "./packages/douro-of-closeout",
+      "description": "The closeout checklist for completed jobs against the documents and steps you require (final lien waivers, warranties, O&M manuals, as-builts, punch list, occupancy, final pay application and others you name): items missing, overdue, rejected or still open long after completion, and which jobs are ready for final billing. Drafts reminders to the project manager. Never submits a closeout package or a final invoice.",
+      "version": "0.1.0",
+      "category": "construction",
+      "keywords": [
+        "construction",
+        "contractors",
+        "construction-accounting",
+        "closeout",
+        "job-closeout",
+        "final-billing"
+      ]
+    },
+    {
+      "name": "elbe-of-punchlists",
+      "source": "./packages/elbe-of-punchlists",
+      "description": "Elbe of Punch Lists: punch list items by job, trade and subcontractor (Procore punch list exports recognised): items past due, open too long, reopened, with no one assigned, and open items on subcontractors you have already paid in full. Drafts punch notices to subcontractors. Never closes an item or charges a subcontractor.",
+      "version": "0.1.0",
+      "category": "construction",
+      "keywords": [
+        "construction",
+        "contractors",
+        "construction-accounting",
+        "punch-list",
+        "closeout",
+        "subcontractors"
+      ]
+    },
+    {
+      "name": "ganges-of-insurance",
+      "source": "./packages/ganges-of-insurance",
+      "description": "Subcontractor certificates of insurance against your requirements: required coverages missing, policies expired or expiring, limits below your minimums, missing additional insured, waiver of subrogation or primary and non-contributory wording, and policies that end before the sub's work does. Drafts certificate requests. Never contacts an insurer or blocks a vendor.",
+      "version": "0.1.0",
+      "category": "construction",
+      "keywords": [
+        "construction",
+        "contractors",
+        "construction-accounting",
+        "certificate-of-insurance",
+        "coi",
+        "subcontractor-insurance"
+      ]
+    },
+    {
+      "name": "hudson-of-wages",
+      "source": "./packages/hudson-of-wages",
+      "description": "Certified payroll lines against the wage rates of the job's wage determination: hourly cash plus fringe below the rate for the classification, overtime not paid as overtime, classifications with no rate, missing worker ids, full Social Security numbers on the report, and lines entered twice. Worker names and ids are masked in what the AI model sees. Drafts payroll corrections. Never submits payroll or pays anyone.",
+      "version": "0.1.0",
+      "category": "construction",
+      "keywords": [
+        "construction",
+        "contractors",
+        "construction-accounting",
+        "certified-payroll",
+        "prevailing-wage",
+        "davis-bacon",
+        "wh-347"
+      ]
+    },
+    {
+      "name": "indus-of-compliance",
+      "source": "./packages/indus-of-compliance",
+      "description": "Each active subcontractor's compliance documents against your list and the extra ones its trade needs (W-9, signed subcontract, licences, safety program, EMR letter and others you name): missing, expired, expiring, rejected, waiting too long for review, and safety ratings above your limit. Drafts document requests. Never approves or blocks a vendor.",
+      "version": "0.1.0",
+      "category": "construction",
+      "keywords": [
+        "construction",
+        "contractors",
+        "construction-accounting",
+        "subcontractor-compliance",
+        "prequalification",
+        "vendor-onboarding"
+      ]
+    },
+    {
+      "name": "lena-of-cashflow",
+      "source": "./packages/lena-of-cashflow",
+      "description": "Lena of Cash Flow: cash flow by job from receipts and disbursements: net cash position per job, jobs where you have paid out more than you collected, invoices to the owner unpaid past your collection days, and jobs negative two months running, with a month-by-month table. Drafts collection letters. Never moves money or changes a payment.",
+      "version": "0.1.0",
+      "category": "construction",
+      "keywords": [
+        "construction",
+        "contractors",
+        "construction-accounting",
+        "cash-flow",
+        "job-cash",
+        "collections"
+      ]
+    },
+    {
+      "name": "limpopo-of-backlog",
+      "source": "./packages/limpopo-of-backlog",
+      "description": "Backlog and margin fade from your month-end job history: work left to earn and the gross profit in it, jobs whose estimated margin has faded since the first estimate or since last month, jobs now forecast at a loss, margins that rose suspiciously, and estimates not updated while the job moved. Drafts the backlog memo. Never changes an estimate.",
+      "version": "0.1.0",
+      "category": "construction",
+      "keywords": [
+        "construction",
+        "contractors",
+        "construction-accounting",
+        "backlog",
+        "margin-fade",
+        "profit-fade",
+        "wip-history"
+      ]
+    },
+    {
+      "name": "loire-of-wip",
+      "source": "./packages/loire-of-wip",
+      "description": "The work-in-progress schedule for month end by the cost-to-cost method: percent complete, earned revenue, over and under billings by job, the anticipated loss to recognise on loss jobs, cost past the estimate and jobs with no estimate. Drafts the over/under billing journal for review. Never posts to the ledger.",
+      "version": "0.1.0",
+      "category": "construction",
+      "keywords": [
+        "construction",
+        "contractors",
+        "construction-accounting",
+        "wip",
+        "work-in-progress",
+        "over-under-billing",
+        "percentage-of-completion"
+      ]
+    },
+    {
+      "name": "mekong-of-tickets",
+      "source": "./packages/mekong-of-tickets",
+      "description": "Supplier invoice lines for materials against the signed delivery tickets and your agreed prices: quantities billed past what was delivered, prices above the agreed price, extensions that do not add up, a ticket billed twice, lines with no ticket, and tickets not yet invoiced (to accrue). Drafts supplier credit requests. Never pays a supplier.",
+      "version": "0.1.0",
+      "category": "construction",
+      "keywords": [
+        "construction",
+        "contractors",
+        "construction-accounting",
+        "delivery-tickets",
+        "material-invoices",
+        "receiving"
+      ]
+    },
+    {
+      "name": "murray-of-warranty",
+      "source": "./packages/murray-of-warranty",
+      "description": "Warranty callbacks by job, trade and subcontractor: callbacks a subcontractor should pay for under its warranty, callbacks after your warranty ended that may be billable, the same problem coming back, callbacks open too long and callbacks with no one responsible, with cost by job and trade. Homeowner names and contacts are masked in what the AI model sees. Drafts subcontractor notices. Never charges anyone or contacts a homeowner.",
+      "version": "0.1.0",
+      "category": "construction",
+      "keywords": [
+        "construction",
+        "contractors",
+        "construction-accounting",
+        "warranty",
+        "callbacks",
+        "homebuilder",
+        "service"
+      ]
+    },
+    {
+      "name": "nile-of-retainage",
+      "source": "./packages/nile-of-retainage",
+      "description": "Retainage both ways: what owners hold from you by job and what you hold from subcontractors. Retainage held at the wrong rate or past a stop point, completed jobs whose retainage is due or overdue to bill, release billed but not collected, subcontractor retainage released before the owner paid yours, and retainage you now owe a subcontractor. Drafts release requests. Never bills, pays or releases.",
+      "version": "0.1.0",
+      "category": "construction",
+      "keywords": [
+        "construction",
+        "contractors",
+        "construction-accounting",
+        "retainage",
+        "retention",
+        "closeout"
+      ]
+    },
+    {
+      "name": "oder-of-submittals",
+      "source": "./packages/oder-of-submittals",
+      "description": "The submittal register worked back from the date material is needed on site: submittals not yet submitted past their latest submit date (required on site less lead time and review time), reviews running over the allowed days, revise-and-resubmit not resubmitted, third and later revisions, approvals that came after the order-by date, and spec sections with no submittal. Ages ball-in-court. Drafts reminders. Never approves or changes a submittal.",
+      "version": "0.1.0",
+      "category": "construction",
+      "keywords": [
+        "construction",
+        "contractors",
+        "construction-accounting",
+        "submittals",
+        "submittal-register",
+        "lead-time",
+        "procore"
+      ]
+    },
+    {
+      "name": "orinoco-of-vendors",
+      "source": "./packages/orinoco-of-vendors",
+      "description": "The vendor master and AP invoices for duplicates: vendors entered twice (same tax id, bank account, address, phone or name once legal forms are set aside), the same invoice entered under two numbers, two vendor records or twice for one vendor, duplicates already paid twice and duplicates still open. Drafts recovery letters. Never merges vendors, voids or pays.",
+      "version": "0.1.0",
+      "category": "construction",
+      "keywords": [
+        "construction",
+        "contractors",
+        "construction-accounting",
+        "duplicate-payments",
+        "vendor-master",
+        "duplicate-invoices"
+      ]
+    },
+    {
+      "name": "platte-of-releases",
+      "source": "./packages/platte-of-releases",
+      "description": "The release check before a subcontractor is paid: project manager approval, the owner paid for that month (pay-when-paid, if you use it), a conditional lien waiver for the invoice, a current insurance certificate, a W-9 on file and retainage withheld at the subcontract rate. Each invoice is cleared or held with its reasons, and payment releases are recorded only after one named person's click. Never pays.",
+      "version": "0.1.0",
+      "category": "construction",
+      "keywords": [
+        "construction",
+        "contractors",
+        "construction-accounting",
+        "payment-release",
+        "pay-when-paid",
+        "subcontractor-payments"
+      ]
+    },
+    {
+      "name": "rhine-of-costcodes",
+      "source": "./packages/rhine-of-costcodes",
+      "description": "Rhine of Cost Codes: job cost against budget by cost code and cost type, from your budget and job cost exports (Procore, Sage, Foundation, Vista, QuickBooks). Flags lines over or projected over budget, spend running ahead of progress, unbudgeted codes and budget math errors, and drafts the cost review memo. Never changes a budget.",
+      "version": "0.1.0",
+      "category": "construction",
+      "keywords": [
+        "construction",
+        "contractors",
+        "construction-accounting",
+        "job-cost",
+        "cost-codes",
+        "budget-variance"
+      ]
+    },
+    {
+      "name": "seine-of-values",
+      "source": "./packages/seine-of-values",
+      "description": "The schedule of values line by line against what has been billed and what the field says is in place: lines billed ahead of progress (over billing), lines billed behind it (money not yet asked for), a schedule of values that does not add up to the contract, approved change orders missing from it, and billing on zero-value lines. Drafts the project manager memo. Never changes a billing.",
+      "version": "0.1.0",
+      "category": "construction",
+      "keywords": [
+        "construction",
+        "contractors",
+        "construction-accounting",
+        "schedule-of-values",
+        "sov",
+        "overbilling",
+        "underbilling"
+      ]
+    },
+    {
+      "name": "shannon-of-service",
+      "source": "./packages/shannon-of-service",
+      "description": "Service and trade tickets with technician timesheets (ServiceTitan layouts recognised): utilisation per technician from working against paid hours, revenue per paid hour, recall rate, completed tickets not invoiced and zero-dollar tickets. Technician names are masked in what the AI model sees. Drafts billing follow-ups. Never invoices a customer or runs payroll.",
+      "version": "0.1.0",
+      "category": "construction",
+      "keywords": [
+        "construction",
+        "contractors",
+        "construction-accounting",
+        "service-tickets",
+        "technician-utilization",
+        "servicetitan",
+        "field-service"
+      ]
+    },
+    {
+      "name": "tagus-of-salestax",
+      "source": "./packages/tagus-of-salestax",
+      "description": "Tagus of Sales Tax: tax charged on material invoices against the rates you supply for each job's jurisdiction: tax not charged (use tax to accrue), tax charged at another jurisdiction's rate, tax overcharged, tax charged on jobs you mark exempt, and deliveries to a different jurisdiction than the job. Drafts refund requests to vendors. Never files a return or posts an entry; not tax advice.",
+      "version": "0.1.0",
+      "category": "construction",
+      "keywords": [
+        "construction",
+        "contractors",
+        "construction-accounting",
+        "sales-tax",
+        "use-tax",
+        "materials-tax"
+      ]
+    },
+    {
+      "name": "thames-of-payapps",
+      "source": "./packages/thames-of-payapps",
+      "description": "Thames of Pay Apps: checks the arithmetic of a pay application in the G702/G703 layout before it goes out or before you approve a subcontractor's: each line's completed and stored total, percent and balance, retainage at your rates, lines billed past their scheduled value, work from previous applications that does not match the last one, and the summary page totals down to the payment due. Never submits or approves a pay application.",
+      "version": "0.1.0",
+      "category": "construction",
+      "keywords": [
+        "construction",
+        "contractors",
+        "construction-accounting",
+        "pay-application",
+        "g702",
+        "g703",
+        "progress-billing"
+      ]
+    },
+    {
+      "name": "tiber-of-waivers",
+      "source": "./packages/tiber-of-waivers",
+      "description": "Every payment to a subcontractor or supplier matched to its lien waivers: payments made without a conditional waiver, unconditional waivers missing after the payment cleared, waivers for less than was paid, unsigned waivers, and final payments without final waivers. Drafts waiver requests. Never files or releases a lien and never pays.",
+      "version": "0.1.0",
+      "category": "construction",
+      "keywords": [
+        "construction",
+        "contractors",
+        "construction-accounting",
+        "lien-waivers",
+        "conditional-waiver",
+        "unconditional-waiver"
+      ]
+    },
+    {
+      "name": "vistula-of-bonding",
+      "source": "./packages/vistula-of-bonding",
+      "description": "A bonding capacity summary from your job list and the single and aggregate limits your surety gave you: bonded backlog against the aggregate limit, jobs over the single-job limit, bonded jobs forecast at a loss, and whether the bonded bids you are chasing fit in what is left. Drafts the summary for your surety broker. Never requests a bond or sends financials; not surety advice.",
+      "version": "0.1.0",
+      "category": "construction",
+      "keywords": [
+        "construction",
+        "contractors",
+        "construction-accounting",
+        "bonding-capacity",
+        "surety",
+        "backlog"
+      ]
+    },
+    {
+      "name": "volga-of-changeorders",
+      "source": "./packages/volga-of-changeorders",
+      "description": "Volga of Change Orders: the change order log by job: pending change orders waiting too long or with no price, approved change orders not yet billed, billing on unapproved or past the approved amount, change orders priced below cost, rejected changes that left cost behind, and numbers entered twice. Drafts owner follow-ups. Never approves or bills a change order.",
+      "version": "0.1.0",
+      "category": "construction",
+      "keywords": [
+        "construction",
+        "contractors",
+        "construction-accounting",
+        "change-orders",
+        "pco",
+        "unbilled"
+      ]
+    },
+    {
+      "name": "yangtze-of-matching",
+      "source": "./packages/yangtze-of-matching",
+      "description": "Three-way match for construction: each AP invoice against its subcontract or PO and the work or delivery your project manager approved: invoices with no commitment, a different vendor or job, cumulative billing past the commitment or past what was approved, no receipt or approval yet, and retainage not withheld. Holds or clears each invoice for review and records one-click payment approvals. Never pays.",
+      "version": "0.1.0",
+      "category": "construction",
+      "keywords": [
+        "construction",
+        "contractors",
+        "construction-accounting",
+        "three-way-match",
+        "ap-approval",
+        "invoice-matching"
+      ]
+    },
+    {
+      "name": "yukon-of-fringes",
+      "source": "./packages/yukon-of-fringes",
+      "description": "Union fringe benefit remittances by local, fund and month against the hours your payroll shows and the contribution rates you supply: funds paid short or not at all, paid over, paid late, hours reported that do not match payroll, and hours for a local with no rates. Drafts fund letters and records one-click approvals to pay a shortfall. Never pays a fund.",
+      "version": "0.1.0",
+      "category": "construction",
+      "keywords": [
+        "construction",
+        "contractors",
+        "construction-accounting",
+        "union-fringe",
+        "fringe-benefits",
+        "union-remittance"
+      ]
+    },
+    {
+      "name": "zambezi-of-permits",
+      "source": "./packages/zambezi-of-permits",
+      "description": "Permits and inspections by job: permits expired or expiring, failed inspections with no re-inspection booked, inspections past their date with no result, inspections on permits you have no record of, and what is coming up. Writes a calendar file for permit expirations and inspections. Drafts notices to the project manager. Never applies to, renews with or schedules with a jurisdiction.",
+      "version": "0.1.0",
+      "category": "construction",
+      "keywords": [
+        "construction",
+        "contractors",
+        "construction-accounting",
+        "permits",
+        "inspections",
+        "building-permits"
+      ]
+    }
+  ]
+}

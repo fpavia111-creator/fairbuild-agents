@@ -1,4 +1,4 @@
-仕入先,保険種類,保険会社,証券番号,適用開始日,有効期限,補償限度額,保険金額,additional_insured,waiver_of_subrogation,primary_noncontributory
+仕入先,保険種類,保険会社,証券番号,適用開始日,有効期限,1事故あたり,総支払限度額,additional_insured,waiver_of_subrogation,primary_noncontributory
 Example Concrete LLC,General Liability,Example Mutual Insurance,GL-1001,2026/05/01,2027/05/01,"1,000,000.00","2,000,000.00",yes,yes,yes
 Example Concrete LLC,Auto,Example Mutual Insurance,CA-1002,2026/05/01,2027/05/01,"1,000,000.00",,yes,,
 Example Concrete LLC,Workers Compensation,Sample Casualty Co,WC-1003,2026/01/01,2027/01/01,"500,000.00",,,yes,

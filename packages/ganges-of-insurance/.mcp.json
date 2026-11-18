@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "ganges-of-insurance": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "ganges-of-insurance@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

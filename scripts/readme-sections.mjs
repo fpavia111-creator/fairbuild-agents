@@ -29,7 +29,10 @@ function demoText(n) {
   const root = mkdtempSync(join(tmpdir(), `${n}-readme-`));
   try {
     const out = execFileSync(process.execPath, [join(PK, n, 'bin', `${n}.js`), 'demo'], { cwd: root, encoding: 'utf8', env: { ...process.env, NO_COLOR: '1' }, timeout: 60000 });
-    return out.replace(/ in \/[^\s,]*(?=,| )/g, '').replace(/\/tmp\/[^\s)]*/g, '<demo folder>').replace(/\r/g, '').trimEnd().split('\n').slice(0, 70).join('\n');
+    // The demo prints its temporary folder; on Windows that is C:\Users\<name>\AppData\Local\Temp\...,
+    // which must not end up in a README, so any path under the temp folder becomes "<demo folder>".
+    const T = `(?:${tmpdir().replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}|/tmp)[\\\\/]`;
+    return out.replace(new RegExp(` in ${T}[^\\s,]*(?=,| )`, 'g'), '').replace(new RegExp(`${T}[^\\s)]*`, 'g'), '<demo folder>').replace(/\r/g, '').trimEnd().split('\n').slice(0, 70).join('\n');
   } finally { rmSync(root, { recursive: true, force: true }); }
 }
 
@@ -68,12 +71,12 @@ function section(n, m, demo) {
         L.push('', EXPORTS_BASIS_NOTE, '');
       }
     }
-    L.push('### Files from other countries', '', `A German export in Windows-1252 with semicolons, \`1.234,56\` and \`03.11.2026\`, or a Japanese one in Shift_JIS with \`2026/11/03\`, is read the same way as the English file. [\`fixtures/intl/\`](fixtures/intl) has both versions of the demo data, and the eval cases \`intl-de-*\` and \`intl-ja-*\` require the same results as the English case. A weight, distance or dimension column found by its translated name with no unit in it is read as metric and converted, and the result says so. Columns named differently? Run \`npx ${n} inspect <file>\` (names and shapes only, never values) and name them in \`fairbuild-sources.json\`:`, '', '```json', '{ "files": { "exports/bills.csv": { "columns": { "invoice_number": "Beleg" }, "date_order": "dmy", "units": { "weight": "kg" } } } }', '```', '');
+    L.push('### Files from other countries', '', `A German export in Windows-1252 with semicolons, \`1.234,56\` and \`03.11.2026\`, or a Japanese one in Shift_JIS with \`2026/11/03\`, is read the same way as the English file. [\`fixtures/intl/\`](fixtures/intl) has both versions of the demo data, and the eval cases \`intl-de-*\` and \`intl-ja-*\` require the same results as the English case. Columns named differently? Run \`npx ${n} inspect <file>\` (names and shapes only, never values) and name them in \`fairbuild-sources.json\`:`, '', '```json', '{ "files": { "exports/bills.csv": { "columns": { "invoice_number": "Beleg" }, "date_order": "dmy" } } }', '```', '');
   }
   if (m.memory) {
     L.push('## Memory', '', `${m.name} can remember facts about your setup so the next run does not have to be told again. \`${prefix}_learn\` only proposes a fact; it changes nothing until a named person accepts it with \`${prefix}_accept_learning\`, which is one click even in Auto. Facts live in one hash-chained file per agent under \`.fairbuild/memory/\`; if the chain does not verify, no fact is used. Credentials, personal identifiers and text that reads like instructions to an AI are refused. Run without memory with \`--no-memory\`.`, '', '| Kind | What an accepted fact changes |', '|---|---|');
     for (const [k, v] of Object.entries(m.memory.kinds)) L.push(`| \`${k}\` | ${esc(v.effect)} |`);
-    L.push('| `note` | nothing (shown by recall only) |', '', `\`\`\`bash\n${n} memory list\n${n} memory accept MEM-1a2b3c4d5e6f --as "Your Name"\n${n} memory retire MEM-1a2b3c4d5e6f --as "Your Name" --reason "carrier renamed"\n\`\`\``, '');
+    L.push('| `note` | nothing (shown by recall only) |', '', `\`\`\`bash\n${n} memory list\n${n} memory accept MEM-1a2b3c4d5e6f --as "Your Name"\n${n} memory retire MEM-1a2b3c4d5e6f --as "Your Name" --reason "subcontractor renamed"\n\`\`\``, '');
   }
   const read = m.tools.find((t) => t.kind === 'read');
   L.push('## Install', '', 'Node 20 or newer. No other dependencies.', '', '```bash', `npx -y ${n} demo`, `npx -y ${n} mcp --root /path/to/your/files`, '```', '', 'Claude Desktop, Cursor and other MCP hosts:', '', '```json', JSON.stringify({ mcpServers: { [n]: { command: 'npx', args: ['-y', n, 'mcp', '--root', '/path/to/your/files'] } } }, null, 2), '```', '', `Claude Code: \`claude mcp add ${n} -- npx -y ${n} mcp --root .\`, or install the \`${n}\` plugin from this repository's marketplace.`, '');

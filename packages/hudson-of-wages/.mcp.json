@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "hudson-of-wages": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "hudson-of-wages@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

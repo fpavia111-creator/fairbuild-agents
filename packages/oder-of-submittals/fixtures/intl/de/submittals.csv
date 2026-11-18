@@ -1,4 +1,4 @@
-Referenz;Belegnummer;LV-Abschnitt;title;Lieferant;Zustand;Liegt bei;Eingereicht am;returned_date;required_on_site;Lieferzeit (Tage);review_days
+Vorlage-Nr.;Index;LV-Abschnitt;title;Lieferant;Zustand;Liegt bei;Eingereicht am;returned_date;required_on_site;Lieferzeit (Tage);review_days
 S-033000-01;0;03 30 00;Concrete mix designs;Example Concrete LLC;Approved;;20.05.2026;01.06.2026;15.06.2026;7;10
 S-081113-01;0;08 11 13;Hollow metal doors and frames;Example Door Co;Submitted;Architect;20.10.2026;;15.01.2027;56;10
 S-083323-01;0;08 33 23;Overhead coiling doors;Sample Door Supply;Open;Subcontractor;;;15.12.2026;42;10

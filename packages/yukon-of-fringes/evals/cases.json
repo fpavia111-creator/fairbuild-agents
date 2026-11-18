@@ -117,7 +117,7 @@
       },
       "expect": {
         "not_contains": [
-          "late"
+          "after the due date"
         ],
         "equals": {
           "result.settings_used.due_day": 20

@@ -1,0 +1,21 @@
+{
+  "name": "brazos-of-backcharges",
+  "version": "0.1.0",
+  "description": "Backcharges to subcontractors from notice to recovery: notices sent late or not at all, agreed backcharges never deducted, deductions that differ from what was agreed, disputes dragging on, backcharges with no backup, and backcharges larger than what you still owe or hold on that subcontractor. Drafts backcharge notices and records one-click approvals to deduct. Never deducts or pays.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/brazos-of-backcharges#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "construction",
+    "contractors",
+    "construction-accounting",
+    "fairbuild",
+    "backcharges",
+    "subcontractor-claims",
+    "cost-recovery"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "douro-of-closeout",
+  "version": "0.1.0",
+  "description": "The closeout checklist for completed jobs against the documents and steps you require (final lien waivers, warranties, O&M manuals, as-builts, punch list, occupancy, final pay application and others you name): items missing, overdue, rejected or still open long after completion, and which jobs are ready for final billing. Drafts reminders to the project manager. Never submits a closeout package or a final invoice.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/douro-of-closeout#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "construction",
+    "contractors",
+    "construction-accounting",
+    "fairbuild",
+    "closeout",
+    "job-closeout",
+    "final-billing"
+  ]
+}

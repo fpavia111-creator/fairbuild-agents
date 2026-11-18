@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "brazos-of-backcharges": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "brazos-of-backcharges@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "zambezi-of-permits": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "zambezi-of-permits@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

@@ -1,4 +1,4 @@
-Belastung;Projekt;Lieferant;Datum;Beschreibung;Betrag;Zustand;notice_date;deducted_amount;backup
+Belastung;Projekt;Lieferant;Datum;Beschreibung;Betrag;Zustand;Anzeigedatum;deducted_amount;backup
 BC-01;24-101;Test Drywall Co;05.10.2026;Cleanup after drywall;1.200,00;Agreed;06.10.2026;0,00;yes
 BC-02;24-101;Example Electric Inc;20.10.2026;Repair of damaged ceiling grid;2.400,00;Notified;05.11.2026;0,00;yes
 BC-03;24-102;Example Roofing LLC;28.10.2026;Interior damage from roof leak;6.500,00;Disputed;29.10.2026;0,00;yes

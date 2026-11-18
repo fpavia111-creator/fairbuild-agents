@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "elbe-of-punchlists": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "elbe-of-punchlists@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

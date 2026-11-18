@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "thames-of-payapps": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "thames-of-payapps@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

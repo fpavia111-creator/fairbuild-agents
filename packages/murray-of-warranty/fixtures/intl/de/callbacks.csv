@@ -1,4 +1,4 @@
-callback_id;Projekt;homeowner;contact_phone;date_reported;Gewerk;Lieferant;Beschreibung;Kosten;Zustand;Erledigt am
+callback_id;Projekt;Bauherr;contact_phone;date_reported;Gewerk;Lieferant;Beschreibung;Kosten;Zustand;Erledigt am
 CB-101;23-090;Avery Example;555-0111;02.10.2026;Roofing;Example Roofing LLC;Leak at skylight;850,00;Closed;05.10.2026
 CB-102;23-090;Avery Example;555-0111;01.11.2026;Roofing;Example Roofing LLC;Leak at skylight again;600,00;Open;
 CB-103;23-095;Jamie Sample;555-0122;12.09.2026;Plumbing;;Dripping faucet;120,00;Closed;13.09.2026

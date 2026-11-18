@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "yukon-of-fringes": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "yukon-of-fringes@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

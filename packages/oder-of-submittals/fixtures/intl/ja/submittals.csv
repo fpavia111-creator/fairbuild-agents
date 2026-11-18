@@ -1,4 +1,4 @@
-参照番号,伝票番号,仕様書項目,title,仕入先,ステータス,対応者,提出日,returned_date,required_on_site,製作期間（日）,review_days
+提出物番号,版数,仕様書項目,title,仕入先,ステータス,対応者,提出日,returned_date,required_on_site,製作期間（日）,review_days
 S-033000-01,0,03 30 00,Concrete mix designs,Example Concrete LLC,Approved,,2026/05/20,2026/06/01,2026/06/15,7,10
 S-081113-01,0,08 11 13,Hollow metal doors and frames,Example Door Co,Submitted,Architect,2026/10/20,,2027/01/15,56,10
 S-083323-01,0,08 33 23,Overhead coiling doors,Sample Door Supply,Open,Subcontractor,,,2026/12/15,42,10

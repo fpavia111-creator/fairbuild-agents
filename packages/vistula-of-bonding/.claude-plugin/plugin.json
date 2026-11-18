@@ -1,0 +1,21 @@
+{
+  "name": "vistula-of-bonding",
+  "version": "0.1.0",
+  "description": "A bonding capacity summary from your job list and the single and aggregate limits your surety gave you: bonded backlog against the aggregate limit, jobs over the single-job limit, bonded jobs forecast at a loss, and whether the bonded bids you are chasing fit in what is left. Drafts the summary for your surety broker. Never requests a bond or sends financials; not surety advice.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/vistula-of-bonding#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "construction",
+    "contractors",
+    "construction-accounting",
+    "fairbuild",
+    "bonding-capacity",
+    "surety",
+    "backlog"
+  ]
+}
