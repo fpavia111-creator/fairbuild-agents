@@ -1,0 +1,364 @@
+{
+  "suite": "columbia-of-timecards",
+  "root": "..",
+  "data_note": "Fictional workers, jobs and timecards in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "check-totals",
+      "tool": "columbia_check",
+      "args": {
+        "timecards": "fixtures/timecards.csv",
+        "assignments": "fixtures/assignments.csv",
+        "jobs": "fixtures/jobs.csv",
+        "budget": "fixtures/budget.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.worker_days": 8,
+          "result.workers": 4,
+          "result.hours": 70,
+          "result.misallocated_hours": 23,
+          "result.misallocated": 3,
+          "result.review": 2,
+          "result.ok": 3
+        }
+      }
+    },
+    {
+      "id": "every-planted-issue",
+      "tool": "columbia_check",
+      "args": {
+        "timecards": "fixtures/timecards.csv",
+        "assignments": "fixtures/assignments.csv",
+        "jobs": "fixtures/jobs.csv",
+        "budget": "fixtures/budget.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "contains": [
+          "closed_job",
+          "not_assigned",
+          "invalid_cost_code",
+          "duplicate_entry",
+          "long_day",
+          "weekend"
+        ]
+      }
+    },
+    {
+      "id": "names-masked",
+      "tool": "columbia_check",
+      "args": {
+        "timecards": "fixtures/timecards.csv",
+        "assignments": "fixtures/assignments.csv"
+      },
+      "expect": {
+        "not_contains": [
+          "Jordan Example",
+          "Casey Sample",
+          "Riley Test",
+          "Morgan Example"
+        ],
+        "contains": [
+          "PERSON-"
+        ]
+      }
+    },
+    {
+      "id": "explain-closed-job-day",
+      "tool": "columbia_explain",
+      "args": {
+        "timecards": "fixtures/timecards.csv",
+        "assignments": "fixtures/assignments.csv",
+        "jobs": "fixtures/jobs.csv",
+        "worker_day": "2026-11-10 Riley Test"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "7 hour(s) on 23-095 01-500, a job that is closed (completed 2026-06-30)",
+          "16 hours on 2026-11-10 across 2 entries"
+        ],
+        "equals": {
+          "result.item.misallocated_hours": 7
+        }
+      }
+    },
+    {
+      "id": "timecards-alone",
+      "tool": "columbia_check",
+      "args": {
+        "timecards": "fixtures/timecards.csv"
+      },
+      "expect": {
+        "equals": {
+          "result.misallocated": 0,
+          "result.review": 3
+        },
+        "not_contains": [
+          "not_assigned",
+          "closed_job",
+          "invalid_cost_code"
+        ]
+      }
+    },
+    {
+      "id": "looser-settings",
+      "tool": "columbia_check",
+      "args": {
+        "timecards": "fixtures/timecards.csv",
+        "settings": "fixtures/settings-loose.json"
+      },
+      "expect": {
+        "equals": {
+          "result.review": 1
+        },
+        "not_contains": [
+          "long_day",
+          "\"code\":\"weekend\""
+        ]
+      }
+    },
+    {
+      "id": "sage300-timecards",
+      "tool": "columbia_check",
+      "args": {
+        "timecards": "fixtures/exports/sage300-timecards.csv",
+        "assignments": "fixtures/assignments.csv"
+      },
+      "expect": {
+        "equals": {
+          "result.worker_days": 3,
+          "result.misallocated": 1,
+          "result.hours": 25
+        },
+        "contains": [
+          "sage300_timecards"
+        ]
+      }
+    },
+    {
+      "id": "settings-typo-is-named",
+      "tool": "columbia_check",
+      "args": {
+        "timecards": "fixtures/timecards.csv",
+        "settings": "fixtures/settings-typo.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "timecard_settings"
+        ]
+      }
+    },
+    {
+      "id": "write-report-writes-files",
+      "tool": "columbia_write_report",
+      "args": {
+        "timecards": "fixtures/timecards.csv",
+        "assignments": "fixtures/assignments.csv",
+        "jobs": "fixtures/jobs.csv",
+        "budget": "fixtures/budget.csv"
+      },
+      "expect": {
+        "status": "executed",
+        "length": {
+          "result.files": 2
+        }
+      }
+    },
+    {
+      "id": "draft-recode",
+      "tool": "columbia_draft_recode",
+      "mode": "auto",
+      "auto_actions": [
+        "columbia_draft_recode"
+      ],
+      "args": {
+        "timecards": "fixtures/timecards.csv",
+        "assignments": "fixtures/assignments.csv",
+        "jobs": "fixtures/jobs.csv",
+        "budget": "fixtures/budget.csv",
+        "label": "week ending 2026-11-14"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.id": "week ending 2026-11-14"
+        },
+        "contains": [
+          "Nothing was sent"
+        ],
+        "not_contains": [
+          "Riley Test"
+        ]
+      }
+    },
+    {
+      "id": "policy-invented-tool",
+      "tool": "columbia_pay_everything_now",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-file-outside-root",
+      "tool": "columbia_check",
+      "args": {
+        "timecards": "../../../outside-the-root.csv",
+        "assignments": "fixtures/assignments.csv",
+        "jobs": "fixtures/jobs.csv",
+        "budget": "fixtures/budget.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside"
+        ]
+      }
+    },
+    {
+      "id": "policy-missing-argument-named",
+      "tool": "columbia_check",
+      "args": {},
+      "expect": {
+        "status": "error",
+        "contains": [
+          "timecards"
+        ]
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reads",
+      "tool": "columbia_check",
+      "mode": "review",
+      "args": {
+        "timecards": "fixtures/timecards.csv",
+        "assignments": "fixtures/assignments.csv",
+        "jobs": "fixtures/jobs.csv",
+        "budget": "fixtures/budget.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reports",
+      "tool": "columbia_write_report",
+      "mode": "review",
+      "args": {
+        "timecards": "fixtures/timecards.csv",
+        "assignments": "fixtures/assignments.csv",
+        "jobs": "fixtures/jobs.csv",
+        "budget": "fixtures/budget.csv"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-blocks-draft",
+      "tool": "columbia_draft_recode",
+      "mode": "review",
+      "args": {
+        "timecards": "fixtures/timecards.csv",
+        "assignments": "fixtures/assignments.csv",
+        "jobs": "fixtures/jobs.csv",
+        "budget": "fixtures/budget.csv",
+        "label": "week ending 2026-11-14"
+      },
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-columbia-request-send-one-click-in-auto",
+      "tool": "columbia_request_send",
+      "mode": "auto",
+      "args": {
+        "draft": "fairbuild-out/drafts/example.md",
+        "draft_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expect": {
+        "status": "needs_approval"
+      }
+    },
+    {
+      "id": "policy-refuses-timecard-edit",
+      "tool": "timecard_edit",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-payroll-run",
+      "tool": "payroll_run",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-email-send",
+      "tool": "email_send",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "intl-de-check-totals",
+      "tool": "columbia_check",
+      "args": {
+        "timecards": "fixtures/intl/de/timecards.csv",
+        "assignments": "fixtures/intl/de/assignments.csv",
+        "jobs": "fixtures/intl/de/jobs.csv",
+        "budget": "fixtures/intl/de/budget.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.worker_days": 8,
+          "result.workers": 4,
+          "result.hours": 70,
+          "result.misallocated_hours": 23,
+          "result.misallocated": 3,
+          "result.review": 2,
+          "result.ok": 3
+        }
+      },
+      "note": "German export of the same data (fixtures/intl/de); must match the English case \"check-totals\"."
+    },
+    {
+      "id": "intl-ja-check-totals",
+      "tool": "columbia_check",
+      "args": {
+        "timecards": "fixtures/intl/ja/timecards.csv",
+        "assignments": "fixtures/intl/ja/assignments.csv",
+        "jobs": "fixtures/intl/ja/jobs.csv",
+        "budget": "fixtures/intl/ja/budget.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.worker_days": 8,
+          "result.workers": 4,
+          "result.hours": 70,
+          "result.misallocated_hours": 23,
+          "result.misallocated": 3,
+          "result.review": 2,
+          "result.ok": 3
+        }
+      },
+      "note": "Japanese export of the same data (fixtures/intl/ja); must match the English case \"check-totals\"."
+    }
+  ]
+}
