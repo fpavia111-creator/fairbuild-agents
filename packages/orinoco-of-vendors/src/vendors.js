@@ -39,7 +39,7 @@ export function findDuplicates({ vendorRows = null, invoiceRows = null, settings
   const items = []; const parent = new Map(vendors.map((v) => [v.id, v.id]));
   const root = (x) => { while (parent.get(x) !== x) x = parent.get(x); return x; };
   for (let i = 0; i < vendors.length; i++) for (let j = i + 1; j < vendors.length; j++) {
-    const a = vendors[i], b = vendors[j]; const f = [];
+    const [a, b] = [vendors[i], vendors[j]].sort((p, q) => (p.id < q.id ? -1 : 1)); const f = [];
     const sim = partySimilarity(a.name, b.name);
     if (a.tax && a.tax === b.tax) f.push(finding('same_tax_id', null, `Both have tax id ending ${a.tax.slice(-4)}.`));
     if (a.bank && a.bank === b.bank && (sim >= 0.8 || (a.addr && a.addr === b.addr))) f.push(finding('same_bank', null, `Both pay to a bank account ending ${a.bank}.`));
@@ -49,8 +49,7 @@ export function findDuplicates({ vendorRows = null, invoiceRows = null, settings
     const strong = f.some((x) => ['same_tax_id', 'same_bank'].includes(x.code)) || f.length >= 2;
     if (!f.length || (!strong && !f.some((x) => x.code === 'same_name'))) continue;
     if (strong) parent.set(root(b.id), root(a.id));
-    const [x, y] = [a, b].sort((p, q) => (p.id < q.id ? -1 : 1));
-    items.push({ kind: 'vendor_pair', key: `${x.id} ${y.id}`, vendor_ids: [x.id, y.id], vendors: [x.name, y.name], invoices: [], amount: 0, paid_twice: 0, status: strong ? 'merge' : 'review', findings: orderFindings(f, ORDER) });
+    items.push({ kind: 'vendor_pair', key: `${a.id} ${b.id}`, vendor_ids: [a.id, b.id], vendors: [a.name, b.name], invoices: [], amount: 0, paid_twice: 0, status: strong ? 'merge' : 'review', findings: orderFindings(f, ORDER) });
   }
   const group = (inv) => { const id = str(inv.vendor_id); if (id && parent.has(id)) return root(id); return `name:${partyKey(inv.vendor)}`; };
   const invs = sortBy((invoiceRows || []).filter((i) => str(i.invoice_number)), [(i) => isoDate(i.invoice_date) || '', 1], [(i) => str(i.invoice_number), 1], [(i) => str(i.vendor_id), 1]);
