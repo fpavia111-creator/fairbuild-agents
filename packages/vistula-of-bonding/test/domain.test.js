@@ -27,9 +27,9 @@ test('a bonded job forecast at a loss is a review item', () => {
 });
 
 test('bonded bids fill the room that is left in name order; an unbonded bid uses none', () => {
-  const r = run([job('A', 1000000)], { pipeline: [{ bid: 'B second', amount: 900000, bond_required: 'yes' }, { bid: 'A first', amount: 900000, bond_required: 'yes' }, { bid: 'C open', amount: 5000000, bond_required: 'no' }] });
+  const r = run([job('A', 1000000)], { limits: { single_limit: 1000000, aggregate_limit: 2500000 }, pipeline: [{ bid: 'B second', amount: 900000, bond_required: 'yes' }, { bid: 'A first', amount: 900000, bond_required: 'yes' }, { bid: 'C open', amount: 5000000, bond_required: 'no' }] });
   assert.equal(r.items.find((i) => i.key === 'A first').status, 'ok');
-  assert.deepEqual(r.items.find((i) => i.key === 'B second').findings.map((f) => [f.code, f.amount]), [['pipeline_exceeds', 800000]]);
+  assert.deepEqual(r.items.find((i) => i.key === 'B second').findings.map((f) => [f.code, f.amount]), [['pipeline_exceeds', 300000]]);
   assert.equal(r.items.find((i) => i.key === 'C open').status, 'ok');
 });
 
