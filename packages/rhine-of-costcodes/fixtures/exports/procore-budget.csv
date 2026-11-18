@@ -1,0 +1,6 @@
+Project Number,Cost Code,Description,Cost Type,Original Budget Amount,Approved COs,Revised Budget,Committed Costs,Job to Date Costs,Forecast To Complete,Estimated Cost at Completion
+24-101,01-500,General conditions,Labor,48000,0,48000,0,30600,17400,48000
+24-101,03-300,Cast-in-place concrete,Subcontract,120000,8000,128000,131500,96000,35500,131500
+24-101,06-100,Rough carpentry,Material,22000,0,22000,9000,25400,1500,26900
+24-101,09-250,Drywall and framing,Subcontract,64000,0,64000,64000,18000,46000,64000
+24-101,26-000,Electrical,Subcontract,85000,5000,92000,90000,45000,45000,90000

@@ -1,0 +1,7 @@
+{
+  "variance_pct": 5,
+  "variance_amount": 2500,
+  "burn_gap_pts": 15,
+  "tolerance": 1,
+  "code_aliases": { "3-300": "03-300" }
+}

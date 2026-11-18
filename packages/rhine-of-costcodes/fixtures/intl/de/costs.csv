@@ -1,0 +1,14 @@
+job;cost_code;cost_type;Datum;source;Lieferant;Referenz;Beschreibung;Betrag;hours
+24-101;01-500;L;31.10.2026;PR;;PR-1031;Superintendent payroll;18.600,00;240
+24-101;01-500;L;14.11.2026;PR;;PR-1114;Superintendent payroll;12.000,00;160
+24-101;03-300;S;20.10.2026;AP;Example Concrete LLC;EC-2210;Pay application 3;56.000,00;
+24-101;03-300;S;10.11.2026;AP;Example Concrete LLC;EC-2231;Pay application 4;40.000,00;
+24-101;06-100;M;12.10.2026;AP;Sample Lumber Supply;SL-88120;Framing lumber;14.400,00;
+24-101;06-100;M;03.11.2026;AP;Sample Lumber Supply;SL-88341;Framing lumber and sheathing;11.000,00;
+24-101;09-250;S;12.11.2026;AP;Test Drywall Co;TD-101;Pay application 1;18.000,00;
+24-101;26-000;S;28.10.2026;AP;Example Electric Inc;EE-5501;Pay application 2;45.000,00;
+24-101;31-000;S;05.11.2026;AP;Sample Excavating;SX-301;Haul off spoils;4.200,00;
+24-102;07-500;S;07.11.2026;AP;Example Roofing LLC;ER-7001;Pay application 2;150.000,00;
+24-102;01-500;L;31.10.2026;PR;;PR-1031;Superintendent payroll;7.200,00;96
+24-102;01-500;L;14.11.2026;PR;;PR-1114;Superintendent payroll;5.650,00;75
+24-199;01-500;L;14.11.2026;PR;;PR-1114;Payroll coded to a closed job;1.300,00;16

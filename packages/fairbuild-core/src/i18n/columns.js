@@ -1,0 +1,288 @@
+// Column names that exports in German, French, Spanish, Portuguese, Italian,
+// Japanese, Chinese and Korean use for the fields agents read, keyed by the
+// agent's own field name. adaptRecords tries these only after the agent's own
+// name and its English aliases found nothing, and never for a column another
+// field already took, so files that read correctly before read the same way.
+//
+// Written from common ERP, bank, HR and expense exports (DATEV, SAP, Sage,
+// freee, Yayoi, Kingdee, Yonyou, Douzone and others). A wrong or missing word
+// can always be fixed with "columns" in fairbuild-sources.json; the result's
+// source report lists every column that was matched by a translated name.
+//
+// Kept out on purpose: US-only forms (W-9, W-8, TIN), US insurance terms, and
+// distances in miles (a "Kilometer" column is a different unit, not a name).
+// Accounting debit/credit (Soll/Haben, 借方/貸方) are listed only under the
+// ledger names, because a bank statement's "debit" is the opposite side.
+
+import { normHeader } from '../intl.js';
+
+export const COLUMN_LANGUAGES = ['de', 'fr', 'es', 'pt', 'it', 'ja', 'zh', 'ko'];
+
+const W = (de, fr, es, pt, it, ja, zh, ko) => ({ de, fr, es, pt, it, ja, zh, ko });
+
+export const COLUMN_WORDS = {
+  // ---- People, users and access ----
+  name: W(['Name', 'Vollständiger Name'], ['Nom', 'Nom complet'], ['Nombre', 'Nombre completo'], ['Nome', 'Nome completo'], ['Nome', 'Nome completo', 'Denominazione'], ['名前', '氏名', '名称'], ['名称', '姓名', '名稱'], ['이름', '성명', '명칭']),
+  email: W(['E-Mail', 'E-Mail-Adresse', 'Mail'], ['E-mail', 'Courriel', 'Adresse e-mail', 'Adresse électronique'], ['Correo', 'Correo electrónico', 'Email'], ['E-mail', 'Endereço de e-mail'], ['E-mail', 'Indirizzo email', 'Posta elettronica'], ['メールアドレス', 'メール', 'Eメール'], ['邮箱', '电子邮件', '邮件地址', '電子郵件', '電子信箱'], ['이메일', '전자우편', '메일']),
+  user: W(['Benutzer', 'Benutzername', 'Anmeldename'], ['Utilisateur', "Nom d'utilisateur"], ['Usuario', 'Nombre de usuario'], ['Usuário', 'Nome de usuário', 'Utilizador'], ['Utente', 'Nome utente'], ['ユーザー', 'ユーザー名', 'ログインID'], ['用户', '用户名', '账号', '帳號'], ['사용자', '사용자명', '계정']),
+  status: W(['Status', 'Zustand'], ['Statut', 'État'], ['Estado', 'Estatus'], ['Situação', 'Estado'], ['Stato'], ['ステータス', '状態', '状況'], ['状态', '狀態'], ['상태']),
+  type: W(['Typ', 'Art'], ['Type'], ['Tipo'], ['Tipo'], ['Tipo'], ['種類', '種別', '区分', 'タイプ'], ['类型', '類型', '类别'], ['유형', '종류', '구분']),
+  role: W(['Rolle', 'Berechtigung', 'Funktion'], ['Rôle', 'Fonction', 'Poste', 'Profil'], ['Rol', 'Puesto', 'Cargo', 'Perfil'], ['Função', 'Papel', 'Cargo', 'Perfil'], ['Ruolo', 'Profilo', 'Mansione'], ['ロール', '役割', '権限', '役職'], ['角色', '权限', '職位', '职位'], ['역할', '권한', '직책']),
+  manager: W(['Vorgesetzter', 'Vorgesetzte', 'Führungskraft'], ['Manager', 'Supérieur hiérarchique', 'N+1'], ['Jefe', 'Jefe directo', 'Supervisor'], ['Gestor', 'Gestor direto', 'Supervisor'], ['Manager', 'Supervisore'], ['上長', '上司'], ['直属上级', '上级', '经理'], ['상사', '직속 상사', '팀장']),
+  manager_email: W(['E-Mail des Vorgesetzten'], ['E-mail du manager'], ['Correo del jefe'], ['E-mail do gestor'], ['Email del responsabile'], ['上長メールアドレス', '上長メール'], ['上级邮箱', '经理邮箱'], ['상사 이메일', '팀장 이메일']),
+  owner: W(['Verantwortlich', 'Verantwortlicher', 'Eigentümer', 'Zuständig'], ['Responsable', 'Propriétaire'], ['Responsable', 'Propietario'], ['Responsável', 'Proprietário'], ['Responsabile', 'Proprietario'], ['担当者', '責任者', '所有者'], ['负责人', '所有者', '责任人'], ['담당자', '책임자', '소유자']),
+  system: W(['Anwendung', 'System', 'Applikation'], ['Application', 'Système', 'Outil'], ['Aplicación', 'Sistema', 'Herramienta'], ['Aplicação', 'Aplicativo', 'Sistema', 'Ferramenta'], ['Applicazione', 'Sistema', 'Strumento'], ['アプリケーション', 'システム', 'アプリ'], ['应用', '应用程序', '系统', '系統'], ['애플리케이션', '시스템', '앱']),
+  app: W(['Anwendung', 'Applikation', 'Werkzeug'], ['Application', 'Outil'], ['Aplicación', 'Herramienta'], ['Aplicação', 'Aplicativo', 'Ferramenta'], ['Applicazione', 'Strumento'], ['アプリケーション', 'アプリ', 'ツール'], ['应用', '应用程序', '工具'], ['애플리케이션', '앱', '도구']),
+  account_type: W(['Kontotyp', 'Benutzertyp', 'Kontoart'], ['Type de compte', "Type d'utilisateur"], ['Tipo de cuenta', 'Tipo de usuario'], ['Tipo de conta', 'Tipo de usuário'], ['Tipo di account', 'Tipo utente'], ['アカウント種別', 'ユーザー種別'], ['账号类型', '用户类型'], ['계정 유형', '사용자 유형']),
+  mfa: W(['Zwei-Faktor', 'Zwei-Faktor-Authentifizierung', '2FA'], ['Double authentification', 'Authentification à deux facteurs', 'A2F'], ['Doble factor', 'Autenticación en dos pasos', 'Verificación en dos pasos'], ['Autenticação em dois fatores', 'Verificação em duas etapas'], ['Autenticazione a due fattori', 'Verifica in due passaggi'], ['多要素認証', '二要素認証', '2段階認証'], ['多因素认证', '双因素认证', '两步验证'], ['다중인증', '2단계 인증', '이중인증']),
+  last_login: W(['Letzte Anmeldung', 'Zuletzt angemeldet', 'Letzter Login'], ['Dernière connexion'], ['Último acceso', 'Último inicio de sesión'], ['Último acesso', 'Último login'], ['Ultimo accesso'], ['最終ログイン', '最終ログイン日時', '最終アクセス'], ['最后登录', '最后登录时间', '最近登录'], ['마지막 로그인', '최근 로그인', '최종 접속일']),
+  last_active: W(['Zuletzt aktiv', 'Letzte Aktivität', 'Letzte Anmeldung'], ['Dernière activité', 'Dernière connexion'], ['Última actividad', 'Último acceso'], ['Última atividade', 'Último acesso'], ['Ultima attività', 'Ultimo accesso'], ['最終利用日', '最終ログイン', '最終アクティビティ'], ['最后活动时间', '最近使用', '最后登录'], ['마지막 활동', '최근 사용일', '마지막 로그인']),
+  last_activity: W(['Letzte Aktivität'], ['Dernière activité'], ['Última actividad'], ['Última atividade'], ['Ultima attività'], ['最終アクティビティ', '最終活動日'], ['最后活动时间', '最近互动'], ['마지막 활동', '최근 활동일']),
+  last_rotated: W(['Zuletzt rotiert', 'Letzte Rotation'], ['Dernière rotation'], ['Última rotación'], ['Última rotação'], ['Ultima rotazione'], ['最終ローテーション', '最終キー更新'], ['最后轮换', '最近轮换时间'], ['마지막 교체', '최종 교체일']),
+  termination_date: W(['Austrittsdatum', 'Letzter Arbeitstag'], ['Date de sortie', 'Date de départ'], ['Fecha de baja', 'Fecha de cese'], ['Data de desligamento', 'Data de demissão'], ['Data di cessazione', 'Data di uscita'], ['退職日', '離職日'], ['离职日期', '離職日期'], ['퇴사일', '퇴직일']),
+  person_id: W(['Personalnummer', 'Mitarbeiter-ID', 'Pers.-Nr.'], ['Matricule', 'ID employé'], ['Número de empleado', 'ID de empleado', 'Legajo'], ['Matrícula', 'ID do funcionário', 'Número do funcionário'], ['Matricola', 'ID dipendente'], ['社員番号', '従業員番号', '社員ID'], ['员工编号', '工号', '員工編號'], ['사번', '사원번호', '직원번호']),
+  start_date: W(['Eintrittsdatum', 'Startdatum', 'Beginn'], ["Date d'entrée", "Date d'embauche", 'Date de début'], ['Fecha de alta', 'Fecha de ingreso', 'Fecha de inicio'], ['Data de admissão', 'Data de início'], ['Data di assunzione', 'Data inizio'], ['入社日', '開始日'], ['入职日期', '开始日期'], ['입사일', '시작일']),
+  end_date: W(['Austrittsdatum', 'Enddatum', 'Letzter Arbeitstag'], ['Date de sortie', 'Date de fin'], ['Fecha de baja', 'Fecha de fin'], ['Data de desligamento', 'Data de término'], ['Data di cessazione', 'Data fine'], ['退職日', '終了日'], ['离职日期', '结束日期'], ['퇴사일', '종료일']),
+  employee: W(['Mitarbeiter', 'Mitarbeitername', 'Name des Mitarbeiters'], ['Employé', 'Salarié', 'Collaborateur'], ['Empleado', 'Nombre del empleado'], ['Funcionário', 'Colaborador', 'Nome do funcionário'], ['Dipendente', 'Nome dipendente'], ['社員名', '従業員', '申請者'], ['员工', '员工姓名', '申请人'], ['직원', '직원명', '신청자']),
+  company: W(['Firma', 'Unternehmen', 'Firmenname'], ['Société', 'Entreprise', 'Raison sociale'], ['Empresa', 'Compañía', 'Razón social'], ['Empresa', 'Razão social'], ['Azienda', 'Società', 'Ragione sociale'], ['会社名', '企業名', '会社'], ['公司', '公司名称', '企业名称'], ['회사', '회사명', '기업명']),
+  // ---- Vendors, customers, orders ----
+  vendor: W(['Lieferant', 'Kreditor', 'Lieferantenname'], ['Fournisseur', 'Nom du fournisseur'], ['Proveedor', 'Nombre del proveedor'], ['Fornecedor', 'Nome do fornecedor'], ['Fornitore', 'Ragione sociale fornitore'], ['仕入先', '取引先', '仕入先名'], ['供应商', '供應商', '供应商名称'], ['공급업체', '거래처', '공급사']),
+  vendor_id: W(['Lieferantennummer', 'Kreditorennummer', 'Kreditor-Nr.'], ['Code fournisseur', 'N° fournisseur'], ['Código de proveedor', 'N.º de proveedor'], ['Código do fornecedor'], ['Codice fornitore'], ['仕入先コード', '取引先コード'], ['供应商编号', '供应商代码'], ['거래처코드', '공급업체코드']),
+  legal_name: W(['Firmierung', 'Rechtlicher Name'], ['Raison sociale', 'Dénomination sociale'], ['Razón social', 'Denominación social'], ['Razão social'], ['Ragione sociale', 'Denominazione sociale'], ['正式名称', '法人名'], ['法定名称', '公司全称'], ['법인명', '상호']),
+  country: W(['Land'], ['Pays'], ['País'], ['País'], ['Paese', 'Nazione'], ['国', '国名'], ['国家', '国家/地区'], ['국가']),
+  address: W(['Adresse', 'Anschrift', 'Straße'], ['Adresse'], ['Dirección', 'Domicilio'], ['Endereço', 'Morada'], ['Indirizzo'], ['住所'], ['地址'], ['주소']),
+  tax_id: W(['Steuernummer', 'USt-IdNr.', 'Umsatzsteuer-ID', 'Steuer-ID'], ['Numéro de TVA', 'N° TVA', 'SIRET', 'SIREN'], ['NIF', 'CIF', 'RFC', 'Número fiscal'], ['CNPJ', 'CPF/CNPJ', 'NIF'], ['Partita IVA', 'P.IVA', 'Codice fiscale'], ['法人番号', '登録番号', 'インボイス登録番号', '適格請求書発行事業者登録番号'], ['统一社会信用代码', '税号', '纳税人识别号', '統一編號'], ['사업자등록번호', '사업자번호', '법인등록번호']),
+  phone: W(['Telefon', 'Telefonnummer', 'Tel.'], ['Téléphone', 'Tél.', 'Numéro de téléphone'], ['Teléfono', 'Tel.'], ['Telefone', 'Tel.'], ['Telefono', 'Tel.'], ['電話番号', '電話', 'TEL'], ['电话', '联系电话', '電話'], ['전화번호', '연락처', '전화']),
+  customer: W(['Kunde', 'Kunden-E-Mail'], ['Client', 'E-mail client'], ['Cliente', 'Correo del cliente'], ['Cliente', 'E-mail do cliente'], ['Cliente', 'Email cliente'], ['顧客', '顧客メール', 'お客様'], ['客户', '客户邮箱'], ['고객', '고객 이메일']),
+  order_id: W(['Bestellnummer', 'Auftragsnummer', 'Bestell-ID'], ['N° de commande', 'Numéro de commande', 'Commande'], ['N.º de pedido', 'Número de pedido', 'Pedido'], ['Nº do pedido', 'Número do pedido', 'Pedido'], ['Numero ordine', 'N. ordine', 'Ordine'], ['注文番号', '受注番号', '注文ID'], ['订单号', '订单编号', '訂單編號'], ['주문번호']),
+  po: W(['Bestellnummer', 'Bestellung', 'Bestell-Nr.'], ['Bon de commande', 'N° de commande', 'Numéro de commande'], ['Orden de compra', 'Pedido', 'N.º de pedido'], ['Pedido de compra', 'Ordem de compra', 'Nº do pedido'], ["Ordine d'acquisto", 'Numero ordine', 'N. ordine'], ['発注番号', '注文番号', '発注書番号'], ['采购订单号', '采购单号', '订单号'], ['발주번호', '구매주문번호', '주문번호']),
+  line: W(['Position', 'Pos.', 'Zeile'], ['Ligne', 'N° de ligne'], ['Línea', 'Posición'], ['Linha'], ['Riga', 'Posizione'], ['明細番号', '行番号', '行'], ['行号', '行項目'], ['행번호', '라인']),
+  item: W(['Artikel', 'Artikelnummer'], ['Article', 'Code article'], ['Artículo', 'Código de artículo'], ['Item', 'Produto', 'Código do item'], ['Articolo', 'Codice articolo'], ['品目', '品番', '品目コード'], ['物料', '物料编码', '品项'], ['품목', '품목코드']),
+  qty: W(['Menge', 'Anzahl'], ['Quantité', 'Qté'], ['Cantidad', 'Cant.'], ['Quantidade', 'Qtd', 'Qtde'], ['Quantità', 'Qtà'], ['数量'], ['数量', '數量'], ['수량']),
+  unit_price: W(['Einzelpreis', 'Stückpreis', 'Preis'], ['Prix unitaire', 'Prix'], ['Precio unitario', 'Precio'], ['Preço unitário', 'Preço'], ['Prezzo unitario', 'Prezzo'], ['単価'], ['单价', '單價'], ['단가']),
+  invoice: W(['Rechnungsnummer', 'Rechnungs-Nr.', 'Rechnung'], ['N° de facture', 'Numéro de facture', 'Facture'], ['N.º de factura', 'Número de factura', 'Factura'], ['Nº da nota fiscal', 'Nota fiscal', 'Número da fatura', 'Fatura'], ['Numero fattura', 'N. fattura', 'Fattura'], ['請求書番号', '請求番号', 'インボイス番号'], ['发票号', '发票号码', '发票编号', '發票號碼'], ['세금계산서번호', '청구서번호', '인보이스번호']),
+  receipt: W(['Wareneingang', 'Beleg', 'Quittung'], ['Réception', 'Reçu', 'Bon de réception', 'Justificatif'], ['Recepción', 'Recibo', 'Albarán', 'Comprobante'], ['Recebimento', 'Recibo', 'Comprovante'], ['Ricevimento', 'Ricevuta', 'Bolla di entrata'], ['入庫番号', '受領書', '領収書', '検収番号'], ['收货单号', '入库单号', '收据'], ['입고번호', '영수증', '검수번호']),
+  method: W(['Zahlungsart', 'Zahlungsmethode'], ['Mode de paiement', 'Moyen de paiement'], ['Forma de pago', 'Método de pago'], ['Forma de pagamento', 'Meio de pagamento'], ['Metodo di pagamento', 'Modalità di pagamento'], ['支払方法', '決済方法'], ['付款方式', '支付方式'], ['결제수단', '지급방법', '결제방법']),
+  order_date: W(['Bestelldatum', 'Auftragsdatum'], ['Date de commande'], ['Fecha del pedido'], ['Data do pedido'], ['Data ordine'], ['注文日', '受注日'], ['下单日期', '订单日期'], ['주문일', '주문일자']),
+  delivered_date: W(['Lieferdatum', 'Zugestellt am'], ['Date de livraison', 'Livré le'], ['Fecha de entrega', 'Entregado el'], ['Data de entrega', 'Entregue em'], ['Data di consegna', 'Consegnato il'], ['配達日', '納品日', 'お届け日'], ['送达日期', '签收日期', '交付日期'], ['배송완료일', '배송일', '납품일']),
+  tracking: W(['Sendungsnummer', 'Sendungsverfolgung', 'Trackingnummer'], ['Numéro de suivi', 'Suivi'], ['Número de seguimiento', 'Seguimiento'], ['Código de rastreio', 'Rastreamento'], ['Numero di tracciamento', 'Tracking'], ['追跡番号', 'お問い合わせ番号', '送り状番号'], ['运单号', '物流单号', '快递单号'], ['송장번호', '운송장번호']),
+  request_id: W(['Anfrage-ID', 'Fallnummer', 'Ticketnummer'], ['N° de demande', 'N° de dossier'], ['N.º de solicitud', 'ID de caso'], ['Nº da solicitação', 'ID do caso'], ['ID richiesta', 'N. pratica'], ['申請番号', '問い合わせ番号', 'ケース番号'], ['申请编号', '工单号', '案例编号'], ['요청번호', '접수번호', '문의번호']),
+  requested_at: W(['Angefordert am', 'Anfragedatum', 'Erstellt am'], ['Date de la demande', 'Créé le'], ['Fecha de solicitud', 'Creado el'], ['Data da solicitação', 'Criado em'], ['Data richiesta', 'Creato il'], ['申請日', '依頼日', '作成日'], ['申请日期', '创建时间'], ['요청일', '생성일']),
+  reason: W(['Grund'], ['Motif', 'Raison'], ['Motivo', 'Razón'], ['Motivo', 'Razão'], ['Motivo'], ['理由', '返品理由'], ['原因', '退款原因'], ['사유', '반품 사유']),
+  reason_code: W(['Grundcode'], ['Code motif'], ['Código de motivo'], ['Código do motivo'], ['Codice motivo'], ['理由コード'], ['原因代码'], ['사유코드']),
+  network: W(['Kartennetzwerk', 'Kartenmarke'], ['Réseau', 'Réseau de carte'], ['Red', 'Marca de tarjeta'], ['Bandeira', 'Rede'], ['Circuito', 'Circuito carta'], ['カードブランド', '国際ブランド'], ['卡组织', '卡品牌'], ['카드브랜드', '카드사']),
+  returned: W(['Zurückgesendet', 'Retoure erhalten'], ['Retourné'], ['Devuelto'], ['Devolvido'], ['Restituito', 'Reso'], ['返品済み', '返品'], ['已退货', '退货'], ['반품완료', '반품']),
+  refunded: W(['Erstattet', 'Erstattungsbetrag'], ['Remboursé', 'Montant remboursé'], ['Reembolsado', 'Importe reembolsado'], ['Reembolsado', 'Valor reembolsado'], ['Rimborsato', 'Importo rimborsato'], ['返金額', '返金済み'], ['退款金额', '已退款'], ['환불액', '환불금액']),
+  // ---- Money, dates, descriptions ----
+  amount: W(['Betrag', 'Summe', 'Gesamtbetrag', 'Umsatz'], ['Montant', 'Montant TTC'], ['Importe', 'Monto', 'Total'], ['Valor', 'Montante', 'Valor total'], ['Importo', 'Totale'], ['金額', '合計', '合計金額'], ['金额', '金額', '总额', '合计'], ['금액', '합계', '총액']),
+  currency: W(['Währung', 'WKZ', 'Währungscode'], ['Devise', 'Monnaie'], ['Moneda', 'Divisa'], ['Moeda'], ['Valuta'], ['通貨', '通貨コード'], ['币种', '货币', '幣別', '幣別'], ['통화', '통화코드']),
+  date: W(['Datum', 'Belegdatum', 'Buchungsdatum'], ['Date', 'Date de pièce'], ['Fecha'], ['Data'], ['Data'], ['日付', '年月日', '取引日'], ['日期', '交易日期'], ['날짜', '일자', '거래일자']),
+  due_date: W(['Fälligkeitsdatum', 'Fällig am', 'Frist'], ["Date d'échéance", 'Échéance'], ['Fecha de vencimiento', 'Vencimiento'], ['Data de vencimento', 'Vencimento', 'Prazo'], ['Data di scadenza', 'Scadenza'], ['期日', '期限'], ['截止日期', '到期日'], ['마감일', '기한']),
+  expires: W(['Ablaufdatum', 'Gültig bis', 'Läuft ab'], ["Date d'expiration", 'Expire le', "Valide jusqu'au"], ['Fecha de vencimiento', 'Caduca', 'Válido hasta'], ['Data de validade', 'Expira em', 'Válido até'], ['Data di scadenza', 'Scadenza', 'Valido fino al'], ['有効期限', '期限'], ['到期日', '有效期至', '过期时间'], ['만료일', '유효기간']),
+  description: W(['Beschreibung', 'Bezeichnung', 'Buchungstext', 'Verwendungszweck', 'Text'], ['Description', 'Libellé', 'Désignation'], ['Descripción', 'Concepto', 'Detalle'], ['Descrição', 'Histórico', 'Detalhe'], ['Descrizione', 'Causale'], ['摘要', '内容', '説明', '品名'], ['摘要', '描述', '说明', '品名'], ['적요', '설명', '내용', '품명']),
+  memo: W(['Verwendungszweck', 'Buchungstext', 'Beschreibung'], ['Libellé', 'Description', 'Motif'], ['Concepto', 'Descripción'], ['Histórico', 'Descrição'], ['Causale', 'Descrizione'], ['摘要', '内容', '備考'], ['摘要', '备注', '用途'], ['적요', '내용', '비고']),
+  reference: W(['Referenz', 'Belegnummer', 'Schecknummer'], ['Référence', 'N° de chèque'], ['Referencia', 'Número de cheque'], ['Referência', 'Número do cheque', 'Documento'], ['Riferimento', 'Numero assegno'], ['参照番号', '伝票番号', '小切手番号'], ['参考号', '凭证号', '支票号'], ['참조번호', '전표번호', '수표번호']),
+  // A bank statement's money out and money in (not ledger debit and credit).
+  debit: W(['Ausgang', 'Belastung', 'Lastschrift', 'Abgang'], ['Débit'], ['Cargo', 'Cargos', 'Retiro'], ['Débito', 'Saída', 'Saídas'], ['Addebito', 'Addebiti', 'Uscite'], ['出金', 'お引出し', '引出金額', '支払金額'], ['支出', '支出金额', '付款金额'], ['출금', '출금액', '찾으신금액']),
+  credit: W(['Eingang', 'Gutschrift', 'Zugang'], ['Crédit'], ['Abono', 'Abonos', 'Depósito'], ['Crédito', 'Entrada', 'Entradas'], ['Accredito', 'Accrediti', 'Entrate'], ['入金', 'お預入れ', '預入金額', '入金額'], ['收入', '收入金额', '存入金额'], ['입금', '입금액', '맡기신금액']),
+  // ---- Expenses ----
+  report_id: W(['Spesenbericht', 'Abrechnungsnummer'], ['Note de frais', 'N° de note de frais'], ['Informe de gastos', 'N.º de informe'], ['Relatório de despesas', 'Nº do relatório'], ['Nota spese', 'N. nota spese'], ['経費精算番号', '精算書番号', 'レポートID'], ['报销单号', '报告编号'], ['경비보고서번호', '정산번호']),
+  submitted_on: W(['Eingereicht am', 'Einreichungsdatum'], ['Soumis le', 'Date de soumission'], ['Fecha de envío', 'Enviado el'], ['Enviado em', 'Data de envio'], ['Inviato il', 'Data di invio'], ['申請日', '提出日'], ['提交日期', '申请日期'], ['제출일', '신청일']),
+  category: W(['Kategorie', 'Ausgabenart', 'Kostenart'], ['Catégorie', 'Type de dépense'], ['Categoría', 'Tipo de gasto'], ['Categoria', 'Tipo de despesa'], ['Categoria', 'Tipo di spesa'], ['経費科目', 'カテゴリ', '費目'], ['费用类别', '类别', '费用科目'], ['비용항목', '카테고리']),
+  merchant: W(['Händler', 'Zahlungsempfänger', 'Geschäft'], ['Commerçant', 'Marchand'], ['Comercio', 'Establecimiento'], ['Estabelecimento', 'Comerciante'], ['Esercente', 'Negozio'], ['支払先', '店舗名', '加盟店'], ['商户', '商家', '收款方'], ['가맹점', '사용처', '상호']),
+  purpose: W(['Zweck', 'Geschäftszweck', 'Anlass'], ['Motif', 'Objet'], ['Motivo', 'Propósito'], ['Motivo', 'Finalidade'], ['Motivo', 'Scopo'], ['目的', '用途'], ['事由', '用途', '目的'], ['목적', '사유', '용도']),
+  attendees: W(['Teilnehmer', 'Anzahl Teilnehmer'], ['Participants', 'Nombre de participants'], ['Asistentes', 'Número de asistentes'], ['Participantes', 'Número de participantes'], ['Partecipanti', 'Numero partecipanti'], ['参加人数', '人数'], ['参与人数', '人数'], ['참석인원', '인원수']),
+  nights: W(['Nächte', 'Übernachtungen'], ['Nuits', 'Nuitées'], ['Noches'], ['Noites', 'Diárias'], ['Notti', 'Pernottamenti'], ['泊数'], ['晚数', '住宿天数'], ['박수', '숙박일수']),
+  days: W(['Tage'], ['Jours'], ['Días'], ['Dias'], ['Giorni'], ['日数'], ['天数'], ['일수']),
+  preapproved_by: W(['Vorab genehmigt von', 'Genehmigt von'], ['Pré-approuvé par', 'Approuvé par'], ['Preaprobado por', 'Aprobado por'], ['Pré-aprovado por', 'Aprovado por'], ['Preapprovato da', 'Approvato da'], ['事前承認者', '承認者'], ['预先审批人', '审批人'], ['사전승인자', '승인자']),
+  // ---- Inventory ----
+  sku: W(['Artikelnummer', 'Artikel-Nr.', 'Materialnummer', 'Material'], ['Référence', 'Réf. article', 'Code article'], ['Código de artículo', 'Referencia'], ['Código do produto', 'Código do item'], ['Codice articolo', 'Articolo'], ['品番', '商品コード', '品目コード'], ['物料编码', '商品编码', '货号', '料号'], ['품목코드', '품번', '상품코드']),
+  uom: W(['Einheit', 'Mengeneinheit', 'ME'], ['Unité', 'Unité de mesure'], ['Unidad', 'Unidad de medida'], ['Unidade', 'Unidade de medida'], ['Unità di misura', 'UM'], ['単位'], ['单位', '计量单位'], ['단위']),
+  location: W(['Lagerort', 'Lager', 'Standort', 'Ort'], ['Emplacement', 'Entrepôt', 'Lieu', 'Site'], ['Ubicación', 'Almacén', 'Lugar'], ['Local', 'Localização', 'Depósito', 'Armazém'], ['Ubicazione', 'Magazzino', 'Luogo'], ['保管場所', '倉庫', 'ロケーション', '場所'], ['库位', '仓库', '地点', '位置'], ['위치', '창고', '보관장소']),
+  lot: W(['Charge', 'Chargennummer', 'Los'], ['Lot', 'N° de lot'], ['Lote', 'N.º de lote'], ['Lote'], ['Lotto'], ['ロット', 'ロット番号'], ['批次', '批号'], ['로트', '로트번호', '배치']),
+  expiry: W(['Mindesthaltbarkeitsdatum', 'MHD', 'Verfallsdatum', 'Ablaufdatum'], ['Date de péremption', 'DLUO', 'DLC', "Date d'expiration"], ['Fecha de caducidad', 'Caducidad', 'Vencimiento'], ['Validade', 'Data de validade'], ['Data di scadenza', 'Scadenza'], ['賞味期限', '消費期限', '有効期限'], ['有效期', '保质期至', '失效日期'], ['유통기한', '유효기간', '소비기한']),
+  system_qty: W(['Bestand', 'Lagerbestand', 'Buchbestand'], ['Stock', 'Quantité en stock', 'Stock théorique'], ['Existencias', 'Stock', 'Cantidad en stock'], ['Estoque', 'Saldo em estoque', 'Quantidade em estoque'], ['Giacenza', 'Quantità a magazzino', 'Esistenza'], ['在庫数', '理論在庫', '帳簿在庫'], ['库存数量', '账面数量', '系统数量'], ['재고수량', '장부재고', '전산재고']),
+  unit_cost: W(['Stückkosten', 'Einstandspreis', 'Durchschnittspreis'], ['Coût unitaire', 'Prix de revient', 'Coût moyen'], ['Costo unitario', 'Coste unitario', 'Costo promedio'], ['Custo unitário', 'Custo médio'], ['Costo unitario', 'Costo medio'], ['単価', '原価', '平均単価'], ['单位成本', '成本单价', '平均成本'], ['단위원가', '원가', '평균단가']),
+  counted_qty: W(['Gezählt', 'Zählmenge', 'Istmenge'], ['Quantité comptée', 'Compté'], ['Cantidad contada', 'Conteo'], ['Quantidade contada', 'Contagem'], ['Quantità contata', 'Conteggio'], ['実棚数', '棚卸数', '実地棚卸数'], ['盘点数量', '实盘数量'], ['실사수량', '재고실사수량']),
+  recount_qty: W(['Nachzählung'], ['Recomptage'], ['Reconteo'], ['Recontagem'], ['Riconteggio'], ['再棚卸数', '再カウント'], ['复盘数量'], ['재실사수량']),
+  counter: W(['Gezählt von', 'Zähler'], ['Compté par'], ['Contado por'], ['Contado por'], ['Contato da', 'Addetto'], ['棚卸担当者'], ['盘点人'], ['실사자']),
+  counted_at: W(['Gezählt am', 'Zählzeitpunkt'], ['Compté le', 'Date du comptage'], ['Fecha del conteo'], ['Data da contagem'], ['Data conteggio'], ['棚卸日時', '棚卸日'], ['盘点时间', '盘点日期'], ['실사일시', '실사일']),
+  // ---- Licences, seats, certificates ----
+  tier: W(['Lizenz', 'Lizenztyp', 'Tarif', 'Edition'], ['Licence', 'Type de licence', 'Formule', 'Édition'], ['Licencia', 'Tipo de licencia', 'Plan', 'Edición'], ['Licença', 'Tipo de licença', 'Plano', 'Edição'], ['Licenza', 'Tipo di licenza', 'Piano', 'Edizione'], ['ライセンス', 'ライセンス種別', 'プラン', 'エディション'], ['许可证', '许可类型', '套餐'], ['라이선스', '라이선스 유형', '요금제', '에디션']),
+  monthly_cost: W(['Monatliche Kosten', 'Kosten pro Monat', 'Monatspreis'], ['Coût mensuel', 'Prix mensuel'], ['Costo mensual', 'Coste mensual', 'Precio mensual'], ['Custo mensal', 'Preço mensal'], ['Costo mensile', 'Prezzo mensile'], ['月額', '月額費用', '月額料金'], ['月费', '每月费用', '月度成本'], ['월 비용', '월 요금', '월간 비용']),
+  id: W(['Kennung', 'Nummer'], ['Identifiant'], ['Identificador'], ['Identificador'], ['Identificativo'], ['番号'], ['编号', '编码'], ['번호', '아이디']),
+  holder: W(['Inhaber'], ['Titulaire'], ['Titular'], ['Titular'], ['Titolare', 'Intestatario'], ['名義人', '保有者'], ['持有人'], ['명의자', '보유자']),
+  issuer: W(['Aussteller'], ['Émetteur'], ['Emisor'], ['Emissor'], ['Emittente'], ['発行者', '発行元'], ['颁发者', '签发机构'], ['발급자', '발행자']),
+  auto_renew: W(['Automatische Verlängerung'], ['Renouvellement automatique'], ['Renovación automática'], ['Renovação automática'], ['Rinnovo automatico'], ['自動更新'], ['自动续费', '自动续期'], ['자동 갱신']),
+  renewal_cost: W(['Verlängerungskosten'], ['Coût de renouvellement'], ['Costo de renovación'], ['Custo de renovação'], ['Costo di rinnovo'], ['更新費用'], ['续费金额', '续期费用'], ['갱신 비용']),
+  // ---- Marketing lists ----
+  consent: W(['Einwilligung', 'Einverständnis'], ['Consentement'], ['Consentimiento'], ['Consentimento'], ['Consenso'], ['同意', '配信同意', 'メール配信同意'], ['同意', '营销同意', '订阅同意'], ['동의', '수신동의', '마케팅 수신동의']),
+  consent_date: W(['Datum der Einwilligung', 'Einwilligungsdatum'], ['Date du consentement'], ['Fecha de consentimiento'], ['Data do consentimento'], ['Data del consenso'], ['同意日', '同意日時'], ['同意日期'], ['동의일', '동의일자']),
+  consent_source: W(['Quelle der Einwilligung'], ['Source du consentement'], ['Origen del consentimiento'], ['Origem do consentimento'], ['Fonte del consenso'], ['同意取得元', '同意経路'], ['同意来源'], ['동의 경로', '동의 출처']),
+  unsubscribed: W(['Abgemeldet', 'Abmeldung'], ['Désabonné', 'Désinscrit'], ['Dado de baja', 'Baja'], ['Descadastrado'], ['Disiscritto'], ['配信停止', '配信解除'], ['已退订', '退订'], ['수신거부', '구독취소']),
+  bounce: W(['Unzustellbar'], ['Rebond'], ['Rebote'], ['Rejeição'], ['Rimbalzo'], ['不達', 'バウンス'], ['退信', '退回'], ['반송', '반송여부']),
+  // ---- Dates, payments and notes (shared) ----
+  invoice_date: W(['Rechnungsdatum', 'Rechnungs-Datum'], ['Date de facture', 'Date de facturation'], ['Fecha de factura', 'Fecha de emisión'], ['Data da fatura', 'Data de emissão'], ['Data fattura', 'Data emissione'], ['請求日', '請求書日付', '請求年月日'], ['发票日期', '开票日期', '開票日期'], ['청구일', '발행일', '작성일자']),
+  paid_amount: W(['Bezahlt', 'Zahlbetrag', 'Gezahlter Betrag'], ['Montant payé', 'Payé'], ['Importe pagado', 'Pagado'], ['Valor pago', 'Pago'], ['Importo pagato', 'Pagato'], ['支払額', '支払金額', '支払済額'], ['已付金额', '付款金额', '支付金额'], ['지급액', '지급금액', '결제금액']),
+  paid_date: W(['Zahlungsdatum', 'Bezahlt am', 'Zahldatum'], ['Date de paiement', 'Payé le'], ['Fecha de pago', 'Pagado el'], ['Data de pagamento', 'Pago em'], ['Data pagamento', 'Pagato il'], ['支払日', '振込日'], ['付款日期', '支付日期'], ['지급일', '결제일', '송금일']),
+  payee: W(['Zahlungsempfänger', 'Empfänger', 'Begünstigter'], ['Bénéficiaire', 'Payé à'], ['Beneficiario', 'Pagado a'], ['Favorecido', 'Beneficiário'], ['Beneficiario', 'Pagato a'], ['支払先', '振込先', '受取人'], ['收款人', '收款方', '收款单位'], ['수취인', '지급처', '받는 사람']),
+  cost_center: W(['Kostenstelle'], ['Centre de coût', 'Centre de coûts'], ['Centro de coste', 'Centro de costo'], ['Centro de custo'], ['Centro di costo'], ['原価センタ', 'コストセンター', '部門'], ['成本中心', '部门'], ['코스트센터', '원가센터', '부서']),
+  credit_amount: W(['Gutschriftsbetrag', 'Gutschrift', 'Erstattungsbetrag'], ["Montant de l'avoir", 'Avoir'], ['Importe abonado', 'Nota de crédito', 'Abono'], ['Valor creditado', 'Nota de crédito'], ['Importo accreditato', 'Nota di credito'], ['返金額', 'クレジット額'], ['贷项金额', '退款金额'], ['크레딧 금액', '환불액']),
+  notes: W(['Bemerkung', 'Bemerkungen', 'Notiz', 'Anmerkungen'], ['Remarques', 'Commentaire', 'Notes', 'Observations'], ['Observaciones', 'Notas', 'Comentarios'], ['Observações', 'Notas', 'Comentários'], ['Note', 'Osservazioni', 'Commenti'], ['備考', 'メモ', 'コメント'], ['备注', '備註', '说明'], ['비고', '메모', '참고']),
+  received_date: W(['Eingangsdatum', 'Empfangen am', 'Eingegangen am'], ['Date de réception', 'Reçu le'], ['Fecha de recepción', 'Recibido el'], ['Data de recebimento', 'Recebido em'], ['Data di ricevimento', 'Ricevuto il'], ['受領日', '受付日', '入荷日'], ['收到日期', '接收日期', '签收日期'], ['수령일', '접수일', '입고일']),
+  signed_by: W(['Unterschrieben von', 'Unterzeichner'], ['Signé par', 'Signataire'], ['Firmado por'], ['Assinado por', 'Recebedor'], ['Firmato da'], ['受領者', 'サイン者'], ['签收人'], ['수령인', '서명자']),
+  credit_note: W(['Gutschriftsnummer'], ["N° d'avoir"], ['N.º de nota de crédito'], ['Nº da nota de crédito'], ['N. nota di credito'], ['クレジットノート番号', '赤伝番号'], ['贷项通知单号', '红字发票号'], ['크레딧노트 번호']),
+  payment_terms: W(['Zahlungsziel', 'Zahlungsziel (Tage)'], ['Délai de paiement'], ['Plazo de pago'], ['Prazo de pagamento'], ['Termini di pagamento', 'Giorni pagamento'], ['支払サイト', '支払期日数'], ['账期', '付款期限'], ['결제기간', '지급조건']),
+  effective_date: W(['Gültig ab', 'Wirksam ab'], ["Date d'effet", 'En vigueur le'], ['Vigente desde', 'Fecha de vigencia'], ['Vigência', 'Válido a partir de'], ['Valido dal', 'Decorrenza'], ['適用開始日', '有効開始日'], ['生效日期'], ['적용일', '시행일']),
+  insurance_expiry: W(['Versicherung gültig bis', 'Ablauf Versicherung'], ["Expiration de l'assurance"], ['Vencimiento del seguro'], ['Vencimento do seguro'], ['Scadenza assicurazione'], ['保険期限', '保険満了日'], ['保险到期日'], ['보험만기일']),
+  capacity: W(['Kapazität'], ['Capacité'], ['Capacidad'], ['Capacidade'], ['Capacità'], ['輸送能力', 'キャパシティ'], ['运力'], ['수송능력', '캐파']),
+  priority: W(['Priorität'], ['Priorité'], ['Prioridad'], ['Prioridade'], ['Priorità'], ['優先度'], ['优先级'], ['우선순위']),
+  // ---- Construction and trades (Fairbuild) ----
+  // Written from common construction accounting, project management, payroll and field
+  // service exports in each market (RIB iTWO, Nevaris, BRZ, Sage Batigest, Presto, Arquimedes,
+  // Sienge, Mais Controle, ACCA PriMus, Teamsystem Construction, 建設業会計 packages such as
+  // 建設大臣 and PROCES.S, Glodon 广联达, Yonyou 用友建筑, Douzone 더존 건설 and others). None
+  // was checked against a live account; "columns" in fairbuild-sources.json fixes any miss.
+  job: W(['Projekt', 'Projektnummer', 'Bauvorhaben', 'BV-Nr.', 'Auftrag', 'Baustelle'], ['Chantier', 'N° de chantier', 'Affaire', 'N° d\'affaire', 'Projet'], ['Obra', 'N.º de obra', 'Proyecto', 'Código de obra'], ['Obra', 'Código da obra', 'Projeto', 'Empreendimento'], ['Commessa', 'N. commessa', 'Cantiere', 'Progetto'], ['工事番号', '工事コード', '工事', '現場', 'プロジェクト'], ['项目编号', '项目', '工程编号', '工程', '項目編號'], ['현장코드', '현장', '공사번호', '프로젝트', '공사']),
+  job_name: W(['Projektname', 'Bauvorhaben Bezeichnung', 'Baustellenname'], ['Nom du chantier', 'Libellé chantier', 'Nom du projet'], ['Nombre de la obra', 'Nombre del proyecto'], ['Nome da obra', 'Nome do projeto'], ['Nome commessa', 'Descrizione commessa', 'Nome cantiere'], ['工事名', '工事名称', '現場名'], ['项目名称', '工程名称', '項目名稱'], ['현장명', '공사명', '프로젝트명']),
+  client: W(['Bauherr', 'Auftraggeber', 'Kunde'], ['Maître d\'ouvrage', 'Client', 'Donneur d\'ordre'], ['Promotor', 'Cliente', 'Propiedad'], ['Contratante', 'Cliente', 'Dono da obra'], ['Committente', 'Cliente', 'Stazione appaltante'], ['発注者', '施主', '得意先'], ['建设单位', '业主', '甲方', '客户'], ['발주처', '건축주', '고객']),
+  contract_amount: W(['Auftragssumme', 'Vertragssumme', 'Auftragswert'], ['Montant du marché', 'Montant du contrat'], ['Importe del contrato', 'Presupuesto de contrato'], ['Valor do contrato', 'Valor contratado'], ['Importo contrattuale', 'Importo del contratto'], ['請負金額', '契約金額', '受注金額'], ['合同金额', '合同价', '合同總額'], ['계약금액', '도급액', '수주금액']),
+  estimated_cost: W(['Kalkulierte Kosten', 'Prognostizierte Gesamtkosten', 'Sollkosten'], ['Coût prévisionnel', 'Déboursé prévisionnel'], ['Coste estimado', 'Coste previsto'], ['Custo estimado', 'Custo previsto'], ['Costo stimato', 'Costo previsto'], ['実行予算', '見積原価', '予定原価'], ['预计总成本', '目标成本', '预算成本'], ['실행예산', '예정원가', '추정원가']),
+  completion_date: W(['Fertigstellung', 'Fertigstellungstermin', 'Abnahmedatum'], ['Date de réception', 'Date d\'achèvement'], ['Fecha de finalización', 'Fecha de recepción'], ['Data de conclusão', 'Data de entrega'], ['Data di ultimazione', 'Data fine lavori'], ['竣工日', '完成日', '引渡日'], ['竣工日期', '完工日期'], ['준공일', '완공일']),
+  project_manager: W(['Projektleiter', 'Bauleiter', 'Oberbauleiter'], ['Conducteur de travaux', 'Chef de projet'], ['Jefe de obra', 'Director de proyecto'], ['Engenheiro responsável', 'Gerente de projeto'], ['Direttore di cantiere', 'Capo commessa', 'Project manager'], ['工事責任者', '現場代理人', '担当者'], ['项目经理', '项目负责人'], ['현장소장', '프로젝트 매니저', '담당자']),
+  retainage_pct: W(['Einbehalt %', 'Sicherheitseinbehalt %'], ['Retenue de garantie %', 'Taux de retenue'], ['Retención %', 'Porcentaje de retención'], ['Retenção %', 'Percentual de retenção'], ['Ritenuta %', 'Ritenuta a garanzia %'], ['保留率', '留保率'], ['质保金比例', '保留金比例'], ['유보율', '하자보수보증금률']),
+  bonded: W(['Bürgschaft', 'Vertragserfüllungsbürgschaft'], ['Caution', 'Garantie bancaire'], ['Aval', 'Fianza'], ['Seguro garantia', 'Fiança'], ['Fideiussione', 'Cauzione'], ['履行保証', '保証'], ['履约保函', '保函'], ['이행보증', '보증']),
+  tax_exempt: W(['Steuerbefreit'], ['Exonéré', 'Exonéré de TVA'], ['Exento'], ['Isento'], ['Esente'], ['非課税'], ['免税'], ['면세']),
+  cost_code: W(['Leistungsposition', 'LV-Position', 'Kostengruppe', 'Kostenstelle Bau'], ['Code de coût', 'Poste', 'Code poste', 'Lot'], ['Partida', 'Código de partida', 'Capítulo', 'Código de coste'], ['Item de custo', 'Código de custo', 'Etapa', 'Centro de custo da obra'], ['Voce di costo', 'Codice voce', 'Categoria lavori', 'WBS'], ['工種', '工種コード', '費目', '原価コード'], ['成本科目', '成本编码', '分部分项', '费用编码'], ['공종', '공종코드', '원가코드', '비목']),
+  cost_code_name: W(['Kostenart Bezeichnung', 'Positionsbezeichnung'], ['Libellé du poste', 'Désignation du poste'], ['Descripción de la partida', 'Nombre de la partida'], ['Descrição do item de custo', 'Descrição da etapa'], ['Descrizione voce', 'Descrizione categoria'], ['工種名', '費目名'], ['成本科目名称', '分项名称'], ['공종명', '비목명']),
+  cost_type: W(['Kostenart', 'Kostenkategorie', 'Leistungsart'], ['Nature de coût', 'Type de coût', 'Nature de dépense'], ['Tipo de coste', 'Naturaleza del coste', 'Tipo de costo'], ['Tipo de custo', 'Natureza do custo'], ['Tipo di costo', 'Natura del costo'], ['原価区分', '費目区分', '要素'], ['成本类型', '费用类型', '成本要素'], ['원가구분', '비용유형', '원가요소']),
+  original_budget: W(['Ursprüngliches Budget', 'Kalkulation', 'Ursprungsbudget', 'Budget'], ['Budget initial', 'Budget', 'Déboursé sec prévu'], ['Presupuesto inicial', 'Presupuesto', 'Presupuesto original'], ['Orçamento inicial', 'Orçamento', 'Orçamento original'], ['Budget iniziale', 'Preventivo', 'Budget'], ['当初予算', '実行予算額', '予算'], ['原始预算', '预算', '初始预算'], ['당초예산', '예산', '실행예산액']),
+  approved_changes: W(['Genehmigte Nachträge', 'Budgetänderungen'], ['Avenants validés', 'Modifications approuvées'], ['Modificados aprobados', 'Cambios aprobados'], ['Aditivos aprovados', 'Alterações aprovadas'], ['Varianti approvate', 'Modifiche approvate'], ['承認済み変更', '予算変更'], ['已批准变更', '预算调整'], ['승인된 변경', '예산변경']),
+  revised_budget: W(['Aktuelles Budget', 'Revidiertes Budget', 'Fortgeschriebenes Budget'], ['Budget révisé', 'Budget actualisé'], ['Presupuesto revisado', 'Presupuesto vigente'], ['Orçamento revisado', 'Orçamento atual'], ['Budget revisionato', 'Budget aggiornato'], ['変更後予算', '現行予算', '修正予算'], ['调整后预算', '当前预算', '修订预算'], ['변경예산', '현행예산', '수정예산']),
+  committed: W(['Beauftragt', 'Obligo', 'Vergeben'], ['Engagé', 'Montant engagé', 'Engagements'], ['Comprometido', 'Contratado'], ['Comprometido', 'Contratado'], ['Impegnato', 'Ordinato'], ['発注済', '契約済額', '発注額'], ['已承诺', '已签合同', '承诺成本'], ['발주액', '계약액', '약정액']),
+  actual: W(['Ist-Kosten', 'Istkosten', 'Kosten bis heute', 'Ist'], ['Réalisé', 'Coût réel', 'Dépenses à date'], ['Real', 'Coste real', 'Coste a origen'], ['Realizado', 'Custo real', 'Custo até a data'], ['Consuntivo', 'Costo effettivo', 'Costo a oggi'], ['実績', '実績原価', '累計原価'], ['实际成本', '实际', '累计成本'], ['실적', '실적원가', '누계원가']),
+  estimate_to_complete: W(['Restkosten', 'Kosten bis Fertigstellung'], ['Reste à dépenser', 'Coût pour terminer'], ['Coste pendiente', 'Coste para terminar'], ['Custo a incorrer', 'Saldo a executar'], ['Costo a finire', 'Costo residuo'], ['残予算', '今後発生原価', '残工事原価'], ['待发生成本', '剩余成本'], ['잔여원가', '향후발생원가']),
+  projected: W(['Prognose', 'Prognostizierte Kosten', 'Hochrechnung'], ['Prévision', 'Coût prévisionnel à terminaison', 'Atterrissage'], ['Previsión', 'Coste previsto final'], ['Previsão', 'Custo projetado'], ['Previsione', 'Costo a finire previsto'], ['見込原価', '最終見込', '着地見込'], ['预计成本', '预测成本', '动态成本'], ['예상원가', '최종예상', '추정원가']),
+  percent_complete: W(['Fertigstellungsgrad', 'Leistungsstand %', 'Baufortschritt %'], ['Avancement %', 'Taux d\'avancement'], ['Porcentaje de avance', 'Avance %'], ['Percentual executado', 'Avanço %'], ['Avanzamento %', 'Percentuale di avanzamento'], ['出来高率', '進捗率', '完成率'], ['完工百分比', '完成进度', '形象进度'], ['공정률', '진척률', '기성률']),
+  source: W(['Herkunft', 'Quelle', 'Belegart'], ['Origine', 'Journal'], ['Origen', 'Diario'], ['Origem', 'Diário'], ['Origine', 'Registro'], ['発生元', '伝票種別'], ['来源', '凭证类型'], ['출처', '전표유형']),
+  hours: W(['Stunden', 'Std.', 'Arbeitsstunden'], ['Heures', 'Nb heures'], ['Horas'], ['Horas'], ['Ore', 'Ore lavorate'], ['時間', '工数', '労働時間'], ['工时', '小时', '工時'], ['시간', '공수', '근무시간']),
+  overtime_hours: W(['Überstunden'], ['Heures supplémentaires', 'Heures sup'], ['Horas extra', 'Horas extraordinarias'], ['Horas extras'], ['Ore straordinarie', 'Straordinari'], ['残業時間', '時間外'], ['加班工时', '加班小时'], ['초과근무시간', '연장근무']),
+  commitment: W(['Auftragsnummer NU', 'Bestellung', 'Nachunternehmervertrag', 'Vergabe-Nr.'], ['N° de commande', 'Contrat de sous-traitance', 'Marché sous-traitant'], ['N.º de pedido', 'Subcontrato', 'Contrato'], ['Pedido de compra', 'Contrato de subempreitada', 'Nº do contrato'], ['Ordine', 'Contratto di subappalto', 'N. contratto'], ['発注番号', '注文書番号', '下請契約'], ['合同编号', '分包合同', '采购订单号'], ['발주번호', '하도급계약번호', '계약번호']),
+  commitment_type: W(['Vertragsart', 'Auftragsart'], ['Type de contrat'], ['Tipo de contrato'], ['Tipo de contrato'], ['Tipo di contratto'], ['契約区分', '発注区分'], ['合同类型'], ['계약유형']),
+  original_amount: W(['Ursprüngliche Auftragssumme', 'Ursprünglicher Betrag'], ['Montant initial du marché', 'Montant initial'], ['Importe inicial', 'Importe original'], ['Valor original', 'Valor inicial'], ['Importo originale', 'Importo iniziale'], ['当初契約額', '当初金額'], ['原合同金额', '原始金额'], ['당초계약액', '최초금액']),
+  revised_amount: W(['Aktuelle Auftragssumme', 'Fortgeschriebene Auftragssumme'], ['Montant actualisé', 'Montant révisé'], ['Importe revisado', 'Importe vigente'], ['Valor revisado', 'Valor atualizado'], ['Importo aggiornato', 'Importo rivisto'], ['変更後契約額', '現契約額'], ['调整后合同金额', '当前合同金额'], ['변경계약액', '현계약액']),
+  invoiced: W(['Abgerechnet', 'Berechnet', 'Rechnungsbetrag kumuliert'], ['Facturé', 'Facturé à date'], ['Facturado', 'Facturado a origen'], ['Faturado', 'Medido'], ['Fatturato', 'Contabilizzato'], ['請求済', '出来高請求額'], ['已开票', '已计量'], ['청구액', '기성청구액']),
+  paid: W(['Bezahlt', 'Gezahlt'], ['Payé', 'Réglé'], ['Pagado'], ['Pago'], ['Pagato'], ['支払済', '支払額'], ['已付款', '已支付'], ['지급액', '지급완료']),
+  retainage_held: W(['Einbehalt', 'Sicherheitseinbehalt', 'Einbehaltener Betrag'], ['Retenue de garantie', 'Retenue'], ['Retención', 'Retención de garantía'], ['Retenção', 'Retenção contratual'], ['Ritenuta', 'Ritenuta a garanzia'], ['保留金', '留保金'], ['质保金', '保留金'], ['유보금', '하자보증금']),
+  executed: W(['Unterschrieben', 'Vertrag unterzeichnet'], ['Signé', 'Contrat signé'], ['Firmado', 'Contrato firmado'], ['Assinado', 'Contrato assinado'], ['Firmato', 'Contratto firmato'], ['契約締結', '締結済'], ['已签订', '已签署'], ['계약체결', '서명완료']),
+  retainage: W(['Einbehalt', 'Sicherheitseinbehalt'], ['Retenue de garantie', 'Retenue'], ['Retención', 'Retención de garantía'], ['Retenção'], ['Ritenuta', 'Ritenuta a garanzia'], ['保留金', '留保金'], ['质保金', '保留金'], ['유보금']),
+  tax: W(['Steuer', 'Umsatzsteuer', 'MwSt'], ['TVA', 'Taxe'], ['IVA', 'Impuesto'], ['Imposto', 'ICMS'], ['IVA', 'Imposta'], ['消費税', '税額'], ['税额', '增值税'], ['세액', '부가세']),
+  check_number: W(['Zahlungsnummer', 'Schecknummer', 'Zahlungsreferenz'], ['N° de paiement', 'N° de chèque'], ['N.º de pago', 'N.º de cheque'], ['Nº do pagamento', 'Nº do cheque'], ['N. pagamento', 'N. assegno'], ['支払番号', '小切手番号'], ['付款编号', '支票号'], ['지급번호', '수표번호']),
+  change_order: W(['Nachtrag', 'Nachtragsnummer', 'NT-Nr.'], ['Avenant', 'N° d\'avenant', 'Travaux supplémentaires'], ['Modificado', 'N.º de modificado', 'Orden de cambio'], ['Aditivo', 'Nº do aditivo', 'Ordem de alteração'], ['Variante', 'N. variante', 'Perizia di variante'], ['変更番号', '追加変更', '設計変更'], ['变更单号', '工程变更', '签证单号'], ['설계변경번호', '변경계약', '변경번호']),
+  co_type: W(['Nachtragsart'], ['Type d\'avenant'], ['Tipo de modificado'], ['Tipo de aditivo'], ['Tipo di variante'], ['変更区分'], ['变更类型'], ['변경유형']),
+  cost: W(['Kosten', 'Kalkulierte Kosten'], ['Coût', 'Déboursé'], ['Coste', 'Costo'], ['Custo'], ['Costo'], ['原価', '費用'], ['成本', '费用'], ['원가', '비용']),
+  submitted_date: W(['Eingereicht am', 'Einreichungsdatum'], ['Date de soumission', 'Soumis le'], ['Fecha de presentación', 'Presentado el'], ['Data de envio', 'Enviado em'], ['Data di invio', 'Inviato il'], ['提出日', '申請日'], ['提交日期', '报送日期'], ['제출일', '신청일']),
+  approved_date: W(['Genehmigt am', 'Freigabedatum'], ['Date d\'approbation', 'Approuvé le'], ['Fecha de aprobación', 'Aprobado el'], ['Data de aprovação', 'Aprovado em'], ['Data di approvazione', 'Approvato il'], ['承認日'], ['批准日期', '审批日期'], ['승인일']),
+  billed: W(['Abgerechnet', 'In Rechnung gestellt'], ['Facturé'], ['Facturado'], ['Faturado'], ['Fatturato'], ['請求済', '請求額'], ['已开票', '已结算'], ['청구액']),
+  application: W(['Abschlagsrechnung Nr.', 'AR-Nr.', 'Abschlagsrechnung'], ['N° de situation', 'Situation de travaux'], ['N.º de certificación', 'Certificación'], ['Nº da medição', 'Medição'], ['N. SAL', 'Stato avanzamento lavori'], ['出来高請求番号', '請求回数'], ['进度款申请号', '计量期数'], ['기성회차', '기성청구번호']),
+  period_to: W(['Leistungszeitraum bis', 'Stichtag'], ['Période au', 'Arrêté au'], ['Periodo hasta', 'Fecha de corte'], ['Período até', 'Data de corte'], ['Periodo al', 'Data di riferimento'], ['対象期間末', '締日'], ['截止日期', '计量截止日'], ['기준일', '기성기준일']),
+  scheduled_value: W(['Vertragswert der Position', 'Positionswert', 'LV-Betrag'], ['Montant du poste', 'Montant au marché'], ['Importe de la partida', 'Valor programado'], ['Valor do item', 'Valor contratado do item'], ['Importo della voce', 'Importo a contratto'], ['契約内訳金額', '内訳金額'], ['分项合同金额', '清单金额'], ['내역금액', '계약내역금액']),
+  previous: W(['Bisher abgerechnet', 'Vorherige Abschläge'], ['Cumul précédent', 'Situations précédentes'], ['A origen anterior', 'Certificado anterior'], ['Medido anterior', 'Acumulado anterior'], ['Precedente', 'SAL precedenti'], ['前回までの出来高', '前回累計'], ['上期累计', '以前累计'], ['전회누계', '이전기성']),
+  this_period: W(['Dieser Abschlag', 'Leistung im Zeitraum'], ['Ce mois', 'Période en cours'], ['Este periodo', 'Certificación actual'], ['Este período', 'Medição atual'], ['Questo periodo', 'SAL corrente'], ['今回出来高', '今回請求'], ['本期完成', '本期计量'], ['금회기성', '이번 회차']),
+  stored_materials: W(['Gelagertes Material', 'Material auf Baustelle'], ['Approvisionnements', 'Matériaux stockés'], ['Acopios', 'Materiales acopiados'], ['Materiais estocados', 'Material em estoque'], ['Materiali in cantiere', 'Provviste'], ['搬入材料', '現場保管材料'], ['现场材料', '已进场材料'], ['반입자재', '현장보관자재']),
+  completed_stored: W(['Gesamt abgerechnet', 'Kumuliert inkl. Material'], ['Cumul à date', 'Total réalisé et approvisionné'], ['A origen', 'Total ejecutado y acopiado'], ['Acumulado', 'Total executado e estocado'], ['Totale a oggi', 'Totale eseguito e provviste'], ['累計出来高', '出来高累計'], ['累计完成', '累计计量'], ['누계기성', '기성누계']),
+  field_percent: W(['Baustellenfortschritt %', 'Fortschritt laut Bauleitung'], ['Avancement chantier %'], ['Avance en obra %'], ['Avanço físico %'], ['Avanzamento fisico %'], ['現場出来高率'], ['现场进度 %'], ['현장공정률']),
+  worker: W(['Mitarbeiter', 'Arbeiter', 'Gewerblicher Mitarbeiter', 'Name'], ['Salarié', 'Ouvrier', 'Nom du salarié'], ['Trabajador', 'Operario', 'Nombre del trabajador'], ['Trabalhador', 'Colaborador', 'Nome do funcionário'], ['Lavoratore', 'Operaio', 'Dipendente'], ['作業員', '作業員名', '氏名'], ['工人', '作业人员', '姓名'], ['근로자', '작업자', '성명']),
+  worker_id: W(['Personalnummer', 'Pers.-Nr.'], ['Matricule'], ['N.º de empleado', 'Legajo'], ['Matrícula'], ['Matricola'], ['社員番号', '作業員番号'], ['工号', '员工编号'], ['사번', '근로자번호']),
+  classification: W(['Lohngruppe', 'Tätigkeit', 'Berufsgruppe'], ['Qualification', 'Catégorie professionnelle', 'Coefficient'], ['Categoría profesional', 'Oficio'], ['Função', 'Categoria profissional', 'Ofício'], ['Qualifica', 'Livello', 'Mansione'], ['職種', '職種区分'], ['工种', '岗位'], ['직종', '공종']),
+  trade: W(['Gewerk'], ['Corps d\'état', 'Lot'], ['Gremio', 'Oficio'], ['Disciplina', 'Ofício'], ['Categoria', 'Opera specialistica'], ['職種', '工種'], ['专业', '工种'], ['공종', '직종']),
+  rate: W(['Stundenlohn', 'Satz', 'Rate', 'Ansatz'], ['Taux', 'Taux horaire'], ['Tarifa', 'Precio hora'], ['Taxa', 'Valor hora'], ['Tariffa', 'Paga oraria'], ['単価', '時間単価', '賃率'], ['单价', '时薪', '费率'], ['단가', '시급', '요율']),
+  fringe: W(['Zulagen', 'Sozialkassenbeitrag', 'Lohnnebenkosten'], ['Avantages', 'Charges sociales', 'Cotisations caisse'], ['Prestaciones', 'Beneficios sociales'], ['Benefícios', 'Encargos'], ['Contributi', 'Benefit', 'Cassa edile'], ['福利費', '手当'], ['福利', '附加福利'], ['부가급여', '복리후생비']),
+  week_ending: W(['Wochenende', 'Woche bis', 'KW-Ende'], ['Semaine se terminant le', 'Fin de semaine'], ['Semana que termina', 'Fin de semana'], ['Semana terminada em', 'Fim da semana'], ['Settimana al', 'Fine settimana'], ['週末日', '週締日'], ['周结束日', '周截止日'], ['주말일', '주간마감일']),
+  equipment: W(['Gerät', 'Gerätenummer', 'Maschine', 'Inventarnummer'], ['Engin', 'Matériel', 'N° d\'engin'], ['Equipo', 'Máquina', 'N.º de equipo'], ['Equipamento', 'Máquina', 'Nº do equipamento'], ['Attrezzatura', 'Macchina', 'Mezzo'], ['機械', '機械番号', '重機'], ['设备', '设备编号', '机械'], ['장비', '장비번호', '중장비']),
+  permit: W(['Genehmigung', 'Baugenehmigung', 'Genehmigungsnummer'], ['Permis', 'N° de permis', 'Autorisation'], ['Licencia', 'Permiso', 'N.º de licencia'], ['Alvará', 'Licença', 'Nº do alvará'], ['Permesso', 'Titolo abilitativo', 'N. permesso'], ['許可番号', '確認申請', '許可'], ['许可证号', '施工许可证', '许可'], ['허가번호', '인허가', '허가']),
+  inspection: W(['Abnahme', 'Prüfung', 'Inspektion'], ['Contrôle', 'Inspection', 'Visite'], ['Inspección', 'Visita de inspección'], ['Vistoria', 'Inspeção'], ['Ispezione', 'Collaudo', 'Sopralluogo'], ['検査', '中間検査', '検査種別'], ['验收', '检查', '检验'], ['검사', '점검', '감리검사']),
+  result: W(['Ergebnis'], ['Résultat'], ['Resultado'], ['Resultado'], ['Esito', 'Risultato'], ['結果', '判定'], ['结果', '结论'], ['결과', '판정']),
+  insurer: W(['Versicherer', 'Versicherungsgesellschaft'], ['Assureur', 'Compagnie d\'assurance'], ['Aseguradora', 'Compañía de seguros'], ['Seguradora'], ['Compagnia assicurativa', 'Assicuratore'], ['保険会社'], ['保险公司'], ['보험사']),
+  policy_number: W(['Policennummer', 'Versicherungsschein-Nr.'], ['N° de police'], ['N.º de póliza'], ['Nº da apólice'], ['N. polizza'], ['証券番号'], ['保单号'], ['증권번호']),
+  coverage: W(['Versicherungsart', 'Deckung'], ['Garantie', 'Type d\'assurance'], ['Cobertura', 'Tipo de seguro'], ['Cobertura', 'Tipo de seguro'], ['Copertura', 'Tipo di polizza'], ['保険種類', '補償内容'], ['险种', '保险类型'], ['보험종류', '담보']),
+  limit: W(['Deckungssumme', 'Versicherungssumme'], ['Plafond', 'Montant de garantie'], ['Límite', 'Suma asegurada'], ['Limite', 'Importância segurada'], ['Massimale'], ['補償限度額', '保険金額'], ['保险金额', '责任限额'], ['보상한도', '보험금액']),
+  document_type: W(['Dokumentart', 'Nachweis'], ['Type de document', 'Pièce'], ['Tipo de documento'], ['Tipo de documento'], ['Tipo di documento'], ['書類種別', '書類'], ['文件类型', '资料类型'], ['서류종류', '문서유형']),
+  waiver_type: W(['Art der Verzichtserklärung'], ['Type de renonciation'], ['Tipo de renuncia'], ['Tipo de renúncia'], ['Tipo di rinuncia'], ['権利放棄書の種類'], ['弃权书类型'], ['권리포기서 유형']),
+  through_date: W(['Bis Datum', 'Gültig bis Leistungsdatum'], ['Jusqu\'au'], ['Hasta la fecha'], ['Até a data'], ['Fino al'], ['対象期間末'], ['截至日期'], ['기준일까지']),
+  bid_amount: W(['Angebotssumme', 'Angebotspreis'], ['Montant de l\'offre', 'Offre'], ['Importe de la oferta', 'Oferta'], ['Valor da proposta', 'Proposta'], ['Importo offerta', 'Offerta'], ['見積金額', '入札金額'], ['投标金额', '报价'], ['입찰금액', '견적금액']),
+  bidder: W(['Bieter', 'Anbieter'], ['Soumissionnaire', 'Entreprise'], ['Licitador', 'Ofertante'], ['Proponente', 'Licitante'], ['Offerente', 'Concorrente'], ['入札者', '見積業者'], ['投标人', '投标单位'], ['입찰자', '견적업체']),
+  area: W(['Ort', 'Bereich', 'Raum', 'Standort'], ['Localisation', 'Zone', 'Emplacement'], ['Ubicación', 'Zona'], ['Local', 'Área'], ['Posizione', 'Zona', 'Ambiente'], ['場所', '部位', '位置'], ['位置', '部位', '区域'], ['위치', '부위', '구역']),
+  spec_section: W(['LV-Abschnitt', 'Leistungsbereich'], ['Article du CCTP', 'Section du cahier des charges'], ['Capítulo del pliego', 'Sección de especificaciones'], ['Seção da especificação', 'Caderno de encargos'], ['Capitolato', 'Sezione del capitolato'], ['仕様書項目', '特記仕様'], ['技术规格章节', '规范章节'], ['시방서 항목', '시방 절']),
+  ball_in_court: W(['Liegt bei', 'Zuständig'], ['En attente de', 'Chez'], ['Pendiente de', 'Responsable actual'], ['Com quem está', 'Pendente com'], ['In carico a'], ['対応者', 'ボール保持者'], ['当前处理人'], ['현재 담당자']),
+  required_date: W(['Benötigt am', 'Bedarfstermin'], ['Date requise', 'Requis le'], ['Fecha requerida', 'Necesario el'], ['Data necessária', 'Necessário em'], ['Data richiesta', 'Necessario il'], ['必要日', '搬入必要日'], ['需求日期', '要求到场日期'], ['필요일', '반입필요일']),
+  lead_time_days: W(['Lieferzeit (Tage)', 'Lieferzeit'], ['Délai de fabrication (jours)', 'Délai'], ['Plazo de entrega (días)', 'Plazo'], ['Prazo de entrega (dias)', 'Prazo'], ['Tempi di consegna (giorni)', 'Tempi di consegna'], ['製作期間（日）', '納期日数'], ['供货周期（天）', '交货期'], ['제작기간(일)', '납기일수']),
+  warranty_end: W(['Gewährleistung bis', 'Ende der Gewährleistung'], ['Fin de garantie', 'Garantie jusqu\'au'], ['Fin de garantía'], ['Fim da garantia'], ['Fine garanzia'], ['保証期限', '瑕疵担保期限'], ['保修截止日期', '质保到期日'], ['하자보수기한', '보증만료일']),
+  jurisdiction: W(['Steuergebiet', 'Gemeinde', 'Gebietskörperschaft'], ['Juridiction fiscale', 'Commune'], ['Jurisdicción', 'Municipio'], ['Jurisdição', 'Município'], ['Giurisdizione', 'Comune'], ['課税地域', '自治体'], ['税收管辖区', '地区'], ['과세지역', '지자체']),
+  tax_rate: W(['Steuersatz'], ['Taux de taxe', 'Taux de TVA'], ['Tipo impositivo', 'Tasa de impuesto'], ['Alíquota'], ['Aliquota'], ['税率'], ['税率'], ['세율']),
+  ticket: W(['Lieferschein', 'Lieferscheinnummer'], ['Bon de livraison', 'N° de BL'], ['Albarán', 'N.º de albarán'], ['Romaneio', 'Nota de entrega'], ['Bolla', 'DDT', 'N. bolla'], ['納品書番号', '納品書'], ['送货单号', '送货单'], ['납품서번호', '거래명세서']),
+  backcharge: W(['Belastung', 'Rückbelastung', 'Gegenrechnung'], ['Refacturation', 'Pénalité imputée'], ['Repercusión', 'Cargo al subcontratista'], ['Desconto ao subempreiteiro', 'Glosa'], ['Addebito', 'Riaddebito'], ['相殺', '請求相殺'], ['扣款', '反索赔'], ['공제', '상계']),
+  punch_item: W(['Mangel', 'Mangelnummer', 'Restarbeit'], ['Réserve', 'N° de réserve'], ['Repaso', 'Defecto pendiente'], ['Pendência', 'Item de vistoria'], ['Difetto', 'Punto aperto'], ['手直し', '指摘事項'], ['整改项', '缺陷'], ['하자', '펀치리스트']),
+  closed_date: W(['Erledigt am', 'Geschlossen am'], ['Levée le', 'Clôturé le'], ['Cerrado el', 'Fecha de cierre'], ['Fechado em', 'Data de fechamento'], ['Chiuso il', 'Data di chiusura'], ['完了日', 'クローズ日'], ['关闭日期', '完成日期'], ['완료일', '종결일']),
+  service_ticket: W(['Auftragsnummer Service', 'Serviceauftrag'], ['N° d\'intervention', 'Bon d\'intervention'], ['N.º de aviso', 'Orden de servicio'], ['Ordem de serviço', 'Nº da OS'], ['Intervento', 'N. intervento'], ['作業番号', 'サービス番号'], ['工单号', '服务单'], ['작업번호', '서비스번호']),
+  technician: W(['Techniker', 'Monteur', 'Servicetechniker'], ['Technicien', 'Intervenant'], ['Técnico'], ['Técnico'], ['Tecnico', 'Manutentore'], ['技術者', '作業者', 'サービスマン'], ['技术员', '维修工'], ['기사', '기술자']),
+  union_fund: W(['Kasse', 'Sozialkasse', 'Fonds'], ['Caisse', 'Fonds'], ['Fondo', 'Caja'], ['Fundo', 'Caixa'], ['Cassa', 'Fondo', 'Cassa edile'], ['基金', '共済'], ['基金', '工会基金'], ['기금', '공제회']),
+  surety: W(['Bürge', 'Kautionsversicherer'], ['Garant', 'Caution'], ['Afianzadora', 'Fiador'], ['Seguradora garantidora', 'Fiador'], ['Fideiussore', 'Garante'], ['保証会社'], ['担保公司', '保证人'], ['보증기관', '보증회사']),
+  day_rate: W(['Tagesmiete', 'Tagessatz'], ['Tarif journalier', 'Location jour'], ['Tarifa diaria', 'Alquiler día'], ['Diária', 'Taxa diária'], ['Tariffa giornaliera', 'Noleggio giornaliero'], ['日額', '日当たり単価'], ['日租金', '日费率'], ['일대여료', '일단가']),
+  on_rent: W(['Mietbeginn', 'Angemietet am'], ['Début de location', 'Mise à disposition'], ['Inicio de alquiler', 'Fecha de entrada'], ['Início da locação'], ['Inizio noleggio'], ['借入日', 'レンタル開始日'], ['进场日期', '租赁开始日'], ['반입일', '임차시작일']),
+  off_rent: W(['Mietende', 'Abgemeldet am'], ['Fin de location', 'Restitution'], ['Fin de alquiler', 'Fecha de baja'], ['Fim da locação', 'Devolução'], ['Fine noleggio', 'Restituzione'], ['返却日', 'レンタル終了日'], ['退场日期', '租赁结束日'], ['반출일', '임차종료일']),
+  // ---- Ledgers and migrations (used by Olympus) ----
+  external_id: W(['Externe ID', 'Alt-ID', 'Altsystem-ID'], ['ID externe', 'Ancien ID'], ['ID externo', 'ID heredado'], ['ID externo', 'ID legado'], ['ID esterno', 'ID legacy'], ['外部ID', '旧システムID'], ['外部编号', '外部ID', '旧系统编号'], ['외부ID', '기존 시스템 ID']),
+  document_number: W(['Belegnummer', 'Beleg-Nr.', 'Dokumentnummer'], ['N° de pièce', 'Numéro de pièce', 'N° de document'], ['N.º de documento', 'Número de documento', 'Asiento'], ['Nº do documento', 'Número do documento', 'Lançamento'], ['Numero documento', 'N. documento', 'Numero registrazione'], ['伝票番号', '仕訳番号', '文書番号'], ['凭证号', '单据编号', '凭证编号'], ['전표번호', '문서번호']),
+  account: W(['Konto', 'Kontonummer', 'Sachkonto'], ['Compte', 'N° de compte', 'Numéro de compte'], ['Cuenta', 'Número de cuenta', 'Cuenta contable'], ['Conta', 'Número da conta', 'Conta contábil'], ['Conto', 'Numero conto', 'Codice conto'], ['勘定科目', '勘定科目コード', '科目コード'], ['科目代码', '会计科目', '科目编码', '科目'], ['계정과목', '계정코드', '계정']),
+  account_name: W(['Kontobezeichnung', 'Kontoname'], ['Libellé du compte', 'Intitulé du compte'], ['Nombre de la cuenta', 'Descripción de la cuenta'], ['Nome da conta', 'Descrição da conta'], ['Descrizione conto', 'Nome conto'], ['勘定科目名', '科目名'], ['科目名称', '会计科目名称'], ['계정과목명', '계정명']),
+  balance: W(['Saldo', 'Endsaldo', 'Kontostand'], ['Solde', 'Solde final'], ['Saldo', 'Saldo final'], ['Saldo', 'Saldo final'], ['Saldo', 'Saldo finale'], ['残高', '期末残高'], ['余额', '期末余额', '餘額'], ['잔액', '기말잔액']),
+  subsidiary: W(['Gesellschaft', 'Buchungskreis', 'Tochtergesellschaft'], ['Société', 'Filiale', 'Entité'], ['Sociedad', 'Filial', 'Entidad'], ['Empresa', 'Filial', 'Entidade'], ['Società', 'Filiale', 'Entità'], ['会社', '子会社', '会社コード'], ['子公司', '公司代码', '核算主体'], ['법인', '자회사', '회사코드']),
+  ledger_debit: W(['Soll', 'Soll-Betrag'], ['Débit'], ['Debe', 'Débito'], ['Débito'], ['Dare'], ['借方', '借方金額'], ['借方', '借方金额'], ['차변', '차변금액']),
+  ledger_credit: W(['Haben', 'Haben-Betrag'], ['Crédit'], ['Haber', 'Crédito'], ['Crédito'], ['Avere'], ['貸方', '貸方金額'], ['贷方', '贷方金额'], ['대변', '대변금액']),
+};
+
+/**
+ * Agent fields that read another entry of the dictionary: a pay application's
+ * billed_to_date is the completed-and-stored total, a timecard's ot_hours are
+ * overtime hours. A field that is not here reads the entry of its own name, when
+ * there is one.
+ */
+export const FIELD_CONCEPTS = Object.freeze({
+  invoice_number: 'invoice', quantity: 'qty', units: 'qty', qty_billed: 'qty', qty_received: 'qty', location: 'area', item: 'line', line_item: 'line',
+  revised_budget: 'revised_budget', committed_cost: 'committed', actual_cost: 'actual', cost_to_date: 'actual', projected_cost: 'projected',
+  original_contract: 'original_amount', revised_contract: 'revised_amount', retainage_withheld: 'retainage', retainage_amount: 'retainage', retainage_balance: 'retainage_held',
+  billed_to_date: 'completed_stored', percent: 'percent_complete', paid_on: 'paid_date', paid_at: 'paid_date', check_date: 'paid_date', received_on: 'received_date',
+  expiry: 'expires', expiration: 'expires', expires_on: 'expires', effective: 'effective_date', issued: 'date', issued_date: 'date', scheduled_date: 'date', inspection_date: 'date',
+  ot_hours: 'overtime_hours', st_hours: 'hours', regular_hours: 'hours', paid_rate: 'rate', base_rate: 'rate', prevailing_rate: 'rate', fringe_rate: 'fringe', fringe_paid: 'fringe', hourly_rate: 'rate',
+  equipment_id: 'equipment', permit_number: 'permit', inspection_type: 'inspection', policy: 'policy_number', each_occurrence: 'limit', aggregate: 'limit', insurance_company: 'insurer',
+  submittal: 'reference', revision: 'reference', due: 'due_date', created: 'date', subcontractor: 'vendor', sub: 'vendor', supplier: 'vendor', contractor: 'vendor',
+  tax_charged: 'tax', tax_amount: 'tax', taxable_amount: 'amount', fund: 'union_fund', union: 'union_fund', ticket_number: 'ticket', delivery_ticket: 'ticket',
+  daily_rate: 'day_rate', on_rent_date: 'on_rent', off_rent_date: 'off_rent', called_off: 'off_rent', tech: 'technician', ticket_id: 'service_ticket', job_number: 'job', project: 'job',
+});
+
+const byField = new Map();
+for (const [field, langs] of Object.entries(COLUMN_WORDS)) {
+  const list = []; const seen = new Map();
+  for (const lang of COLUMN_LANGUAGES) for (const w of langs[lang] || []) {
+    const k = normHeader(w);
+    if (!k) continue;
+    // A word shared by languages (摘要 in Japanese and Chinese) is listed once, with both.
+    if (seen.has(k)) { const e = seen.get(k); if (!e.lang.split(', ').includes(lang)) e.lang += `, ${lang}`; continue; }
+    const e = { lang, word: w }; seen.set(k, e); list.push(e);
+  }
+  byField.set(field, list);
+}
+
+/** Translated column names for one of an agent's fields: [{ lang, word }], [] when there are none. */
+export function translatedNames(field) { return byField.get(field) || []; }
+
+/** The translated names of a concept in one language, or every language (for agents that pick columns themselves). */
+export function namesFor(concept, lang = null) {
+  const c = COLUMN_WORDS[concept];
+  if (!c) return [];
+  return lang ? [...(c[lang] || [])] : COLUMN_LANGUAGES.flatMap((l) => c[l] || []);
+}
+
+/** Every known column name, normalised: used to tell which text encoding a file was saved in. */
+export const KNOWN_HEADER_WORDS = new Set([...byField.values()].flat().map((x) => normHeader(x.word)).concat(Object.keys(COLUMN_WORDS).map(normHeader)).filter((k) => k && k.length > 1));
