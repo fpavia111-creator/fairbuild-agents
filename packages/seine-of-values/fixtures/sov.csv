@@ -1,0 +1,14 @@
+job,item,description,scheduled_value,completed_stored,field_percent
+24-101,1,General conditions,48000,28800,60
+24-101,2,Cast-in-place concrete,128000,96000,80
+24-101,3,Rough carpentry,22000,21000,95
+24-101,4,Drywall and framing,64000,19000,15
+24-101,5,Electrical,92000,45000,65
+24-101,6,Doors and hardware,18000,14000,40
+24-101,7,Painting,30000,12000,40
+24-101,8,Change order CO-002 lighting,8000,3000,40
+24-101,9,Sitework,40000,12000,30
+24-102,1,Mobilization,20000,20000,100
+24-102,2,Membrane roofing,210000,120000,70
+24-102,3,Sheet metal,30000,0,0
+24-102,4,Final cleanup,0,2500,

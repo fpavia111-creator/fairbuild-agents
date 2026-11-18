@@ -1,0 +1,4 @@
+job,change_order,status,description,amount
+24-101,CO-001,Approved,Added outlets in exam rooms,5000
+24-101,CO-002,Approved,Upgraded lighting,8000
+24-101,PCO-003,Pending,Unforeseen rock excavation,12500
