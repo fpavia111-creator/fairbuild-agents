@@ -1,0 +1,12 @@
+kind,job,permit_number,type,jurisdiction,date,result,status,findings,reasons,decision,decided_by
+inspection,24-101,BP-2026-0141,Framing,,2026-11-05,fail,action,failed_no_reinspection,Framing on job 24-101 failed on 2026-11-05 and no re-inspection is booked.,,
+permit,24-102,RP-2026-0090,Roofing,Sample County,2026-10-15,,action,permit_expired,Roofing permit RP-2026-0090 expired on 2026-10-15 and is not closed out. Renew it or close it out with Sample County.,,
+inspection,24-102,RP-2026-0090,Roof final,,2026-11-10,,action,inspection_overdue,Roof final was scheduled for 2026-11-10 and has no result 6 day(s) later. Record the result or rebook it.,,
+inspection,24-102,MP-2026-0999,Mechanical rough,,2026-11-25,,action,permit_missing inspection_upcoming,"Inspection ""Mechanical rough"" is on permit MP-2026-0999, which is not in your permit log. Check the permit was pulled. Mechanical rough on 2026-11-25, in 9 day(s).",,
+inspection,24-101,EP-2026-0333,Rough electrical,,2026-11-20,,soon,inspection_upcoming,"Rough electrical on 2026-11-20, in 4 day(s).",,
+permit,24-101,EP-2026-0333,Electrical,Example City,2026-12-01,,soon,permit_expiring,"Electrical permit EP-2026-0333 expires on 2026-12-01, in 15 day(s).",,
+inspection,24-101,BP-2026-0141,Footing,,2026-06-10,pass,ok,,,,
+permit,24-101,BP-2026-0141,Building,Example City,2027-05-01,,ok,,,,
+inspection,24-102,PP-2026-0212,Underground plumbing,,2026-10-01,fail,ok,,,,
+inspection,24-102,PP-2026-0212,Underground plumbing,,2026-10-08,pass,ok,,,,
+permit,24-102,PP-2026-0212,Plumbing,Sample County,2027-05-10,,ok,,,,

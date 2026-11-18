@@ -1,0 +1,9 @@
+date,worker,worker_id,entries,hours,misallocated_hours,status,findings,reasons,decision,decided_by
+2026-11-10,Casey Sample,7722,24-102 07-500 8h,8,8,misallocated,not_assigned,Casey Sample was not assigned to job 24-102 on 2026-11-10; 8 hour(s) charged to it.,,
+2026-11-10,Riley Test,3355,23-095 01-500 7h; 24-102 07-500 9h,16,7,misallocated,closed_job not_assigned long_day,"7 hour(s) on 23-095 01-500, a job that is closed (completed 2026-06-30). Riley Test was not assigned to job 23-095 on 2026-11-10; 7 hour(s) charged to it. 16 hours on 2026-11-10 across 2 entries, more than 14. Check for a typing error or a missing split.",,
+2026-11-11,Morgan Example,8801,24-101 05-120 8h,8,8,misallocated,invalid_cost_code,Cost code 05-120 has no budget on job 24-101; 8 hour(s) charged to it.,,
+2026-11-12,Morgan Example,8801,24-101 09-250 8h,8,0,review,duplicate_entry,24-101 09-250 8 hour(s) is entered 2 times on 2026-11-12; counted once.,,
+2026-11-14,Jordan Example,4411,24-101 01-500 6h,6,0,review,weekend,6 hour(s) on a Saturday (2026-11-14). Confirm the work was authorised.,,
+2026-11-09,Jordan Example,4411,24-101 06-100 8h,8,0,ok,,,,
+2026-11-10,Jordan Example,4411,24-101 06-100 8h,8,0,ok,,,,
+2026-11-16,Casey Sample,7722,24-102 07-500 8h,8,0,ok,,,,

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Schedule of values against billings</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b6760;--line:#e4e0d8;--ok:#1f7a4d;--bad:#b42318;--warn:#a15c07;--card:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#161514;--fg:#ecebe8;--mut:#a29d94;--line:#34312d;--ok:#4ade80;--bad:#f87171;--warn:#fbbf24;--card:#1f1e1c}}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,Segoe UI,"Hiragino Sans","Yu Gothic UI","Microsoft YaHei","PingFang SC","Malgun Gothic","Apple SD Gothic Neo","Noto Sans CJK",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:17px;margin:28px 0 8px}
+.mut{color:var(--mut)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+table{border-collapse:collapse;width:100%;background:var(--card);font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{font-weight:600}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.tiles{display:flex;gap:12px;flex-wrap:wrap}.tile{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;min-width:120px}
+.tile b{display:block;font-size:22px}code{font-size:13px;overflow-wrap:anywhere}pre{overflow-x:auto}
+.wrap{overflow-x:auto;max-width:100%}svg,img{max-width:100%;height:auto}figure{margin:16px 0}p,li,h1,h2,h3{overflow-wrap:break-word}
+</style></head><body><main>
+<h1>Schedule of values against billings</h1>
+<p class="mut">13 schedule of values line(s) on 2 job(s), 393300 billed of 710000. 2 line(s) billed ahead of the field (16200), 2 behind it (41800 not yet billed), 2 to review.</p>
+<h2>By job</h2><div class="wrap"><table><thead><tr><th scope="col">job</th><th scope="col">lines</th><th scope="col">scheduled</th><th scope="col">billed</th><th scope="col">earned</th><th scope="col">billed ahead</th><th scope="col">billed behind</th><th scope="col">net over under</th></tr></thead><tbody>
+<tr><td>24-101</td><td>9</td><td>450000</td><td>250800</td><td>255900</td><td>16200</td><td>14800</td><td>-5100</td></tr>
+<tr><td>24-102</td><td>4</td><td>260000</td><td>142500</td><td>169500</td><td>0</td><td>27000</td><td>-27000</td></tr>
+</tbody></table></div>
+<h2>By finding</h2><div class="wrap"><table><thead><tr><th scope="col">code</th><th scope="col">count</th><th scope="col">amount</th></tr></thead><tbody>
+<tr><td>billed_ahead</td><td>2</td><td>16200</td></tr>
+<tr><td>billed_behind</td><td>2</td><td>41800</td></tr>
+<tr><td>billed_on_zero_line</td><td>1</td><td>2500</td></tr>
+<tr><td>no_field_percent</td><td>1</td><td>0</td></tr>
+<tr><td>sov_not_equal_contract</td><td>1</td><td>5000</td></tr>
+</tbody></table></div>
+<h2>All rows (14)</h2>
+<div class="wrap"><table><thead><tr><th scope="col">job</th><th scope="col">item</th><th scope="col">description</th><th scope="col">scheduled value</th><th scope="col">billed</th><th scope="col">billed percent</th><th scope="col">field percent</th><th scope="col">status</th><th scope="col">reasons</th></tr></thead><tbody>
+<tr><td>24-101</td><td>4</td><td>Drywall and framing</td><td>64000</td><td>19000</td><td>29.69</td><td>15</td><td>ahead</td><td>Billed 29.69% (19000) with 15% in place in the field: 9400 billed ahead of the work.</td></tr>
+<tr><td>24-101</td><td>6</td><td>Doors and hardware</td><td>18000</td><td>14000</td><td>77.78</td><td>40</td><td>ahead</td><td>Billed 77.78% (14000) with 40% in place in the field: 6800 billed ahead of the work.</td></tr>
+<tr><td>24-101</td><td>5</td><td>Electrical</td><td>92000</td><td>45000</td><td>48.91</td><td>65</td><td>behind</td><td>65% is in place in the field but 48.91% (45000) is billed: 14800 not yet billed.</td></tr>
+<tr><td>24-102</td><td>2</td><td>Membrane roofing</td><td>210000</td><td>120000</td><td>57.14</td><td>70</td><td>behind</td><td>70% is in place in the field but 57.14% (120000) is billed: 27000 not yet billed.</td></tr>
+<tr><td>24-101</td><td>JOB</td><td>Schedule of values as a whole</td><td>450000</td><td>250800</td><td>55.7</td><td></td><td>review</td><td>The schedule of values adds up to 450000; the revised contract is 455000.</td></tr>
+<tr><td>24-102</td><td>4</td><td>Final cleanup</td><td>0</td><td>2500</td><td></td><td></td><td>review</td><td>2500 billed on a line with no scheduled value. Move it to a priced line or a change order line. 2500 billed with no field percent complete to compare it with.</td></tr>
+<tr><td>24-101</td><td>1</td><td>General conditions</td><td>48000</td><td>28800</td><td>60</td><td>60</td><td>ok</td><td></td></tr>
+<tr><td>24-101</td><td>2</td><td>Cast-in-place concrete</td><td>128000</td><td>96000</td><td>75</td><td>80</td><td>ok</td><td></td></tr>
+<tr><td>24-101</td><td>3</td><td>Rough carpentry</td><td>22000</td><td>21000</td><td>95.45</td><td>95</td><td>ok</td><td></td></tr>
+<tr><td>24-101</td><td>7</td><td>Painting</td><td>30000</td><td>12000</td><td>40</td><td>40</td><td>ok</td><td></td></tr>
+<tr><td>24-101</td><td>8</td><td>Change order CO-002 lighting</td><td>8000</td><td>3000</td><td>37.5</td><td>40</td><td>ok</td><td></td></tr>
+<tr><td>24-101</td><td>9</td><td>Sitework</td><td>40000</td><td>12000</td><td>30</td><td>30</td><td>ok</td><td></td></tr>
+<tr><td>24-102</td><td>1</td><td>Mobilization</td><td>20000</td><td>20000</td><td>100</td><td>100</td><td>ok</td><td></td></tr>
+<tr><td>24-102</td><td>3</td><td>Sheet metal</td><td>30000</td><td>0</td><td>0</td><td>0</td><td>ok</td><td></td></tr>
+</tbody></table></div>
+<h2>Limits</h2><ul><li>Reads only the files you give it. It does not log in to your accounting system, project management system, bank, surety, insurer or any government portal.</li><li>Thresholds, percentages, rates and dates come from the settings file you supply; the defaults it used are listed in the result.</li><li>Not legal, tax, lien, insurance, surety or accounting advice. A person decides what to bill, pay, hold, send or file.</li><li>Field percent complete is the project manager&#39;s estimate as given in the file; Seine does not measure progress.</li></ul>
+<p class="mut" style="margin-top:32px">Written by a Fairbuild agent from your files. Nothing was sent or paid.</p>
+</main></body></html>

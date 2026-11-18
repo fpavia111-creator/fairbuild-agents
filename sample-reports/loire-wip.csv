@@ -1,0 +1,8 @@
+job,job_name,contract_amount,estimated_cost,cost_to_date,percent_complete,earned_revenue,billed_to_date,over_billed,under_billed,loss_provision,status,findings,reasons,decision,decided_by
+24-103,Example Clinic annex,200000,214000,160500,75,150000,150000,0,0,3500,loss,loss_job,"Estimated cost 214000 exceeds the contract 200000: an expected loss of 14000, of which 10500 is already in gross profit to date; 3500 more is to be recognised now.",,
+23-095,Sample Retail storefront,180000,150000,152000,100,180000,180000,0,0,0,review,cost_exceeds_estimate,Cost to date 152000 is past the estimated total cost 150000. Update the estimate; percent complete is held at 100% until then.,,
+24-102,Sample Library roof,260000,205000,150000,73.17,190243.9,142500,0,47743.9,0,review,under_billed_large,"Under billed 47743.9 (18.4% of the contract): earned 190243.9, billed 142500. Bill the work in place or check the cost to date for misposted cost.",,
+24-105,Sample Office tenant improvement,90000,,12000,,,15000,0,0,0,review,no_estimate,Cost 12000 and billings 15000 with no estimated total cost: percent complete cannot be measured. Enter the estimate.,,
+24-101,Example Clinic fit-out,455000,390000,234000,60,273000,256800,0,16200,0,ok,,,,
+24-104,Example Warehouse slab,300000,240000,60000,25,75000,105000,30000,0,0,ok,,,,
+24-106,Example Parking lot,120000,100000,0,0,0,0,0,0,0,ok,,,,

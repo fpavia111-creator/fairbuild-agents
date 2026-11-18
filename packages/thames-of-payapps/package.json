@@ -1,6 +1,7 @@
 {
   "name": "thames-of-payapps",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/thames-of-payapps",
   "description": "Thames of Pay Apps: checks the arithmetic of a pay application in the G702/G703 layout before it goes out or before you approve a subcontractor's: each line's completed and stored total, percent and balance, retainage at your rates, lines billed past their scheduled value, work from previous applications that does not match the last one, and the summary page totals down to the payment due. Never submits or approves a pay application.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

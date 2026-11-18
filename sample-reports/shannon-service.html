@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Service tickets and technician utilisation</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b6760;--line:#e4e0d8;--ok:#1f7a4d;--bad:#b42318;--warn:#a15c07;--card:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#161514;--fg:#ecebe8;--mut:#a29d94;--line:#34312d;--ok:#4ade80;--bad:#f87171;--warn:#fbbf24;--card:#1f1e1c}}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,Segoe UI,"Hiragino Sans","Yu Gothic UI","Microsoft YaHei","PingFang SC","Malgun Gothic","Apple SD Gothic Neo","Noto Sans CJK",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:17px;margin:28px 0 8px}
+.mut{color:var(--mut)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+table{border-collapse:collapse;width:100%;background:var(--card);font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{font-weight:600}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.tiles{display:flex;gap:12px;flex-wrap:wrap}.tile{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;min-width:120px}
+.tile b{display:block;font-size:22px}code{font-size:13px;overflow-wrap:anywhere}pre{overflow-x:auto}
+.wrap{overflow-x:auto;max-width:100%}svg,img{max-width:100%;height:auto}figure{margin:16px 0}p,li,h1,h2,h3{overflow-wrap:break-word}
+</style></head><body><main>
+<h1>Service tickets and technician utilisation</h1>
+<p class="mut">7 completed ticket(s) by 3 technician(s), 4039 invoiced or due: 2 ticket(s) not billed or billed at zero (620 unbilled). Utilisation 61.7%; 1 technician(s) below target or with a high recall rate.</p>
+<h2>By technician</h2><div class="wrap"><table><thead><tr><th scope="col">technician</th><th scope="col">completed</th><th scope="col">revenue</th><th scope="col">paid hours</th><th scope="col">utilisation pct</th><th scope="col">revenue per paid hour</th><th scope="col">recall rate pct</th></tr></thead><tbody>
+<tr><td>Blake Sample</td><td>3</td><td>970</td><td>40</td><td>45</td><td>24.25</td><td>33.3</td></tr>
+<tr><td>Alex Example</td><td>3</td><td>669</td><td>40</td><td>65</td><td>16.73</td><td>0</td></tr>
+<tr><td>Casey Test</td><td>1</td><td>2400</td><td>40</td><td>75</td><td>60</td><td>0</td></tr>
+</tbody></table></div>
+<h2>By finding</h2><div class="wrap"><table><thead><tr><th scope="col">code</th><th scope="col">count</th><th scope="col">amount</th></tr></thead><tbody>
+<tr><td>completed_not_invoiced</td><td>1</td><td>620</td></tr>
+<tr><td>high_recall_rate</td><td>1</td><td>0</td></tr>
+<tr><td>low_utilisation</td><td>1</td><td>0</td></tr>
+<tr><td>zero_invoice</td><td>1</td><td>0</td></tr>
+</tbody></table></div>
+<h2>All rows (5)</h2>
+<div class="wrap"><table><thead><tr><th scope="col">kind</th><th scope="col">key</th><th scope="col">technician</th><th scope="col">revenue</th><th scope="col">utilisation pct</th><th scope="col">recall rate pct</th><th scope="col">status</th><th scope="col">reasons</th></tr></thead><tbody>
+<tr><td>ticket</td><td>ST-9003</td><td>Alex Example</td><td>0</td><td></td><td></td><td>unbilled</td><td>Completed 2026-11-11 with a zero total and not marked recall or warranty. Was the work billed?</td></tr>
+<tr><td>ticket</td><td>ST-9005</td><td>Blake Sample</td><td>620</td><td></td><td></td><td>unbilled</td><td>Completed 2026-11-10 for 620 with no invoice number.</td></tr>
+<tr><td>technician</td><td>Blake Sample</td><td>Blake Sample</td><td>970</td><td>45</td><td>33.3</td><td>review</td><td>18 working hour(s) of 40 paid: 45% utilisation, below 60%. 1 recall(s) on 3 completed ticket(s): 33.3%, above 10%.</td></tr>
+<tr><td>technician</td><td>Alex Example</td><td>Alex Example</td><td>669</td><td>65</td><td>0</td><td>ok</td><td></td></tr>
+<tr><td>technician</td><td>Casey Test</td><td>Casey Test</td><td>2400</td><td>75</td><td>0</td><td>ok</td><td></td></tr>
+</tbody></table></div>
+<h2>Limits</h2><ul><li>Reads only the files you give it. It does not log in to your accounting system, project management system, bank, surety, insurer or any government portal.</li><li>Thresholds, percentages, rates and dates come from the settings file you supply; the defaults it used are listed in the result.</li><li>Not legal, tax, lien, insurance, surety or accounting advice. A person decides what to bill, pay, hold, send or file.</li><li>Results returned to the AI model have worker names, worker ids, Social Security numbers and homeowner contact details masked. The files written here keep the real values: keep them in a secure folder.</li><li>Utilisation depends on which timesheet codes you count as working; the codes used are listed in the result.</li></ul>
+<p class="mut" style="margin-top:32px">Written by a Fairbuild agent from your files. Nothing was sent or paid.</p>
+</main></body></html>

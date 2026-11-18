@@ -1,0 +1,8 @@
+check_number,vendor,job,date,amount,final,conditional,unconditional,status,findings,reasons,decision,decided_by
+CK-5004,Example Electric Inc,24-101,2026-10-30,40500,no,,,missing,paid_without_conditional unconditional_pending,"CK-5004 paid 40500 on 2026-10-30 with no conditional waiver on file. Unconditional waiver for CK-5004 not in yet; 17 day(s) since payment, due within 30.",,
+CK-5005,Sample Lumber Supply,24-101,2026-10-15,14400,no,Conditional progress,,missing,unconditional_missing,No unconditional waiver for CK-5005 (14400) 32 days after payment.,,
+CK-5007,Sample Sheet Metal,24-102,2026-08-25,9500,yes,,,missing,final_waiver_missing,"CK-5007 is a final payment of 9500, but the waivers on file are progress waivers. Get final conditional and unconditional waivers.",,
+CK-5006,Example Roofing LLC,24-102,2026-11-09,136500,no,Conditional progress,,review,waiver_short unconditional_pending,"The conditional progress covers 130000; CK-5006 paid 136500. Unconditional waiver for CK-5006 not in yet; 7 day(s) since payment, due within 30.",,
+CK-5003,Test Drywall Co,24-101,2026-11-14,16200,no,Conditional progress,,review,unsigned unconditional_pending,"The conditional progress for CK-5003 is not signed. Unconditional waiver for CK-5003 not in yet; 2 day(s) since payment, due within 30.",,
+CK-5002,Example Concrete LLC,24-101,2026-11-12,36000,no,Conditional progress,,waiting,unconditional_pending,"Unconditional waiver for CK-5002 not in yet; 4 day(s) since payment, due within 30.",,
+CK-5001,Example Concrete LLC,24-101,2026-10-25,50400,no,Conditional progress,Unconditional progress,ok,,,,

@@ -1,6 +1,7 @@
 {
   "name": "murray-of-warranty",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/murray-of-warranty",
   "description": "Murray of Warranty: warranty callbacks by job, trade and subcontractor: callbacks a subcontractor should pay for under its warranty, callbacks after your warranty ended that may be billable, the same problem coming back, callbacks open too long and callbacks with no one responsible, with cost by job and trade. Homeowner names and contacts are masked in what the AI model sees. Drafts subcontractor notices. Never charges anyone or contacts a homeowner.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

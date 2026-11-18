@@ -209,4 +209,4 @@ else {
   if (report.ok) process.stdout.write(`\nPublish order and commands (run them yourself):\n${publish.map((l) => '  ' + l).join('\n')}\n`);
   process.stdout.write(`\nManual steps:\n${manual.map((m) => '  - ' + m).join('\n')}\n\nReport: ${relative(ROOT, join(outDir, 'release-check.md'))}\n`);
 }
-process.exit(failed.length ? 1 : 0);
+process.exitCode = failed.length ? 1 : 0;

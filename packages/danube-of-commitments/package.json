@@ -1,6 +1,7 @@
 {
   "name": "danube-of-commitments",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/danube-of-commitments",
   "description": "Danube of Commitments: subcontracts and purchase orders against invoices and payments: committed cost still open, commitments billed past their value, unsigned subcontracts being billed, stale open POs, closed POs with a balance, retainage held at the wrong rate and invoices that name no commitment. Drafts vendor letters. Never closes or changes a PO.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

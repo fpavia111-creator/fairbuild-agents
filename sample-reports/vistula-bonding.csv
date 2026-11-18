@@ -1,0 +1,11 @@
+kind,key,name,bonded,contract_amount,percent_complete,backlog,status,findings,reasons,decision,decided_by
+job,24-301,Example County school addition,yes,2600000,0,2600000,over,single_over,Bonded contract 2600000 is over your single-job limit of 2500000 by 100000. Confirm your surety approved it.,,
+bid,Example Library Annex,Example Library Annex,yes,1200000,0,1200000,exceeds,pipeline_exceeds,"With this bid (and the bonded bids listed before it) bonded backlog would be 4101756.1, 101756.1 over your aggregate limit; 1098243.9 was left.",,
+bid,Test Fire Station,Test Fire Station,yes,600000,0,600000,exceeds,pipeline_exceeds,"With this bid (and the bonded bids listed before it) bonded backlog would be 4701756.1, 701756.1 over your aggregate limit; 0 was left.",,
+program,PROGRAM,Bonding program,yes,,,2901756.1,review,near_aggregate,Bonded backlog 2901756.1 is 72.5% of your aggregate limit of 4000000; 1098243.9 left.,,
+job,24-103,Example Clinic annex,yes,200000,75,50000,review,bonded_loss,Bonded job forecast at a loss of 14000. Sureties watch loss jobs; expect questions.,,
+job,24-101,Example Clinic fit-out,yes,455000,60,182000,ok,,,,
+job,24-102,Sample Library roof,yes,260000,73.17,69756.1,ok,,,,
+job,24-104,Example Warehouse slab,no,300000,25,225000,ok,,,,
+job,24-105,Sample Office tenant improvement,no,90000,83.33,15000,ok,,,,
+bid,Sample Parking Garage,Sample Parking Garage,no,900000,0,900000,ok,,,,

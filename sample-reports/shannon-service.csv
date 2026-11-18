@@ -1,0 +1,6 @@
+kind,key,technician,date,revenue,utilisation_pct,recall_rate_pct,status,findings,reasons,decision,decided_by
+ticket,ST-9003,Alex Example,2026-11-11,0,,,unbilled,zero_invoice,Completed 2026-11-11 with a zero total and not marked recall or warranty. Was the work billed?,,
+ticket,ST-9005,Blake Sample,2026-11-10,620,,,unbilled,completed_not_invoiced,Completed 2026-11-10 for 620 with no invoice number.,,
+technician,Blake Sample,Blake Sample,,970,45,33.3,review,low_utilisation high_recall_rate,"18 working hour(s) of 40 paid: 45% utilisation, below 60%. 1 recall(s) on 3 completed ticket(s): 33.3%, above 10%.",,
+technician,Alex Example,Alex Example,,669,65,0,ok,,,,
+technician,Casey Test,Casey Test,,2400,75,0,ok,,,,

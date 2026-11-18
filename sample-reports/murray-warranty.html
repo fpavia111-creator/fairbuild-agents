@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Warranty callbacks</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b6760;--line:#e4e0d8;--ok:#1f7a4d;--bad:#b42318;--warn:#a15c07;--card:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#161514;--fg:#ecebe8;--mut:#a29d94;--line:#34312d;--ok:#4ade80;--bad:#f87171;--warn:#fbbf24;--card:#1f1e1c}}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,Segoe UI,"Hiragino Sans","Yu Gothic UI","Microsoft YaHei","PingFang SC","Malgun Gothic","Apple SD Gothic Neo","Noto Sans CJK",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:17px;margin:28px 0 8px}
+.mut{color:var(--mut)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+table{border-collapse:collapse;width:100%;background:var(--card);font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{font-weight:600}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.tiles{display:flex;gap:12px;flex-wrap:wrap}.tile{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;min-width:120px}
+.tile b{display:block;font-size:22px}code{font-size:13px;overflow-wrap:anywhere}pre{overflow-x:auto}
+.wrap{overflow-x:auto;max-width:100%}svg,img{max-width:100%;height:auto}figure{margin:16px 0}p,li,h1,h2,h3{overflow-wrap:break-word}
+</style></head><body><main>
+<h1>Warranty callbacks</h1>
+<p class="mut">6 warranty callback(s), 3470 in cost, 2 open: 1750 to recover from subcontractors, 1400 reported after the warranty ended, 1 to review.</p>
+<h2>By job</h2><div class="wrap"><table><thead><tr><th scope="col">job</th><th scope="col">callbacks</th><th scope="col">cost</th><th scope="col">open</th></tr></thead><tbody>
+<tr><td>22-050</td><td>1</td><td>1400</td><td>0</td></tr>
+<tr><td>23-090</td><td>3</td><td>1650</td><td>1</td></tr>
+<tr><td>23-110</td><td>1</td><td>300</td><td>1</td></tr>
+<tr><td>23-095</td><td>1</td><td>120</td><td>0</td></tr>
+</tbody></table></div>
+<h2>By trade</h2><div class="wrap"><table><thead><tr><th scope="col">trade</th><th scope="col">callbacks</th><th scope="col">cost</th></tr></thead><tbody>
+<tr><td>Paving</td><td>1</td><td>1400</td></tr>
+<tr><td>Roofing</td><td>2</td><td>1450</td></tr>
+<tr><td>Electrical</td><td>1</td><td>300</td></tr>
+<tr><td>Plumbing</td><td>1</td><td>120</td></tr>
+<tr><td>Drywall</td><td>1</td><td>200</td></tr>
+</tbody></table></div>
+<h2>By finding</h2><div class="wrap"><table><thead><tr><th scope="col">code</th><th scope="col">count</th><th scope="col">amount</th></tr></thead><tbody>
+<tr><td>backcharge_candidate</td><td>3</td><td>1750</td></tr>
+<tr><td>no_responsible_party</td><td>1</td><td>0</td></tr>
+<tr><td>open_too_long</td><td>1</td><td>0</td></tr>
+<tr><td>out_of_warranty</td><td>1</td><td>1400</td></tr>
+<tr><td>repeat_callback</td><td>1</td><td>0</td></tr>
+</tbody></table></div>
+<h2>All rows (6)</h2>
+<div class="wrap"><table><thead><tr><th scope="col">callback id</th><th scope="col">job</th><th scope="col">date reported</th><th scope="col">trade</th><th scope="col">vendor</th><th scope="col">cost</th><th scope="col">status</th><th scope="col">reasons</th></tr></thead><tbody>
+<tr><td>CB-104</td><td>22-050</td><td>2026-10-20</td><td>Paving</td><td>Example Paving Co</td><td>1400</td><td>billable</td><td>Reported 2026-10-20; the warranty on job 22-050 ended 2026-03-01. The repair may be billable to the owner.</td></tr>
+<tr><td>CB-101</td><td>23-090</td><td>2026-10-02</td><td>Roofing</td><td>Example Roofing LLC</td><td>850</td><td>backcharge</td><td>Example Roofing LLC did the roofing; 850 of callback cost to recover under its subcontract warranty.</td></tr>
+<tr><td>CB-102</td><td>23-090</td><td>2026-11-01</td><td>Roofing</td><td>Example Roofing LLC</td><td>600</td><td>backcharge</td><td>Example Roofing LLC did the roofing; 600 of callback cost to recover under its subcontract warranty. The same trade was called back on job 23-090 30 day(s) earlier (CB-101). The first repair may not have fixed it. Open 15 days since 2026-11-01.</td></tr>
+<tr><td>CB-105</td><td>23-110</td><td>2026-11-10</td><td>Electrical</td><td>Example Electric Inc</td><td>300</td><td>backcharge</td><td>Example Electric Inc did the electrical; 300 of callback cost to recover under its subcontract warranty.</td></tr>
+<tr><td>CB-103</td><td>23-095</td><td>2026-09-12</td><td>Plumbing</td><td></td><td>120</td><td>review</td><td>No one recorded as responsible for the plumbing repair.</td></tr>
+<tr><td>CB-106</td><td>23-090</td><td>2026-09-01</td><td>Drywall</td><td>Self</td><td>200</td><td>ok</td><td></td></tr>
+</tbody></table></div>
+<h2>Limits</h2><ul><li>Reads only the files you give it. It does not log in to your accounting system, project management system, bank, surety, insurer or any government portal.</li><li>Thresholds, percentages, rates and dates come from the settings file you supply; the defaults it used are listed in the result.</li><li>Not legal, tax, lien, insurance, surety or accounting advice. A person decides what to bill, pay, hold, send or file.</li><li>Results returned to the AI model have worker names, worker ids, Social Security numbers and homeowner contact details masked. The files written here keep the real values: keep them in a secure folder.</li><li>Whether a repair is covered by your warranty or a subcontractor&#39;s is decided by the contracts; Murray only reads the dates and parties in your files.</li></ul>
+<p class="mut" style="margin-top:32px">Written by a Fairbuild agent from your files. Nothing was sent or paid.</p>
+</main></body></html>

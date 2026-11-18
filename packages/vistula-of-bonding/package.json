@@ -1,6 +1,7 @@
 {
   "name": "vistula-of-bonding",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/vistula-of-bonding",
   "description": "Vistula of Bonding: a bonding capacity summary from your job list and the single and aggregate limits your surety gave you: bonded backlog against the aggregate limit, jobs over the single-job limit, bonded jobs forecast at a loss, and whether the bonded bids you are chasing fit in what is left. Drafts the summary for your surety broker. Never requests a bond or sends financials; not surety advice.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

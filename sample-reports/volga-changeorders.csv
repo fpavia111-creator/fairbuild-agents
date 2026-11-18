@@ -1,0 +1,10 @@
+job,change_order,description,state,amount,cost,billed,unbilled,age_days,status,findings,reasons,decision,decided_by
+24-101,CO-005,Added soffit framing,pending,4200,3000,2000,0,46,billing_error,billed_not_approved pending_aging,"2000 has been billed on CO-005, which is pending. Owners usually reject billing on unapproved changes. Pending 46 days since 2026-10-01 for 4200. Follow up with the owner for a decision.",,
+24-102,CO-102,Additional crickets,approved,3000,2100,3600,0,,billing_error,over_billed,Billed 3600 is more than the approved 3000.,,
+24-101,CO-002,Upgraded lighting,approved,8000,6100,3000,5000,,unbilled,approved_unbilled,"Approved for 8000 on 2026-09-30; 3000 billed so far, 5000 not yet on a pay application.",,
+24-101,PCO-003,Unforeseen rock excavation,pending,12500,9600,0,0,67,review,pending_aging,Pending 67 days since 2026-09-10 for 12500. Follow up with the owner for a decision.,,
+24-101,PCO-004,Owner-requested door hardware,pending,,1200,0,0,14,review,no_price,Pending with no price (estimated cost 1200). Price it and submit it.,,
+24-102,CO-101,Roof drain relocation,approved,6500,7200,6500,0,,review,negative_margin,Priced at 6500 against an estimated cost of 7200: 700 below cost.,,
+24-102,CO-104,Parapet cap,approved,2500,1900,2500,0,,review,duplicate_number,"CO-104 appears 2 times on job 24-102 (""Parapet cap"" 2500, ""Parapet cap entered twice"" 2500). Only the first is counted; correct the log.",,
+24-102,PCO-103,Deck repair,rejected,9000,4800,0,0,,review,rejected_with_cost,"Rejected, with 4800 of estimated cost. Decide whether to absorb it, rework the pricing or pursue a claim.",,
+24-101,CO-001,Added outlets in exam rooms,approved,5000,3800,5000,0,,ok,,,,

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Backlog and margin fade</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b6760;--line:#e4e0d8;--ok:#1f7a4d;--bad:#b42318;--warn:#a15c07;--card:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#161514;--fg:#ecebe8;--mut:#a29d94;--line:#34312d;--ok:#4ade80;--bad:#f87171;--warn:#fbbf24;--card:#1f1e1c}}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,Segoe UI,"Hiragino Sans","Yu Gothic UI","Microsoft YaHei","PingFang SC","Malgun Gothic","Apple SD Gothic Neo","Noto Sans CJK",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:17px;margin:28px 0 8px}
+.mut{color:var(--mut)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+table{border-collapse:collapse;width:100%;background:var(--card);font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{font-weight:600}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.tiles{display:flex;gap:12px;flex-wrap:wrap}.tile{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;min-width:120px}
+.tile b{display:block;font-size:22px}code{font-size:13px;overflow-wrap:anywhere}pre{overflow-x:auto}
+.wrap{overflow-x:auto;max-width:100%}svg,img{max-width:100%;height:auto}figure{margin:16px 0}p,li,h1,h2,h3{overflow-wrap:break-word}
+</style></head><body><main>
+<h1>Backlog and margin fade</h1>
+<p class="mut">Backlog at 2026-10: 661756.1 on 6 job(s), 106156.1 gross profit in it (16%). 1 job(s) with margin fade or a loss forecast (28000 of estimated gross profit lost), 2 to review.</p>
+<h2>Totals</h2><div class="wrap"><table><thead><tr><th scope="col">jobs</th><th scope="col">backlog</th><th scope="col">backlog gross profit</th><th scope="col">backlog margin pct</th><th scope="col">fade amount</th></tr></thead><tbody>
+<tr><td>6</td><td>661756.1</td><td>106156.1</td><td>16</td><td>28000</td></tr>
+</tbody></table></div>
+<h2>By finding</h2><div class="wrap"><table><thead><tr><th scope="col">code</th><th scope="col">count</th><th scope="col">amount</th></tr></thead><tbody>
+<tr><td>estimate_not_updated</td><td>1</td><td>0</td></tr>
+<tr><td>fade_since_last</td><td>1</td><td>16000</td></tr>
+<tr><td>loss_forecast</td><td>1</td><td>-14000</td></tr>
+<tr><td>margin_fade</td><td>1</td><td>28000</td></tr>
+<tr><td>margin_gain</td><td>1</td><td>0</td></tr>
+</tbody></table></div>
+<h2>All rows (6)</h2>
+<div class="wrap"><table><thead><tr><th scope="col">job</th><th scope="col">contract amount</th><th scope="col">first margin pct</th><th scope="col">latest margin pct</th><th scope="col">fade pts</th><th scope="col">backlog</th><th scope="col">backlog gross profit</th><th scope="col">status</th><th scope="col">reasons</th></tr></thead><tbody>
+<tr><td>24-103</td><td>200000</td><td>7</td><td>-7</td><td>14</td><td>50000</td><td>-3500</td><td>fade</td><td>Forecast at a loss: estimated cost 214000 on a contract of 200000 (-7%). Margin has faded from 7% (2026-08) to -7% (2026-10), 14 points: estimated gross profit down 28000. Down 8 points since 2026-09 alone.</td></tr>
+<tr><td>24-104</td><td>300000</td><td>20</td><td>20</td><td>0</td><td>225000</td><td>45000</td><td>review</td><td>Estimated cost has stayed at 240000 for three periods while the job went from 0% to 25% complete. Ask for a reforecast.</td></tr>
+<tr><td>24-105</td><td>90000</td><td>20</td><td>26</td><td>-6</td><td>15000</td><td>3900</td><td>review</td><td>Margin has risen from 20% to 26%, 6 points. Check the estimate to complete is real and no cost is missing or misposted.</td></tr>
+<tr><td>24-101</td><td>455000</td><td>15</td><td>14.29</td><td>0.71</td><td>182000</td><td>26000</td><td>ok</td><td></td></tr>
+<tr><td>24-106</td><td>120000</td><td>16.67</td><td>16.67</td><td>0</td><td>120000</td><td>20000</td><td>ok</td><td></td></tr>
+<tr><td>24-102</td><td>260000</td><td>20</td><td>21.15</td><td>-1.15</td><td>69756.1</td><td>14756.1</td><td>ok</td><td></td></tr>
+</tbody></table></div>
+<h2>Limits</h2><ul><li>Reads only the files you give it. It does not log in to your accounting system, project management system, bank, surety, insurer or any government portal.</li><li>Thresholds, percentages, rates and dates come from the settings file you supply; the defaults it used are listed in the result.</li><li>Not legal, tax, lien, insurance, surety or accounting advice. A person decides what to bill, pay, hold, send or file.</li><li>Fade is measured on the estimates in your history file. Limpopo does not know why a margin moved; the project managers do.</li></ul>
+<p class="mut" style="margin-top:32px">Written by a Fairbuild agent from your files. Nothing was sent or paid.</p>
+</main></body></html>

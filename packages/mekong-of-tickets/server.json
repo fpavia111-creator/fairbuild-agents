@@ -1,0 +1,37 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.fpavia111-creator/mekong-of-tickets",
+  "title": "Mekong of Tickets",
+  "description": "Mekong of Tickets: supplier invoice lines for materials against the signed delivery tickets and…",
+  "version": "0.1.0",
+  "repository": {
+    "url": "https://github.com/fpavia111-creator/fairbuild-agents",
+    "source": "github",
+    "subfolder": "packages/mekong-of-tickets"
+  },
+  "websiteUrl": "https://fair-agents.com/fairbuild.html",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "mekong-of-tickets",
+      "version": "0.1.0",
+      "transport": {
+        "type": "stdio"
+      },
+      "packageArguments": [
+        {
+          "type": "positional",
+          "value": "mcp"
+        },
+        {
+          "type": "named",
+          "name": "--root",
+          "description": "Folder holding the exports this agent may read and write (it cannot reach outside it)",
+          "isRequired": true,
+          "format": "filepath",
+          "valueHint": "exports_folder"
+        }
+      ]
+    }
+  ]
+}

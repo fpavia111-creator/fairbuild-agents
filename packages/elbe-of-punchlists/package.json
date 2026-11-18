@@ -1,6 +1,7 @@
 {
   "name": "elbe-of-punchlists",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/elbe-of-punchlists",
   "description": "Elbe of Punch Lists: punch list items by job, trade and subcontractor (Procore punch list exports recognised): items past due, open too long, reopened, with no one assigned, and open items on subcontractors you have already paid in full. Drafts punch notices to subcontractors. Never closes an item or charges a subcontractor.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

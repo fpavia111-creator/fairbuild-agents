@@ -1,0 +1,10 @@
+job,cost_code,cost_type,name,revised_budget,committed,actual,projected,overrun,percent_spent,percent_complete,status,findings,reasons,decision,decided_by
+24-101,06-100,M,Rough carpentry,22000,9000,25400,26900,4900,115.5,90,over,over_budget projected_over,Cost to date 25400 is over the revised budget 22000 by 3400. Projected cost 26900 is over the revised budget 22000 by 4900 (22.3%).,,
+24-101,03-300,S,Cast-in-place concrete,128000,131500,96000,131500,3500,75,75,over,committed_over projected_over,Committed cost 131500 is over the revised budget 128000 by 3500. Projected cost 131500 is over the revised budget 128000 by 3500 (2.7%).,,
+24-101,31-000,S,,0,,4200,,0,,,unbudgeted,unbudgeted_cost,"4200 of cost (1 row(s)) is coded to 31-000 on job 24-101, which has no budget line for that code. Recode it or add the code to the budget.",,
+24-199,01-500,L,,0,,1300,,0,,,unbudgeted,no_budget_job,"1300 of cost (1 row(s)) is coded to job 24-199, which is not in the budget file. Check the job number.",,
+24-101,09-250,S,Drywall and framing,64000,64000,18000,64000,0,28.1,10,review,burn_ahead,"28.1% of the budget is spent at 10% complete, 18.1 points ahead of progress. Ask the project manager for the cost to complete.",,
+24-101,26-000,S,Electrical,92000,90000,45000,90000,0,48.9,50,review,revised_math,Original 85000 plus approved changes 5000 is 90000; the revised budget says 92000.,,
+24-102,01-500,L,General conditions,30000,0,12850,30850,0,42.8,40,review,detail_does_not_tie,"Cost detail adds up to 12850 (2 row(s)); the budget report shows 12000 to date. Check for costs posted after the budget report was run, or coded to this line by mistake.",,
+24-101,01-500,L,General conditions,48000,0,30600,48000,0,63.7,60,ok,,,,
+24-102,07-500,S,Membrane roofing,210000,205000,150000,205000,0,71.4,72,ok,,,,

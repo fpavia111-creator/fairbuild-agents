@@ -1,6 +1,7 @@
 {
   "name": "mekong-of-tickets",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/mekong-of-tickets",
   "description": "Mekong of Tickets: supplier invoice lines for materials against the signed delivery tickets and your agreed prices: quantities billed past what was delivered, prices above the agreed price, extensions that do not add up, a ticket billed twice, lines with no ticket, and tickets not yet invoiced (to accrue). Drafts supplier credit requests. Never pays a supplier.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

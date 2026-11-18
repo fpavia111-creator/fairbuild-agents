@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bid tabulation</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b6760;--line:#e4e0d8;--ok:#1f7a4d;--bad:#b42318;--warn:#a15c07;--card:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#161514;--fg:#ecebe8;--mut:#a29d94;--line:#34312d;--ok:#4ade80;--bad:#f87171;--warn:#fbbf24;--card:#1f1e1c}}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,Segoe UI,"Hiragino Sans","Yu Gothic UI","Microsoft YaHei","PingFang SC","Malgun Gothic","Apple SD Gothic Neo","Noto Sans CJK",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:17px;margin:28px 0 8px}
+.mut{color:var(--mut)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+table{border-collapse:collapse;width:100%;background:var(--card);font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{font-weight:600}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.tiles{display:flex;gap:12px;flex-wrap:wrap}.tile{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;min-width:120px}
+.tile b{display:block;font-size:22px}code{font-size:13px;overflow-wrap:anywhere}pre{overflow-x:auto}
+.wrap{overflow-x:auto;max-width:100%}svg,img{max-width:100%;height:auto}figure{margin:16px 0}p,li,h1,h2,h3{overflow-wrap:break-word}
+</style></head><body><main>
+<h1>Bid tabulation</h1>
+<p class="mut">6 bid(s) on 2 package(s): 5 responsive, 1 not responsive (late, no bond or missing addenda), 2 leveled for scope gaps (53000 in plugs). Lowest responsive leveled: 09 Drywall: Test Drywall Co 248000; 26 Electrical: Example Electric Inc 412000.</p>
+<h2>By bid package</h2><div class="wrap"><table><thead><tr><th scope="col">trade package</th><th scope="col">bidders</th><th scope="col">responsive</th><th scope="col">low base</th><th scope="col">low leveled</th><th scope="col">spread pct</th></tr></thead><tbody>
+<tr><td>09 Drywall</td><td>3</td><td>2</td><td>Example Wallboard Inc 189000</td><td>Test Drywall Co 248000</td><td>0.6</td></tr>
+<tr><td>26 Electrical</td><td>3</td><td>3</td><td>Sample Power Co 398000</td><td>Example Electric Inc 412000</td><td>10.44</td></tr>
+</tbody></table></div>
+<h2>By finding</h2><div class="wrap"><table><thead><tr><th scope="col">code</th><th scope="col">count</th><th scope="col">amount</th></tr></thead><tbody>
+<tr><td>has_exclusions</td><td>2</td><td>0</td></tr>
+<tr><td>late_bid</td><td>1</td><td>0</td></tr>
+<tr><td>low_outlier</td><td>1</td><td>0</td></tr>
+<tr><td>missing_addenda</td><td>1</td><td>0</td></tr>
+<tr><td>no_bond</td><td>1</td><td>0</td></tr>
+<tr><td>scope_gap</td><td>2</td><td>53000</td></tr>
+</tbody></table></div>
+<h2>All rows (6)</h2>
+<div class="wrap"><table><thead><tr><th scope="col">bid package</th><th scope="col">bidder</th><th scope="col">base bid</th><th scope="col">plugs</th><th scope="col">leveled bid</th><th scope="col">rank</th><th scope="col">status</th><th scope="col">reasons</th></tr></thead><tbody>
+<tr><td>09 Drywall</td><td>Test Drywall Co</td><td>248000</td><td>0</td><td>248000</td><td>1</td><td>ok</td><td></td></tr>
+<tr><td>09 Drywall</td><td>Sample Interiors LLC</td><td>231500</td><td>18000</td><td>249500</td><td>2</td><td>leveled</td><td>Does not include insulation (plug 18000); leveled bid is 249500. Exclusions: Insulation by others.</td></tr>
+<tr><td>09 Drywall</td><td>Example Wallboard Inc</td><td>189000</td><td>0</td><td>189000</td><td></td><td>non_responsive</td><td>Received 2026-11-10 14:10, after the due time 2026-11-10 14:00. No bid bond with the bid. Acknowledges 1 of 2 addenda. Base bid 189000 is 18.36% below the package median 231500. Confirm the bidder&#39;s scope and quantities before relying on it.</td></tr>
+<tr><td>26 Electrical</td><td>Example Electric Inc</td><td>412000</td><td>0</td><td>412000</td><td>1</td><td>ok</td><td></td></tr>
+<tr><td>26 Electrical</td><td>Sample Power Co</td><td>398000</td><td>35000</td><td>433000</td><td>2</td><td>leveled</td><td>Does not include fire alarm (plug 35000); leveled bid is 433000. Exclusions: Fire alarm excluded.</td></tr>
+<tr><td>26 Electrical</td><td>Test Circuit LLC</td><td>455000</td><td>0</td><td>455000</td><td>3</td><td>ok</td><td></td></tr>
+</tbody></table></div>
+<h2>Limits</h2><ul><li>Reads only the files you give it. It does not log in to your accounting system, project management system, bank, surety, insurer or any government portal.</li><li>Thresholds, percentages, rates and dates come from the settings file you supply; the defaults it used are listed in the result.</li><li>Not legal, tax, lien, insurance, surety or accounting advice. A person decides what to bill, pay, hold, send or file.</li><li>Plug values are your estimates, not the bidders&#39; prices. The lowest leveled bid is a starting point for review, not an award recommendation.</li></ul>
+<p class="mut" style="margin-top:32px">Written by a Fairbuild agent from your files. Nothing was sent or paid.</p>
+</main></body></html>

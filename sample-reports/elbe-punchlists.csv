@@ -1,0 +1,9 @@
+job,item,location,description,trade,vendor,created,due_date,age_days,status,findings,reasons,decision,decided_by
+24-102,P-5,Roof,Flashing loose at curb,Roofing,Example Roofing LLC,2026-10-10,2026-10-31,37,risk,sub_paid_in_full past_due open_too_long,"Example Roofing LLC has been paid in full with no retainage left, and this item is still open. You have no money held to make sure it gets done. Due 2026-10-31, 16 day(s) ago. Open 37 days since 2026-10-10.",,
+24-101,P-1,Exam room 3,Paint touch-up at door frame,Painting,Sample Painting Co,2026-10-01,2026-10-15,46,past_due,past_due open_too_long,"Due 2026-10-15, 32 day(s) ago. Open 46 days since 2026-10-01.",,
+24-101,P-4,Room 105,Outlet cover missing,Electrical,Example Electric Inc,2026-09-25,2026-10-10,52,past_due,past_due reopened open_too_long,"Due 2026-10-10, 37 day(s) ago. Reopened after it was marked done. Open 52 days since 2026-09-25.",,
+24-102,P-6,Stair 2,Handrail loose,Misc metals,,2026-11-02,2026-11-30,14,review,no_assignee,No one is assigned.,,
+24-101,P-2,Corridor,Ceiling tile damaged,Acoustical,Test Ceilings LLC,2026-10-20,2026-11-20,27,open,,,,
+24-102,P-7,Restroom,Caulk at sink,Plumbing,Sample Plumbing Co,2026-11-05,2026-11-25,11,open,,,,
+24-101,P-3,Lobby,Door closer adjustment,Doors,Example Door Co,2026-10-05,2026-10-20,,closed,,,,
+24-102,P-8,Roof,Debris left on roof,Roofing,Example Roofing LLC,2026-11-01,2026-11-08,,closed,,,,

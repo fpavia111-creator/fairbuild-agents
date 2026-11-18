@@ -1,6 +1,7 @@
 {
   "name": "loire-of-wip",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/loire-of-wip",
   "description": "Loire of WIP: the work-in-progress schedule for month end by the cost-to-cost method: percent complete, earned revenue, over and under billings by job, the anticipated loss to recognise on loss jobs, cost past the estimate and jobs with no estimate. Drafts the over/under billing journal for review. Never posts to the ledger.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

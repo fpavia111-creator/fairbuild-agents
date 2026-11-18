@@ -1,6 +1,7 @@
 {
   "name": "colorado-of-equipment",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/colorado-of-equipment",
   "description": "Colorado of Equipment: equipment rental invoices against the agreed day, week and month rates, the off-rent date and the hours the machine was used: billed above the cheapest rate combination, billed after it was called off, the same days billed twice, rentals sitting idle, and rentals with no job. Drafts credit requests. Never calls a rental off or pays.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

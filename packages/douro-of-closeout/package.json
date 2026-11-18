@@ -1,6 +1,7 @@
 {
   "name": "douro-of-closeout",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/douro-of-closeout",
   "description": "Douro of Closeout: the closeout checklist for completed jobs against the documents and steps you require (final lien waivers, warranties, O&M manuals, as-builts, punch list, occupancy, final pay application and others you name): items missing, overdue, rejected or still open long after completion, and which jobs are ready for final billing. Drafts reminders to the project manager. Never submits a closeout package or a final invoice.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

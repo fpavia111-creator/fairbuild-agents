@@ -1,0 +1,12 @@
+side,key,job,party,base,retainage_pct,held,released,outstanding,completion,status,findings,reasons,decision,decided_by
+receivable,23-090,23-090,Example School District,300000,5,15000,0,15000,2026-08-15,collect,release_overdue,"Completed 2026-08-15, 93 days ago; 15000 of retainage has not been billed for release.",,
+receivable,23-095,23-095,Sample Retail LLC,180000,10,18000,0,18000,2026-06-30,collect,release_unpaid,18000 of retainage was billed for release and 0 collected; 139 days since completion.,,
+payable,SC-401,22-050,Example Paving Co,80000,10,8000,0,8000,,pay,release_owed_to_sub,The owner has paid the retainage on job 22-050 and Example Paving Co's subcontract is closed; 8000 of their retainage is still held.,,
+receivable,24-102,24-102,Sample County Library,400000,10,36000,0,36000,,review,rate_off,Retainage recorded is 36000; 10% of 400000 billed is 40000. Check the pay applications or the contract rate.,,
+receivable,24-103,24-103,Example Clinic Annex,150000,10,15000,0,15000,,review,over_withheld,The owner holds 15000; 10% of 100000 (retainage stops at 50% of the contract) is 10000. Ask for the difference on the next pay application.,,
+payable,SC-301,23-095,Example Storefronts LLC,60000,10,6000,6000,0,,review,released_before_owner,6000 of retainage was released to Example Storefronts LLC while the owner still holds 18000 on job 23-095. Check the subcontract's pay-when-paid terms; this is cash out ahead of cash in.,,
+payable,SC-302,24-102,Sample Roofing Co,150000,5,10500,0,10500,,review,rate_off,You hold 10500 from Sample Roofing Co; 5% of 150000 invoiced is 7500.,,
+receivable,22-050,22-050,Sample Parks Department,90000,10,9000,9000,0,2026-03-01,ok,,,,
+receivable,24-101,24-101,Example Health Partners,270000,10,27000,0,27000,,ok,,,,
+payable,SC-201,23-090,Sample Mechanical Inc,120000,10,12000,0,12000,,ok,,,,
+payable,SC-101,24-101,Example Concrete LLC,96000,10,9600,0,9600,,ok,,,,

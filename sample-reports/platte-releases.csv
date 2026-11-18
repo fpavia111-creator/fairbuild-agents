@@ -1,0 +1,7 @@
+invoice_number,vendor,job,commitment,invoice_date,amount,retainage,releasable,status,findings,reasons,decision,decided_by
+ER-7002,Example Roofing LLC,24-102,SC-104,2026-11-07,55000,5500,49500,hold,owner_not_paid,The owner has not paid job 24-102 for 2026-11. Under pay-when-paid this invoice waits.,,
+SM-50,Sample Mechanical Inc,23-090,SC-201,2026-11-05,12000,1200,10800,hold,coi_expired,Sample Mechanical Inc's insurance certificate expired on 2026-10-31.,,
+SP-13,Sample Painting Co,24-102,SC-105,2026-11-14,3000,300,2700,hold,not_approved owner_not_paid no_conditional_waiver,The project manager has not approved this invoice. The owner has not paid job 24-102 for 2026-11. Under pay-when-paid this invoice waits. No conditional waiver on file for SP-13.,,
+TD-101,Test Drywall Co,24-101,SC-102,2026-11-12,18000,1800,16200,hold,no_w9,No W-9 on file for Test Drywall Co.,,
+EE-5502,Example Electric Inc,24-101,SC-103,2026-11-14,3000,0,2700,review,retainage_short,"Retainage withheld is 0; 10% of 3000 is 300. Release 2700, not 3000.",,
+EC-2231,Example Concrete LLC,24-101,SC-101,2026-11-10,40000,4000,36000,release,,,,

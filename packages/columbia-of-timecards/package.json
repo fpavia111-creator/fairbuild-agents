@@ -1,6 +1,7 @@
 {
   "name": "columbia-of-timecards",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/columbia-of-timecards",
   "description": "Columbia of Timecards: field timecards against crew assignments, job status and the cost codes in each job budget: hours on a job the worker was not assigned to that day, on a closed job, or on a cost code the job has no budget for; days longer than your limit; weekend work; and entries made twice. Worker names are masked in what the AI model sees. Drafts recode requests. Never edits a timecard or runs payroll.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

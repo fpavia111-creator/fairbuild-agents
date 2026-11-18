@@ -82,4 +82,4 @@ let cols = 0, tr = 0, cs = 0;
 for (const r of summary) { cols += r.columns || 0; tr += r.translated || 0; cs += r.cases || 0; console.log(`${pad(r.agent, 28)}${pad(r.cases, 7)}${pad(r.cases ? `${r.translated}/${r.columns}` : '-', 20)}${LANGS.map((l) => pad((r.langs && r.langs[l]) || '-', 8)).join('')}`); }
 console.log(`\n${agents.length} agent(s), ${cs} case(s) with spreadsheet inputs, ${tr}/${cols} column names translated (German count), ${LANGS.length} language(s). ${regressions ? `${regressions} case(s) passed in English and failed in another language.` : 'Every case that passes in English passes in every language.'}`);
 if (showMissing) console.log(`\nFields with no German word: ${[...missing.entries()].sort((a, b) => b[1] - a[1]).map(([f, n]) => `${f}${n > 1 ? ` x${n}` : ''}`).join(', ')}`);
-process.exit(regressions ? 1 : 0);
+process.exitCode = regressions ? 1 : 0;

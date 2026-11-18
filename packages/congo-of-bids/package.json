@@ -1,6 +1,7 @@
 {
   "name": "congo-of-bids",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/congo-of-bids",
   "description": "Congo of Bids: subcontractor bids tabulated and leveled by bid package: scope items a bidder left out priced at your plug values, bids missing addenda or a bid bond, late bids, and bids far below or above the others. Shows the lowest responsive leveled bid per package. Drafts scope clarification letters. Never awards, rejects or notifies a bidder.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

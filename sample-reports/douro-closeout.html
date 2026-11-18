@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Job closeout checklist</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b6760;--line:#e4e0d8;--ok:#1f7a4d;--bad:#b42318;--warn:#a15c07;--card:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#161514;--fg:#ecebe8;--mut:#a29d94;--line:#34312d;--ok:#4ade80;--bad:#f87171;--warn:#fbbf24;--card:#1f1e1c}}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,Segoe UI,"Hiragino Sans","Yu Gothic UI","Microsoft YaHei","PingFang SC","Malgun Gothic","Apple SD Gothic Neo","Noto Sans CJK",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:17px;margin:28px 0 8px}
+.mut{color:var(--mut)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+table{border-collapse:collapse;width:100%;background:var(--card);font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{font-weight:600}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.tiles{display:flex;gap:12px;flex-wrap:wrap}.tile{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;min-width:120px}
+.tile b{display:block;font-size:22px}code{font-size:13px;overflow-wrap:anywhere}pre{overflow-x:auto}
+.wrap{overflow-x:auto;max-width:100%}svg,img{max-width:100%;height:auto}figure{margin:16px 0}p,li,h1,h2,h3{overflow-wrap:break-word}
+</style></head><body><main>
+<h1>Job closeout checklist</h1>
+<p class="mut">2 completed job(s), 14 closeout item(s) as of 2026-11-16: 11 done, 1 missing, 1 rejected, 1 overdue or open too long, 0 open. 1 job(s) ready for final billing.</p>
+<h2>By job</h2><div class="wrap"><table><thead><tr><th scope="col">job</th><th scope="col">completed</th><th scope="col">days since</th><th scope="col">items</th><th scope="col">done</th><th scope="col">percent</th><th scope="col">ready for final billing</th></tr></thead><tbody>
+<tr><td>23-090</td><td>2026-08-15</td><td>93</td><td>7</td><td>4</td><td>57.1</td><td>no</td></tr>
+<tr><td>23-095</td><td>2026-06-30</td><td>139</td><td>7</td><td>7</td><td>100</td><td>yes</td></tr>
+</tbody></table></div>
+<h2>By finding</h2><div class="wrap"><table><thead><tr><th scope="col">code</th><th scope="col">count</th></tr></thead><tbody>
+<tr><td>item_missing</td><td>1</td></tr>
+<tr><td>item_overdue</td><td>1</td></tr>
+<tr><td>item_rejected</td><td>1</td></tr>
+</tbody></table></div>
+<h2>All rows (14)</h2>
+<div class="wrap"><table><thead><tr><th scope="col">job</th><th scope="col">item</th><th scope="col">item status</th><th scope="col">due date</th><th scope="col">status</th><th scope="col">reasons</th></tr></thead><tbody>
+<tr><td>23-090</td><td>Final pay application</td><td></td><td></td><td>missing</td><td>Final pay application is not on the closeout checklist for job 23-090.</td></tr>
+<tr><td>23-090</td><td>As-built drawings</td><td>Rejected</td><td>2026-09-30</td><td>rejected</td><td>As-built drawings was returned or rejected; resubmit it.</td></tr>
+<tr><td>23-090</td><td>O&amp;M manuals</td><td>Pending</td><td>2026-09-15</td><td>overdue</td><td>O&amp;M manuals was due 2026-09-15 and is still pending.</td></tr>
+<tr><td>23-090</td><td>Certificate of occupancy</td><td>Received</td><td>2026-08-20</td><td>done</td><td></td></tr>
+<tr><td>23-090</td><td>Final lien waivers</td><td>Received</td><td>2026-09-15</td><td>done</td><td></td></tr>
+<tr><td>23-090</td><td>Punch list closed</td><td>Complete</td><td>2026-10-01</td><td>done</td><td></td></tr>
+<tr><td>23-090</td><td>Warranties</td><td>Received</td><td>2026-09-15</td><td>done</td><td></td></tr>
+<tr><td>23-095</td><td>As-built drawings</td><td>Approved</td><td>2026-07-31</td><td>done</td><td></td></tr>
+<tr><td>23-095</td><td>Certificate of occupancy</td><td>Received</td><td>2026-07-01</td><td>done</td><td></td></tr>
+<tr><td>23-095</td><td>Final lien waivers</td><td>Received</td><td>2026-07-31</td><td>done</td><td></td></tr>
+<tr><td>23-095</td><td>Final pay application</td><td>Approved</td><td>2026-08-15</td><td>done</td><td></td></tr>
+<tr><td>23-095</td><td>O&amp;M manuals</td><td>Received</td><td>2026-07-31</td><td>done</td><td></td></tr>
+<tr><td>23-095</td><td>Punch list closed</td><td>Complete</td><td>2026-07-15</td><td>done</td><td></td></tr>
+<tr><td>23-095</td><td>Warranties</td><td>Received</td><td>2026-07-31</td><td>done</td><td></td></tr>
+</tbody></table></div>
+<h2>Limits</h2><ul><li>Reads only the files you give it. It does not log in to your accounting system, project management system, bank, surety, insurer or any government portal.</li><li>Thresholds, percentages, rates and dates come from the settings file you supply; the defaults it used are listed in the result.</li><li>Not legal, tax, lien, insurance, surety or accounting advice. A person decides what to bill, pay, hold, send or file.</li><li>Your contract decides what closeout requires; Douro checks the items you list against the checklist you keep.</li></ul>
+<p class="mut" style="margin-top:32px">Written by a Fairbuild agent from your files. Nothing was sent or paid.</p>
+</main></body></html>

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Equipment hours and rental costs</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b6760;--line:#e4e0d8;--ok:#1f7a4d;--bad:#b42318;--warn:#a15c07;--card:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#161514;--fg:#ecebe8;--mut:#a29d94;--line:#34312d;--ok:#4ade80;--bad:#f87171;--warn:#fbbf24;--card:#1f1e1c}}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,Segoe UI,"Hiragino Sans","Yu Gothic UI","Microsoft YaHei","PingFang SC","Malgun Gothic","Apple SD Gothic Neo","Noto Sans CJK",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:17px;margin:28px 0 8px}
+.mut{color:var(--mut)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+table{border-collapse:collapse;width:100%;background:var(--card);font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{font-weight:600}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.tiles{display:flex;gap:12px;flex-wrap:wrap}.tile{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;min-width:120px}
+.tile b{display:block;font-size:22px}code{font-size:13px;overflow-wrap:anywhere}pre{overflow-x:auto}
+.wrap{overflow-x:auto;max-width:100%}svg,img{max-width:100%;height:auto}figure{margin:16px 0}p,li,h1,h2,h3{overflow-wrap:break-word}
+</style></head><body><main>
+<h1>Equipment hours and rental costs</h1>
+<p class="mut">6 rental invoice(s), 10200 billed: 3 overbilled by 2300 in total, 2 to review (2000 on idle rentals).</p>
+<h2>By job</h2><div class="wrap"><table><thead><tr><th scope="col">job</th><th scope="col">invoices</th><th scope="col">billed</th><th scope="col">hours used</th></tr></thead><tbody>
+<tr><td>24-102</td><td>3</td><td>7800</td><td>77</td></tr>
+<tr><td>24-101</td><td>2</td><td>2000</td><td>13</td></tr>
+<tr><td>(no job)</td><td>1</td><td>400</td><td>15</td></tr>
+</tbody></table></div>
+<h2>By vendor</h2><div class="wrap"><table><thead><tr><th scope="col">vendor</th><th scope="col">invoices</th><th scope="col">billed</th><th scope="col">overbilled</th></tr></thead><tbody>
+<tr><td>Sample Equipment Rentals</td><td>3</td><td>7400</td><td>1600</td></tr>
+<tr><td>Example Lift Rentals</td><td>3</td><td>2800</td><td>700</td></tr>
+</tbody></table></div>
+<h2>By finding</h2><div class="wrap"><table><thead><tr><th scope="col">code</th><th scope="col">count</th><th scope="col">amount</th></tr></thead><tbody>
+<tr><td>billed_after_off_rent</td><td>1</td><td>350</td></tr>
+<tr><td>idle</td><td>2</td><td>0</td></tr>
+<tr><td>no_job</td><td>1</td><td>0</td></tr>
+<tr><td>overlap</td><td>1</td><td>350</td></tr>
+<tr><td>rate_over</td><td>1</td><td>1600</td></tr>
+</tbody></table></div>
+<h2>All rows (6)</h2>
+<div class="wrap"><table><thead><tr><th scope="col">invoice number</th><th scope="col">equipment id</th><th scope="col">vendor</th><th scope="col">job</th><th scope="col">days</th><th scope="col">amount</th><th scope="col">fair amount</th><th scope="col">hours used</th><th scope="col">status</th><th scope="col">reasons</th></tr></thead><tbody>
+<tr><td>RI-9001</td><td>EQ-R100</td><td>Sample Equipment Rentals</td><td>24-102</td><td>28</td><td>6400</td><td>4800</td><td>34</td><td>overbilled</td><td>28 day(s) billed 6400; the cheapest of the day, week and month rates (450 / 1600 / 4800) is 4800.</td></tr>
+<tr><td>RI-9002</td><td>EQ-R101</td><td>Example Lift Rentals</td><td>24-101</td><td>28</td><td>1400</td><td>1050</td><td>13</td><td>overbilled</td><td>Called off 2026-11-01 but billed through 2026-11-11: 10 day(s) after off-rent. 18 billable day(s) cost at most 1050. 13 hour(s) logged over 18 day(s) on rent (5.06 a week, below 8). Call it off or move it to a job that needs it.</td></tr>
+<tr><td>RI-9005</td><td>EQ-R103</td><td>Example Lift Rentals</td><td>24-102</td><td>14</td><td>700</td><td>700</td><td>20</td><td>overbilled</td><td>5 day(s) from 2026-11-10 were already billed on invoice RI-9004 (through 2026-11-14).</td></tr>
+<tr><td>RI-9003</td><td>EQ-R102</td><td>Sample Equipment Rentals</td><td>24-101</td><td>28</td><td>600</td><td>600</td><td>0</td><td>review</td><td>0 hour(s) logged over 28 day(s) on rent (0 a week, below 8). Call it off or move it to a job that needs it.</td></tr>
+<tr><td>RI-9006</td><td>EQ-R104</td><td>Sample Equipment Rentals</td><td></td><td>7</td><td>400</td><td>400</td><td>15</td><td>review</td><td>Invoice RI-9006 has no job; the usage log puts this machine on 24-101.</td></tr>
+<tr><td>RI-9004</td><td>EQ-R103</td><td>Example Lift Rentals</td><td>24-102</td><td>14</td><td>700</td><td>700</td><td>23</td><td>ok</td><td></td></tr>
+</tbody></table></div>
+<h2>Limits</h2><ul><li>Reads only the files you give it. It does not log in to your accounting system, project management system, bank, surety, insurer or any government portal.</li><li>Thresholds, percentages, rates and dates come from the settings file you supply; the defaults it used are listed in the result.</li><li>Not legal, tax, lien, insurance, surety or accounting advice. A person decides what to bill, pay, hold, send or file.</li><li>Rate tiers follow the common rule that a rental is billed at the cheapest combination of its rates; your rental agreement may differ (minimum charges, damage waiver, fuel, delivery).</li></ul>
+<p class="mut" style="margin-top:32px">Written by a Fairbuild agent from your files. Nothing was sent or paid.</p>
+</main></body></html>

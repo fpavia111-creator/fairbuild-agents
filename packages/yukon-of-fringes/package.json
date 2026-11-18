@@ -1,6 +1,7 @@
 {
   "name": "yukon-of-fringes",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/yukon-of-fringes",
   "description": "Yukon of Fringes: union fringe benefit remittances by local, fund and month against the hours your payroll shows and the contribution rates you supply: funds paid short or not at all, paid over, paid late, hours reported that do not match payroll, and hours for a local with no rates. Drafts fund letters and records one-click approvals to pay a shortfall. Never pays a fund.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

@@ -166,4 +166,4 @@ for (const n of agents) { await dataPass(n); await exportsPass(n); if (withArgs)
 const by = {}; for (const f of findings) (by[f.kind] ||= []).push(f);
 for (const [k, v] of Object.entries(by)) { console.log(`\n${k} (${v.length})`); for (const f of v.slice(0, 40)) console.log(`  ${f.n} ${f.where || ''} ${f.detail || ''}`); }
 console.log(`\n${agents.length} agent(s), ${info.calls} call(s), ${info.poisoned} planted value(s), ${info.injectWarnings} result(s) flagged for instruction-like text, ${info.changed} call(s) refused or held because of the planted data. ${findings.length} finding(s).`);
-process.exit(findings.length ? 1 : 0);
+process.exitCode = findings.length ? 1 : 0; // not process.exit(): on Windows that can drop output still queued for a pipe

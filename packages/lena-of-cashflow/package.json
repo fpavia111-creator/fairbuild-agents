@@ -1,6 +1,7 @@
 {
   "name": "lena-of-cashflow",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/lena-of-cashflow",
   "description": "Lena of Cash Flow: cash flow by job from receipts and disbursements: net cash position per job, jobs where you have paid out more than you collected, invoices to the owner unpaid past your collection days, and jobs negative two months running, with a month-by-month table. Drafts collection letters. Never moves money or changes a payment.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

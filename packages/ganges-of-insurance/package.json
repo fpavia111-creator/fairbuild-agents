@@ -1,6 +1,7 @@
 {
   "name": "ganges-of-insurance",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/ganges-of-insurance",
   "description": "Ganges of Insurance: subcontractor certificates of insurance against your requirements: required coverages missing, policies expired or expiring, limits below your minimums, missing additional insured, waiver of subrogation or primary and non-contributory wording, and policies that end before the sub's work does. Drafts certificate requests. Never contacts an insurer or blocks a vendor.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

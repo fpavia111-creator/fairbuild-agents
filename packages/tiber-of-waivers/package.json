@@ -1,6 +1,7 @@
 {
   "name": "tiber-of-waivers",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/tiber-of-waivers",
   "description": "Tiber of Waivers: every payment to a subcontractor or supplier matched to its lien waivers: payments made without a conditional waiver, unconditional waivers missing after the payment cleared, waivers for less than was paid, unsigned waivers, and final payments without final waivers. Drafts waiver requests. Never files or releases a lien and never pays.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

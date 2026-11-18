@@ -1,0 +1,7 @@
+job,periods,first_period,latest_period,contract_amount,first_margin_pct,latest_margin_pct,fade_pts,percent_complete,backlog,backlog_gross_profit,status,findings,reasons,decision,decided_by
+24-103,3,2026-08,2026-10,200000,7,-7,14,75,50000,-3500,fade,loss_forecast margin_fade fade_since_last,"Forecast at a loss: estimated cost 214000 on a contract of 200000 (-7%). Margin has faded from 7% (2026-08) to -7% (2026-10), 14 points: estimated gross profit down 28000. Down 8 points since 2026-09 alone.",,
+24-104,3,2026-08,2026-10,300000,20,20,0,25,225000,45000,review,estimate_not_updated,Estimated cost has stayed at 240000 for three periods while the job went from 0% to 25% complete. Ask for a reforecast.,,
+24-105,3,2026-08,2026-10,90000,20,26,-6,83.33,15000,3900,review,margin_gain,"Margin has risen from 20% to 26%, 6 points. Check the estimate to complete is real and no cost is missing or misposted.",,
+24-101,3,2026-08,2026-10,455000,15,14.29,0.71,60,182000,26000,ok,,,,
+24-106,1,2026-10,2026-10,120000,16.67,16.67,0,0,120000,20000,ok,,,,
+24-102,3,2026-08,2026-10,260000,20,21.15,-1.15,73.17,69756.1,14756.1,ok,,,,

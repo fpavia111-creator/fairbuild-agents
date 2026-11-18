@@ -1,0 +1,9 @@
+invoice_number,vendor,job,commitment,invoice_date,amount,commitment_value,billed_with_this,approved_to_date,status,findings,reasons,decision,decided_by
+EE-5501,Example Electric Inc,24-101,SC-103,2026-10-28,45000,92000,45000,40000,hold,over_approved,With this invoice SC-103 is billed 45000; 40000 was approved as received or in place (2026-10-26).,,
+EE-5502,Example Electric Inc,24-102,SC-103,2026-11-14,3000,92000,48000,40000,hold,over_approved job_mismatch retainage_missing,With this invoice SC-103 is billed 48000; 40000 was approved as received or in place (2026-10-26). Invoice is coded to job 24-102; SC-103 is on job 24-101. SC-103 carries 10% retainage and none was withheld on this invoice.,,
+EX-77,Example Glazing LLC,24-102,SC-199,2026-11-05,8800,,,,hold,no_commitment,"Commitment ""SC-199"" is not in the commitment list. Get the commitment issued or coded before approving.",,
+SL-88120,Sample Lumber Supply,24-101,PO-201,2026-10-12,14400,9000,14400,9000,hold,over_commitment over_approved,With this invoice PO-201 is billed 14400 against its value of 9000. With this invoice PO-201 is billed 14400; 9000 was approved as received or in place (2026-10-10).,,
+SL-88341,Sample Lumber Supply,24-101,PO-201,2026-11-03,11000,9000,25400,9000,hold,over_commitment over_approved,With this invoice PO-201 is billed 25400 against its value of 9000. With this invoice PO-201 is billed 25400; 9000 was approved as received or in place (2026-10-10).,,
+SG-55,Sample Glass Co,24-102,PO-204,2026-11-12,4800,12000,4800,,review,no_receipt,No receipt or approval on file for PO-204. Ask the project manager to confirm the work or delivery.,,
+EC-2210,Example Concrete LLC,24-101,SC-101,2026-10-20,56000,131500,56000,96000,matched,,,,
+EC-2231,Example Concrete LLC,24-101,SC-101,2026-11-10,40000,131500,96000,96000,matched,,,,

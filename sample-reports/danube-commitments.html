@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Commitments and open purchase orders</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b6760;--line:#e4e0d8;--ok:#1f7a4d;--bad:#b42318;--warn:#a15c07;--card:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#161514;--fg:#ecebe8;--mut:#a29d94;--line:#34312d;--ok:#4ade80;--bad:#f87171;--warn:#fbbf24;--card:#1f1e1c}}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,Segoe UI,"Hiragino Sans","Yu Gothic UI","Microsoft YaHei","PingFang SC","Malgun Gothic","Apple SD Gothic Neo","Noto Sans CJK",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:17px;margin:28px 0 8px}
+.mut{color:var(--mut)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+table{border-collapse:collapse;width:100%;background:var(--card);font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{font-weight:600}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.tiles{display:flex;gap:12px;flex-wrap:wrap}.tile{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;min-width:120px}
+.tile b{display:block;font-size:22px}code{font-size:13px;overflow-wrap:anywhere}pre{overflow-x:auto}
+.wrap{overflow-x:auto;max-width:100%}svg,img{max-width:100%;height:auto}figure{margin:16px 0}p,li,h1,h2,h3{overflow-wrap:break-word}
+</style></head><body><main>
+<h1>Commitments and open purchase orders</h1>
+<p class="mut">8 commitment(s): 208500 still open of 558500 committed. 2 billed or paid past their value (16400 over-invoiced, 1000 overpaid), 5 to review, 1 invoice group(s) naming no commitment (8800).</p>
+<h2>By vendor</h2><div class="wrap"><table><thead><tr><th scope="col">vendor</th><th scope="col">commitments</th><th scope="col">revised</th><th scope="col">invoiced</th><th scope="col">open</th></tr></thead><tbody>
+<tr><td>Sample Lumber Supply</td><td>1</td><td>9000</td><td>25400</td><td>0</td></tr>
+<tr><td>Sample Painting Co</td><td>1</td><td>30000</td><td>9000</td><td>21000</td></tr>
+<tr><td>Test Drywall Co</td><td>1</td><td>64000</td><td>18000</td><td>46000</td></tr>
+<tr><td>Example Electric Inc</td><td>1</td><td>92000</td><td>45000</td><td>47000</td></tr>
+<tr><td>Sample Rebar Co</td><td>1</td><td>15000</td><td>11000</td><td>4000</td></tr>
+<tr><td>Sample Sheet Metal</td><td>1</td><td>12000</td><td>9500</td><td>0</td></tr>
+<tr><td>Example Roofing LLC</td><td>1</td><td>205000</td><td>150000</td><td>55000</td></tr>
+<tr><td>Example Concrete LLC</td><td>1</td><td>131500</td><td>96000</td><td>35500</td></tr>
+</tbody></table></div>
+<h2>By job</h2><div class="wrap"><table><thead><tr><th scope="col">job</th><th scope="col">commitments</th><th scope="col">revised</th><th scope="col">invoiced</th><th scope="col">open</th></tr></thead><tbody>
+<tr><td>24-101</td><td>4</td><td>296500</td><td>184400</td><td>128500</td></tr>
+<tr><td>24-102</td><td>4</td><td>262000</td><td>179500</td><td>80000</td></tr>
+</tbody></table></div>
+<h2>By finding</h2><div class="wrap"><table><thead><tr><th scope="col">code</th><th scope="col">count</th><th scope="col">amount</th></tr></thead><tbody>
+<tr><td>closed_with_balance</td><td>1</td><td>2500</td></tr>
+<tr><td>invoiced_does_not_tie</td><td>1</td><td>0</td></tr>
+<tr><td>not_executed</td><td>1</td><td>0</td></tr>
+<tr><td>over_invoiced</td><td>1</td><td>16400</td></tr>
+<tr><td>paid_over_invoiced</td><td>1</td><td>1000</td></tr>
+<tr><td>retainage_off</td><td>1</td><td>1500</td></tr>
+<tr><td>revised_math</td><td>1</td><td>2000</td></tr>
+<tr><td>stale_open</td><td>1</td><td>0</td></tr>
+<tr><td>unknown_commitment</td><td>1</td><td>8800</td></tr>
+</tbody></table></div>
+<h2>All rows (9)</h2>
+<div class="wrap"><table><thead><tr><th scope="col">commitment</th><th scope="col">job</th><th scope="col">vendor</th><th scope="col">revised</th><th scope="col">invoiced</th><th scope="col">open amount</th><th scope="col">status</th><th scope="col">reasons</th></tr></thead><tbody>
+<tr><td>PO-201</td><td>24-101</td><td>Sample Lumber Supply</td><td>9000</td><td>25400</td><td>0</td><td>over</td><td>Invoiced 25400 is more than the commitment&#39;s value 9000 by 16400. Look for an unissued change order or a bill coded to the wrong commitment.</td></tr>
+<tr><td>SC-105</td><td>24-102</td><td>Sample Painting Co</td><td>30000</td><td>9000</td><td>21000</td><td>over</td><td>Paid 10000 is more than invoiced 9000 by 1000. AP invoices against SC-105 add up to 9000 (2); the commitment report shows 6000 invoiced.</td></tr>
+<tr><td>SC-199</td><td>24-102</td><td>Example Glazing LLC</td><td>0</td><td>8800</td><td>0</td><td>unmatched</td><td>Invoice(s) EX-77 from Example Glazing LLC (8800) name commitment &quot;SC-199&quot;, which is not in the commitment list.</td></tr>
+<tr><td>SC-102</td><td>24-101</td><td>Test Drywall Co</td><td>64000</td><td>18000</td><td>46000</td><td>review</td><td>18000 has been invoiced against SC-102, which is not marked executed. Get the signed subcontract or PO before paying more.</td></tr>
+<tr><td>SC-103</td><td>24-101</td><td>Example Electric Inc</td><td>92000</td><td>45000</td><td>47000</td><td>review</td><td>Original 85000 plus approved changes 5000 is 90000; the commitment says 92000.</td></tr>
+<tr><td>PO-202</td><td>24-102</td><td>Sample Rebar Co</td><td>15000</td><td>11000</td><td>4000</td><td>review</td><td>4000 is still open on PO-202 with no invoice for 220 days (since 2026-04-10). Ask the vendor whether more is coming or close it.</td></tr>
+<tr><td>PO-203</td><td>24-102</td><td>Sample Sheet Metal</td><td>12000</td><td>9500</td><td>0</td><td>review</td><td>PO-203 is closed with 2500 not invoiced. If the work is finished, reduce the commitment so committed cost is not overstated.</td></tr>
+<tr><td>SC-104</td><td>24-102</td><td>Example Roofing LLC</td><td>205000</td><td>150000</td><td>55000</td><td>review</td><td>Retainage held is 13500; 10% of 150000 invoiced is 15000.</td></tr>
+<tr><td>SC-101</td><td>24-101</td><td>Example Concrete LLC</td><td>131500</td><td>96000</td><td>35500</td><td>ok</td><td></td></tr>
+</tbody></table></div>
+<h2>Limits</h2><ul><li>Reads only the files you give it. It does not log in to your accounting system, project management system, bank, surety, insurer or any government portal.</li><li>Thresholds, percentages, rates and dates come from the settings file you supply; the defaults it used are listed in the result.</li><li>Not legal, tax, lien, insurance, surety or accounting advice. A person decides what to bill, pay, hold, send or file.</li></ul>
+<p class="mut" style="margin-top:32px">Written by a Fairbuild agent from your files. Nothing was sent or paid.</p>
+</main></body></html>

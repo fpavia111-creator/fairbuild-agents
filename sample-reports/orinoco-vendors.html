@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Duplicate vendors and invoices</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b6760;--line:#e4e0d8;--ok:#1f7a4d;--bad:#b42318;--warn:#a15c07;--card:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#161514;--fg:#ecebe8;--mut:#a29d94;--line:#34312d;--ok:#4ade80;--bad:#f87171;--warn:#fbbf24;--card:#1f1e1c}}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,Segoe UI,"Hiragino Sans","Yu Gothic UI","Microsoft YaHei","PingFang SC","Malgun Gothic","Apple SD Gothic Neo","Noto Sans CJK",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:17px;margin:28px 0 8px}
+.mut{color:var(--mut)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+table{border-collapse:collapse;width:100%;background:var(--card);font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{font-weight:600}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.tiles{display:flex;gap:12px;flex-wrap:wrap}.tile{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;min-width:120px}
+.tile b{display:block;font-size:22px}code{font-size:13px;overflow-wrap:anywhere}pre{overflow-x:auto}
+.wrap{overflow-x:auto;max-width:100%}svg,img{max-width:100%;height:auto}figure{margin:16px 0}p,li,h1,h2,h3{overflow-wrap:break-word}
+</style></head><body><main>
+<h1>Duplicate vendors and invoices</h1>
+<p class="mut">9 vendor record(s), 10 invoice(s): 3 likely duplicate vendor pair(s), 4 duplicate invoice group(s). 101000 paid twice (2 group(s)), 32400 in open duplicates to stop before payment.</p>
+<h2>Duplicate vendors</h2><div class="wrap"><table><thead><tr><th scope="col">vendor ids</th><th scope="col">names</th><th scope="col">status</th></tr></thead><tbody>
+<tr><td>V100 + V101</td><td>Example Concrete LLC / Example Concrete, L.L.C.</td><td>merge</td></tr>
+<tr><td>V200 + V201</td><td>Sample Lumber Supply / Sample Lumber Supply Co</td><td>merge</td></tr>
+<tr><td>V500 + V501</td><td>Sample Paving Co / Sample Paving Company</td><td>review</td></tr>
+</tbody></table></div>
+<h2>By finding</h2><div class="wrap"><table><thead><tr><th scope="col">code</th><th scope="col">count</th></tr></thead><tbody>
+<tr><td>same_address</td><td>2</td></tr>
+<tr><td>same_amount_near_number</td><td>1</td></tr>
+<tr><td>same_bank</td><td>2</td></tr>
+<tr><td>same_name</td><td>3</td></tr>
+<tr><td>same_number</td><td>3</td></tr>
+<tr><td>same_phone</td><td>1</td></tr>
+<tr><td>same_tax_id</td><td>1</td></tr>
+</tbody></table></div>
+<h2>All rows (7)</h2>
+<div class="wrap"><table><thead><tr><th scope="col">kind</th><th scope="col">vendors</th><th scope="col">invoices</th><th scope="col">amount</th><th scope="col">paid twice</th><th scope="col">status</th><th scope="col">reasons</th></tr></thead><tbody>
+<tr><td>invoice_dup</td><td>Example Concrete LLC / Example Concrete, L.L.C.</td><td>EC-2210 2026-10-20 56000 paid; EC2210 2026-10-22 56000 paid</td><td>56000</td><td>56000</td><td>paid_twice</td><td>Invoice number EC-2210 is entered also as EC2210 under vendor records V100 and V101.</td></tr>
+<tr><td>invoice_dup</td><td>Example Electric Inc</td><td>EE-5501 2026-10-28 45000 paid; EE-5510 2026-10-30 45000 paid</td><td>45000</td><td>45000</td><td>paid_twice</td><td>EE-5501 and EE-5510 are for the same amount 45000, 2 day(s) apart, with near-identical numbers.</td></tr>
+<tr><td>invoice_dup</td><td>Sample Lumber Supply Co / Sample Lumber Supply</td><td>0088120 2026-10-12 14400 open; SL-88120 2026-10-12 14400 paid</td><td>14400</td><td>0</td><td>stop</td><td>Invoice number 0088120 is entered also as SL-88120 under vendor records V201 and V200.</td></tr>
+<tr><td>invoice_dup</td><td>Test Drywall Co</td><td>TD-101 2026-11-12 18000 paid; TD-101 2026-11-12 18000 open</td><td>18000</td><td>0</td><td>stop</td><td>Invoice number TD-101 is entered more than once.</td></tr>
+<tr><td>vendor_pair</td><td>Example Concrete LLC / Example Concrete, L.L.C.</td><td></td><td>0</td><td>0</td><td>merge</td><td>Both have tax id ending 6789. Both pay to a bank account ending 4321. Same address. Same phone number. Names &quot;Example Concrete LLC&quot; and &quot;Example Concrete, L.L.C.&quot; match once legal forms and punctuation are set aside (100%).</td></tr>
+<tr><td>vendor_pair</td><td>Sample Lumber Supply / Sample Lumber Supply Co</td><td></td><td>0</td><td>0</td><td>merge</td><td>Both pay to a bank account ending 2222. Same address. Names &quot;Sample Lumber Supply&quot; and &quot;Sample Lumber Supply Co&quot; match once legal forms and punctuation are set aside (100%).</td></tr>
+<tr><td>vendor_pair</td><td>Sample Paving Co / Sample Paving Company</td><td></td><td>0</td><td>0</td><td>review</td><td>Names &quot;Sample Paving Co&quot; and &quot;Sample Paving Company&quot; match once legal forms and punctuation are set aside (100%).</td></tr>
+</tbody></table></div>
+<h2>Limits</h2><ul><li>Reads only the files you give it. It does not log in to your accounting system, project management system, bank, surety, insurer or any government portal.</li><li>Thresholds, percentages, rates and dates come from the settings file you supply; the defaults it used are listed in the result.</li><li>Not legal, tax, lien, insurance, surety or accounting advice. A person decides what to bill, pay, hold, send or file.</li><li>A duplicate here is a likely duplicate: confirm with the invoices, the bank and the vendor before stopping or recovering a payment.</li></ul>
+<p class="mut" style="margin-top:32px">Written by a Fairbuild agent from your files. Nothing was sent or paid.</p>
+</main></body></html>

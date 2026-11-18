@@ -1,0 +1,73 @@
+{
+  "product": "Fairbuild",
+  "industry": "Construction and trades",
+  "kicker": "General contractors, subcontractors and trade service companies",
+  "lede": "Thirty small agents that check a contractor's back office from the files it already exports, job cost, change orders, pay applications, retainage, lien waivers, insurance, certified payroll and more, and wait for one named person before anything is paid, filed, submitted or sent.",
+  "from": "$1,500",
+  "packages": [
+    ["$3,500 · One company", "Job cost and WIP pack", "Job cost against budget, commitments, change orders, the month-end WIP schedule and cash by job (5 agents)"],
+    ["$2,000 · One company", "Billing and retainage pack", "Pay application arithmetic, schedule of values against progress, retainage both ways (3 agents)"],
+    ["$4,000 · One company", "Subcontractor payment pack", "Three-way match, the release check before a sub is paid, lien waivers, insurance certificates, compliance documents, backcharges (6 agents)"],
+    ["$2,500 · One company", "Payables cleanup pack", "Duplicate vendors and invoices, material invoices against delivery tickets, sales and use tax, equipment rentals (4 agents)"],
+    ["$3,000 · One company", "Payroll and labor pack", "Certified payroll against the wage determination, union fringe remittances, field timecards, set to your rates (3 agents)"],
+    ["$2,000 · One company", "Field and closeout pack", "Permits and inspections, the submittal register, punch lists, the closeout checklist (4 agents)"],
+    ["$2,000 · One company", "Bids, backlog and bonding pack", "Subcontractor bid leveling, backlog and margin fade, bonding capacity against your surety limits (3 agents)"],
+    ["$1,500 · One company", "Service and warranty pack", "Service tickets and technician time, warranty callbacks (2 agents)"],
+    ["$12,000 · One company", "Whole back office", "All 30 agents, mapped to your exports and set to your rules, two training sessions"],
+    ["$15,000 · Up to 5 companies", "Partner rollout", "For contractor groups and accounting firms serving several contractors: all 30 agents, one shared setup, each company's exports mapped"]
+  ],
+  "support": "Support after setup: $200 a month for one pack, $600 a month for the whole back office, $250 a month per company for partner rollouts. Includes export changes, rate and rule updates, new agent versions and a monthly check-in.",
+  "notes": [
+    "Reads the files you export; it does not log in to your accounting or project management system, bank, surety, insurer or any government portal.",
+    "Column layouts for Procore, Sage 100 and 300 Contractor, Foundation, Vista, QuickBooks, Buildertrend and ServiceTitan were written from public documentation and knowledge of those systems; the first setup confirms them on your files.",
+    "Retainage rates, notice days, wage rates, fringe rates, tax rates and insurance requirements are settings you confirm from your contracts and your advisers; the defaults are examples.",
+    "Not legal, tax, lien, insurance, surety or accounting advice; it checks your numbers against the rules you set.",
+    "Report pages come in nine languages, translated by Claude and not yet reviewed by native speakers. Results and CSV files stay in English."
+  ],
+  "warn": "Your files and reports stay on your computer. Worker names, worker ids, Social Security numbers and homeowner contacts are masked in anything sent to the AI model. No agent pays, files or releases a lien, submits or approves a pay application, posts to your ledger, runs payroll or messages anyone: drafts wait for one named person.",
+  "groups": [
+    ["Job cost, billing and cash", [
+      ["Job cost against budget", "Each job by cost code and cost type: over or projected over budget, spend ahead of percent complete, cost on codes with no budget."],
+      ["Commitments", "Subcontracts and purchase orders against invoices and payments: billed past value, unsigned subcontracts, stale open POs."],
+      ["Change orders", "Pending too long or unpriced, approved and not billed, billed past what was approved, priced below cost."],
+      ["Schedule of values", "Billing to date against field percent complete, line by line, and a schedule of values that adds up to the contract."],
+      ["Pay application arithmetic", "A G702/G703-layout pay application checked line by line down to the payment due, yours or a subcontractor's."],
+      ["Month-end WIP", "Percent complete by cost-to-cost, earned revenue, over and under billings, loss jobs, and a draft journal."],
+      ["Retainage both ways", "What owners hold from you and what you hold from subs: rates, release timing, releases not collected."],
+      ["Cash by job", "Receipts against disbursements by job and month, jobs paid out more than collected, slow owner invoices."]
+    ]],
+    ["Subcontractors and payables", [
+      ["Three-way match", "Each invoice against its subcontract or PO and the work the project manager approved."],
+      ["Release check before a sub is paid", "Approval, pay-when-paid, conditional waiver, insurance, W-9 and retainage, invoice by invoice."],
+      ["Lien waivers", "Every payment matched to its conditional and unconditional waivers, and finals with final waivers."],
+      ["Insurance certificates", "Coverages, limits and endorsements against your requirements, and policies that end before the work does."],
+      ["Subcontractor compliance", "Documents by trade: missing, expired, rejected or waiting for review, and safety ratings."],
+      ["Duplicate vendors and invoices", "Vendors entered twice and invoices entered twice, including ones already paid twice."],
+      ["Backcharges", "From notice to recovery: late notices, agreed and never deducted, more than you still owe or hold."],
+      ["Material tickets", "Supplier invoices against signed delivery tickets and agreed prices, and tickets not yet invoiced."],
+      ["Sales and use tax", "Tax on material invoices against the rates you supply, and use tax to accrue."]
+    ]],
+    ["Payroll and labor", [
+      ["Certified payroll", "Payroll lines against the job's wage determination: underpaid, overtime, missing rates, full SSNs on the report."],
+      ["Union fringe remittances", "Remittances by local, fund and month against payroll hours and your contribution rates."],
+      ["Field timecards", "Hours against crew assignments, job status and budgeted cost codes."]
+    ]],
+    ["Field, permits and closeout", [
+      ["Equipment rentals", "Rental invoices against day, week and month rates, off-rent dates and hours used."],
+      ["Permits and inspections", "Expiring permits, failed inspections not re-booked, and a calendar file of what is coming."],
+      ["Submittals", "The register worked back from the date material is needed on site."],
+      ["Punch lists", "Items past due, reopened or unassigned, and open items on subs already paid in full."],
+      ["Closeout", "The closeout checklist of completed jobs, and which jobs are ready for final billing."]
+    ]],
+    ["Bids, backlog and bonding", [
+      ["Bid leveling", "Subcontractor bids by package with scope gaps priced at your plug values, missing addenda and bid bonds."],
+      ["Backlog and margin fade", "Work left to earn, the gross profit in it, and margins that faded since the first estimate."],
+      ["Bonding capacity", "Bonded backlog against the single and aggregate limits your surety gave you."]
+    ]],
+    ["Service and warranty", [
+      ["Service tickets", "Technician utilization, revenue per paid hour, recalls and completed tickets not invoiced."],
+      ["Warranty callbacks", "Callbacks by trade and sub, cost a sub should cover, and repeat callbacks."]
+    ]]
+  ],
+  "closing": "Each one does one job, on your computer, from a file you export. Nothing is paid, filed, submitted or sent until a named person on your team says so."
+}

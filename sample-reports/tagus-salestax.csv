@@ -1,0 +1,8 @@
+invoice_number,vendor,job,jurisdiction,amount,tax,rate_charged_pct,rate_pct,expected_tax,status,findings,reasons,decision,decided_by
+EBC-311,Example Block Co,24-102,Sample County,1800,148.5,8.25,7,126,refund,tax_overcharged wrong_jurisdiction_rate,Charged 148.5 (8.25%); 7% of 1800 in Sample County is 126. The 8.25% charged is the Example City rate; the delivery was to Sample County.,,
+SG-55,Sample Glass Co,24-201,Sample County,4800,336,7,7,0,refund,tax_on_exempt_job,"Job 24-201 is marked exempt, but 336 of tax was charged. Send the vendor the exemption certificate and ask for a credit.",,
+SL-88341,Sample Lumber Supply,24-101,Example City,4800,0,0,8.25,396,use_tax,tax_undercharged,Charged 0 (0%); 8.25% of 4800 in Example City is 396. Accrue the difference as use tax unless the purchase is exempt.,,
+SRM-7701,Sample Ready Mix,24-101,Example City,6600,462,7,8.25,544.5,use_tax,tax_undercharged wrong_jurisdiction_rate,Charged 462 (7%); 8.25% of 6600 in Example City is 544.5. Accrue the difference as use tax unless the purchase is exempt. The 7% charged is the Sample County rate; the delivery was to Example City.,,
+SP-20,Sample Paint Supply,24-102,Test Township,900,58.5,6.5,6.5,58.5,review,jurisdiction_mismatch,"Delivered to Test Township, but job 24-102 is in Sample County. Check the ship-to address.",,
+EBC-310,Example Block Co,24-102,Sample County,2520,176.4,7,7,176.4,ok,,,,
+SL-88120,Sample Lumber Supply,24-101,Example City,4050,334.13,8.25,8.25,334.13,ok,,,,

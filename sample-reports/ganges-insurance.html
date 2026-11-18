@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Subcontractor insurance certificates as of 2026-11-16</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b6760;--line:#e4e0d8;--ok:#1f7a4d;--bad:#b42318;--warn:#a15c07;--card:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#161514;--fg:#ecebe8;--mut:#a29d94;--line:#34312d;--ok:#4ade80;--bad:#f87171;--warn:#fbbf24;--card:#1f1e1c}}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,Segoe UI,"Hiragino Sans","Yu Gothic UI","Microsoft YaHei","PingFang SC","Malgun Gothic","Apple SD Gothic Neo","Noto Sans CJK",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:17px;margin:28px 0 8px}
+.mut{color:var(--mut)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+table{border-collapse:collapse;width:100%;background:var(--card);font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{font-weight:600}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.tiles{display:flex;gap:12px;flex-wrap:wrap}.tile{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;min-width:120px}
+.tile b{display:block;font-size:22px}code{font-size:13px;overflow-wrap:anywhere}pre{overflow-x:auto}
+.wrap{overflow-x:auto;max-width:100%}svg,img{max-width:100%;height:auto}figure{margin:16px 0}p,li,h1,h2,h3{overflow-wrap:break-word}
+</style></head><body><main>
+<h1>Subcontractor insurance certificates as of 2026-11-16</h1>
+<p class="mut">6 subcontractor(s), 19 coverage(s) checked as of 2026-11-16: 2 missing or expired, 2 below your requirements, 1 expiring or ending before the work does. 2 subcontractor(s) fully clear.</p>
+<h2>By vendor</h2><div class="wrap"><table><thead><tr><th scope="col">vendor</th><th scope="col">coverages</th><th scope="col">problems</th><th scope="col">worst</th></tr></thead><tbody>
+<tr><td>Example Electric Inc</td><td>3</td><td>2</td><td>expired</td></tr>
+<tr><td>Sample Painting Co</td><td>3</td><td>1</td><td>expired</td></tr>
+<tr><td>Example Roofing LLC</td><td>4</td><td>1</td><td>deficient</td></tr>
+<tr><td>Test Drywall Co</td><td>3</td><td>1</td><td>expiring</td></tr>
+<tr><td>Example Concrete LLC</td><td>3</td><td>0</td><td>ok</td></tr>
+<tr><td>Sample Mechanical Inc</td><td>3</td><td>0</td><td>ok</td></tr>
+</tbody></table></div>
+<h2>By finding</h2><div class="wrap"><table><thead><tr><th scope="col">code</th><th scope="col">count</th><th scope="col">amount</th></tr></thead><tbody>
+<tr><td>aggregate_low</td><td>1</td><td>1000000</td></tr>
+<tr><td>coverage_missing</td><td>1</td><td>0</td></tr>
+<tr><td>expired</td><td>1</td><td>0</td></tr>
+<tr><td>expiring_soon</td><td>1</td><td>0</td></tr>
+<tr><td>limit_low</td><td>1</td><td>500000</td></tr>
+<tr><td>no_additional_insured</td><td>1</td><td>0</td></tr>
+</tbody></table></div>
+<h2>All rows (19)</h2>
+<div class="wrap"><table><thead><tr><th scope="col">vendor</th><th scope="col">coverage</th><th scope="col">expires</th><th scope="col">each occurrence</th><th scope="col">aggregate</th><th scope="col">status</th><th scope="col">reasons</th></tr></thead><tbody>
+<tr><td>Example Electric Inc</td><td>WC</td><td>2026-10-31</td><td>500000</td><td></td><td>expired</td><td>WC policy WC-3003 expired on 2026-10-31.</td></tr>
+<tr><td>Sample Painting Co</td><td>Auto</td><td></td><td></td><td></td><td>expired</td><td>No Auto certificate on file for Sample Painting Co.</td></tr>
+<tr><td>Example Electric Inc</td><td>GL</td><td>2027-02-01</td><td>1000000</td><td>2000000</td><td>deficient</td><td>GL does not show you as additional insured.</td></tr>
+<tr><td>Example Roofing LLC</td><td>GL</td><td>2027-04-01</td><td>500000</td><td>1000000</td><td>deficient</td><td>GL each-occurrence limit is 500000; you require 1000000. GL aggregate is 1000000; you require 2000000.</td></tr>
+<tr><td>Test Drywall Co</td><td>GL</td><td>2026-11-30</td><td>1000000</td><td>2000000</td><td>expiring</td><td>GL policy GL-2001 expires on 2026-11-30, in 14 day(s).</td></tr>
+<tr><td>Example Concrete LLC</td><td>Auto</td><td>2027-05-01</td><td>1000000</td><td></td><td>ok</td><td></td></tr>
+<tr><td>Example Concrete LLC</td><td>GL</td><td>2027-05-01</td><td>1000000</td><td>2000000</td><td>ok</td><td></td></tr>
+<tr><td>Example Concrete LLC</td><td>WC</td><td>2027-01-01</td><td>500000</td><td></td><td>ok</td><td></td></tr>
+<tr><td>Example Electric Inc</td><td>Auto</td><td>2027-02-01</td><td>1000000</td><td></td><td>ok</td><td></td></tr>
+<tr><td>Example Roofing LLC</td><td>Auto</td><td>2027-04-01</td><td>1000000</td><td></td><td>ok</td><td></td></tr>
+<tr><td>Example Roofing LLC</td><td>Umbrella</td><td>2027-04-01</td><td>2000000</td><td>2000000</td><td>ok</td><td></td></tr>
+<tr><td>Example Roofing LLC</td><td>WC</td><td>2027-04-01</td><td>500000</td><td></td><td>ok</td><td></td></tr>
+<tr><td>Sample Mechanical Inc</td><td>Auto</td><td>2027-07-01</td><td>1000000</td><td></td><td>ok</td><td></td></tr>
+<tr><td>Sample Mechanical Inc</td><td>GL</td><td>2027-07-01</td><td>2000000</td><td>4000000</td><td>ok</td><td></td></tr>
+<tr><td>Sample Mechanical Inc</td><td>WC</td><td>2027-07-01</td><td>1000000</td><td></td><td>ok</td><td></td></tr>
+<tr><td>Sample Painting Co</td><td>GL</td><td>2027-09-01</td><td>1000000</td><td>2000000</td><td>ok</td><td></td></tr>
+<tr><td>Sample Painting Co</td><td>WC</td><td>2027-09-01</td><td>500000</td><td></td><td>ok</td><td></td></tr>
+<tr><td>Test Drywall Co</td><td>Auto</td><td>2027-03-01</td><td>1000000</td><td></td><td>ok</td><td></td></tr>
+<tr><td>Test Drywall Co</td><td>WC</td><td>2027-03-01</td><td>500000</td><td></td><td>ok</td><td></td></tr>
+</tbody></table></div>
+<h2>Limits</h2><ul><li>Reads only the files you give it. It does not log in to your accounting system, project management system, bank, surety, insurer or any government portal.</li><li>Thresholds, percentages, rates and dates come from the settings file you supply; the defaults it used are listed in the result.</li><li>Not legal, tax, lien, insurance, surety or accounting advice. A person decides what to bill, pay, hold, send or file.</li><li>Ganges reads the certificate data you entered; a certificate is evidence of insurance, not the policy. Endorsements and exclusions are for your insurance agent to confirm.</li></ul>
+<p class="mut" style="margin-top:32px">Written by a Fairbuild agent from your files. Nothing was sent or paid.</p>
+</main></body></html>

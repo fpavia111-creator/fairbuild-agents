@@ -1,0 +1,9 @@
+submittal,revision,spec_section,title,vendor,ball_in_court,days_in_court,required_on_site,order_by,submit_by,status,findings,reasons,decision,decided_by
+S-083323-01,0,08 33 23,Overhead coiling doors,Sample Door Supply,Subcontractor,,2026-12-15,2026-11-03,2026-10-24,late,submit_late,"Not submitted yet; to have it on site by 2026-12-15 with 42 day(s) lead time and 10 review day(s), it had to be submitted by 2026-10-24.",,
+S-081113-01,0,08 11 13,Hollow metal doors and frames,Example Door Co,Architect,27,2027-01-15,2026-11-20,2026-11-10,late,review_overdue,With Architect for 27 days since 2026-10-20; 10 review day(s) allowed. Order-by date is 2026-11-20.,,
+S-092900-01,2,09 29 00,Gypsum board,Test Drywall Co,Subcontractor,39,2027-01-10,2026-12-27,2026-12-17,late,resubmit_overdue resubmittal_loop,"Returned ""Revise and resubmit"" on 2026-10-08 and not resubmitted after 39 days. Revision 2: this is submission 3. Meet with the reviewer and Test Drywall Co to settle the comments.",,
+S-260500-01,0,26 05 00,Electrical gear,Example Electric Inc,,,2026-10-01,2026-09-01,2026-08-22,review,approved_too_late,"Approved 2026-09-10, after the order-by date 2026-09-01: with 30 day(s) lead time it cannot be on site by 2026-10-01. Check the delivery date with Example Electric Inc.",,
+,,07 92 00,Joint sealants,,,,,,,review,no_submittal_for_section,Spec section 07 92 00 Joint sealants has no submittal in the register.,,
+,,22 40 00,Plumbing fixtures,,,,,,,review,no_submittal_for_section,Spec section 22 40 00 Plumbing fixtures has no submittal in the register.,,
+S-233000-01,0,23 30 00,HVAC ductwork,Sample Mechanical Inc,Engineer,6,2027-02-01,2027-01-02,2026-12-23,in_progress,,,,
+S-033000-01,0,03 30 00,Concrete mix designs,Example Concrete LLC,,,2026-06-15,2026-06-08,2026-05-29,done,,,,

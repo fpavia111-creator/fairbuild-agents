@@ -1,6 +1,7 @@
 {
   "name": "oder-of-submittals",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/oder-of-submittals",
   "description": "Oder of Submittals: the submittal register worked back from the date material is needed on site: submittals not yet submitted past their latest submit date (required on site less lead time and review time), reviews running over the allowed days, revise-and-resubmit not resubmitted, third and later revisions, approvals that came after the order-by date, and spec sections with no submittal. Ages ball-in-court. Drafts reminders. Never approves or changes a submittal.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

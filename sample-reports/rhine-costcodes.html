@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Job cost against budget</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b6760;--line:#e4e0d8;--ok:#1f7a4d;--bad:#b42318;--warn:#a15c07;--card:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#161514;--fg:#ecebe8;--mut:#a29d94;--line:#34312d;--ok:#4ade80;--bad:#f87171;--warn:#fbbf24;--card:#1f1e1c}}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,Segoe UI,"Hiragino Sans","Yu Gothic UI","Microsoft YaHei","PingFang SC","Malgun Gothic","Apple SD Gothic Neo","Noto Sans CJK",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:17px;margin:28px 0 8px}
+.mut{color:var(--mut)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+table{border-collapse:collapse;width:100%;background:var(--card);font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{font-weight:600}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.tiles{display:flex;gap:12px;flex-wrap:wrap}.tile{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;min-width:120px}
+.tile b{display:block;font-size:22px}code{font-size:13px;overflow-wrap:anywhere}pre{overflow-x:auto}
+.wrap{overflow-x:auto;max-width:100%}svg,img{max-width:100%;height:auto}figure{margin:16px 0}p,li,h1,h2,h3{overflow-wrap:break-word}
+</style></head><body><main>
+<h1>Job cost against budget</h1>
+<p class="mut">7 budget line(s) on 2 job(s): 2 over or projected over budget (overrun 8400), 1 running ahead of progress, 1 with budget math errors, 4200 on codes with no budget, 1300 on jobs not in the budget.</p>
+<h2>By job</h2><div class="wrap"><table><thead><tr><th scope="col">job</th><th scope="col">lines</th><th scope="col">revised budget</th><th scope="col">committed</th><th scope="col">actual</th><th scope="col">projected</th><th scope="col">overrun</th></tr></thead><tbody>
+<tr><td>24-101</td><td>6</td><td>354000</td><td>294500</td><td>219200</td><td>364600</td><td>8400</td></tr>
+<tr><td>24-199</td><td>1</td><td>0</td><td>0</td><td>1300</td><td>1300</td><td>0</td></tr>
+<tr><td>24-102</td><td>2</td><td>240000</td><td>205000</td><td>162850</td><td>235850</td><td>0</td></tr>
+</tbody></table></div>
+<h2>By finding</h2><div class="wrap"><table><thead><tr><th scope="col">code</th><th scope="col">count</th><th scope="col">amount</th></tr></thead><tbody>
+<tr><td>burn_ahead</td><td>1</td><td>0</td></tr>
+<tr><td>committed_over</td><td>1</td><td>3500</td></tr>
+<tr><td>detail_does_not_tie</td><td>1</td><td>0</td></tr>
+<tr><td>no_budget_job</td><td>1</td><td>1300</td></tr>
+<tr><td>over_budget</td><td>1</td><td>3400</td></tr>
+<tr><td>projected_over</td><td>2</td><td>8400</td></tr>
+<tr><td>revised_math</td><td>1</td><td>2000</td></tr>
+<tr><td>unbudgeted_cost</td><td>1</td><td>4200</td></tr>
+</tbody></table></div>
+<h2>All rows (9)</h2>
+<div class="wrap"><table><thead><tr><th scope="col">job</th><th scope="col">cost code</th><th scope="col">cost type</th><th scope="col">revised budget</th><th scope="col">actual</th><th scope="col">projected</th><th scope="col">overrun</th><th scope="col">status</th><th scope="col">reasons</th></tr></thead><tbody>
+<tr><td>24-101</td><td>06-100</td><td>M</td><td>22000</td><td>25400</td><td>26900</td><td>4900</td><td>over</td><td>Cost to date 25400 is over the revised budget 22000 by 3400. Projected cost 26900 is over the revised budget 22000 by 4900 (22.3%).</td></tr>
+<tr><td>24-101</td><td>03-300</td><td>S</td><td>128000</td><td>96000</td><td>131500</td><td>3500</td><td>over</td><td>Committed cost 131500 is over the revised budget 128000 by 3500. Projected cost 131500 is over the revised budget 128000 by 3500 (2.7%).</td></tr>
+<tr><td>24-101</td><td>31-000</td><td>S</td><td>0</td><td>4200</td><td></td><td>0</td><td>unbudgeted</td><td>4200 of cost (1 row(s)) is coded to 31-000 on job 24-101, which has no budget line for that code. Recode it or add the code to the budget.</td></tr>
+<tr><td>24-199</td><td>01-500</td><td>L</td><td>0</td><td>1300</td><td></td><td>0</td><td>unbudgeted</td><td>1300 of cost (1 row(s)) is coded to job 24-199, which is not in the budget file. Check the job number.</td></tr>
+<tr><td>24-101</td><td>09-250</td><td>S</td><td>64000</td><td>18000</td><td>64000</td><td>0</td><td>review</td><td>28.1% of the budget is spent at 10% complete, 18.1 points ahead of progress. Ask the project manager for the cost to complete.</td></tr>
+<tr><td>24-101</td><td>26-000</td><td>S</td><td>92000</td><td>45000</td><td>90000</td><td>0</td><td>review</td><td>Original 85000 plus approved changes 5000 is 90000; the revised budget says 92000.</td></tr>
+<tr><td>24-102</td><td>01-500</td><td>L</td><td>30000</td><td>12850</td><td>30850</td><td>0</td><td>review</td><td>Cost detail adds up to 12850 (2 row(s)); the budget report shows 12000 to date. Check for costs posted after the budget report was run, or coded to this line by mistake.</td></tr>
+<tr><td>24-101</td><td>01-500</td><td>L</td><td>48000</td><td>30600</td><td>48000</td><td>0</td><td>ok</td><td></td></tr>
+<tr><td>24-102</td><td>07-500</td><td>S</td><td>210000</td><td>150000</td><td>205000</td><td>0</td><td>ok</td><td></td></tr>
+</tbody></table></div>
+<h2>Limits</h2><ul><li>Reads only the files you give it. It does not log in to your accounting system, project management system, bank, surety, insurer or any government portal.</li><li>Thresholds, percentages, rates and dates come from the settings file you supply; the defaults it used are listed in the result.</li><li>Not legal, tax, lien, insurance, surety or accounting advice. A person decides what to bill, pay, hold, send or file.</li><li>Projected cost is the budget file&#39;s own projection, or cost to date plus the cost to complete it gives. Rhine does not estimate cost to complete itself.</li></ul>
+<p class="mut" style="margin-top:32px">Written by a Fairbuild agent from your files. Nothing was sent or paid.</p>
+</main></body></html>

@@ -1,6 +1,7 @@
 {
   "name": "zambezi-of-permits",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/zambezi-of-permits",
   "description": "Zambezi of Permits: permits and inspections by job: permits expired or expiring, failed inspections with no re-inspection booked, inspections past their date with no result, inspections on permits you have no record of, and what is coming up. Writes a calendar file for permit expirations and inspections. Drafts notices to the project manager. Never applies to, renews with or schedules with a jurisdiction.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

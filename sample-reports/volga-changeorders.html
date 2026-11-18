@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Change order log</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b6760;--line:#e4e0d8;--ok:#1f7a4d;--bad:#b42318;--warn:#a15c07;--card:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#161514;--fg:#ecebe8;--mut:#a29d94;--line:#34312d;--ok:#4ade80;--bad:#f87171;--warn:#fbbf24;--card:#1f1e1c}}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,Segoe UI,"Hiragino Sans","Yu Gothic UI","Microsoft YaHei","PingFang SC","Malgun Gothic","Apple SD Gothic Neo","Noto Sans CJK",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:17px;margin:28px 0 8px}
+.mut{color:var(--mut)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+table{border-collapse:collapse;width:100%;background:var(--card);font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{font-weight:600}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.tiles{display:flex;gap:12px;flex-wrap:wrap}.tile{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;min-width:120px}
+.tile b{display:block;font-size:22px}code{font-size:13px;overflow-wrap:anywhere}pre{overflow-x:auto}
+.wrap{overflow-x:auto;max-width:100%}svg,img{max-width:100%;height:auto}figure{margin:16px 0}p,li,h1,h2,h3{overflow-wrap:break-word}
+</style></head><body><main>
+<h1>Change order log</h1>
+<p class="mut">9 change order(s): 25000 approved, 16700 pending (2 waiting more than 30 days), 5000 approved but not billed. 2 with billing errors, 5 to review.</p>
+<h2>By job</h2><div class="wrap"><table><thead><tr><th scope="col">job</th><th scope="col">change orders</th><th scope="col">approved</th><th scope="col">pending</th><th scope="col">billed</th><th scope="col">unbilled</th></tr></thead><tbody>
+<tr><td>24-101</td><td>5</td><td>13000</td><td>16700</td><td>10000</td><td>5000</td></tr>
+<tr><td>24-102</td><td>4</td><td>12000</td><td>0</td><td>12600</td><td>0</td></tr>
+</tbody></table></div>
+<h2>By status</h2><div class="wrap"><table><thead><tr><th scope="col">state</th><th scope="col">count</th><th scope="col">amount</th></tr></thead><tbody>
+<tr><td>pending</td><td>3</td><td>16700</td></tr>
+<tr><td>approved</td><td>5</td><td>25000</td></tr>
+<tr><td>rejected</td><td>1</td><td>9000</td></tr>
+</tbody></table></div>
+<h2>By finding</h2><div class="wrap"><table><thead><tr><th scope="col">code</th><th scope="col">count</th><th scope="col">amount</th></tr></thead><tbody>
+<tr><td>approved_unbilled</td><td>1</td><td>5000</td></tr>
+<tr><td>billed_not_approved</td><td>1</td><td>2000</td></tr>
+<tr><td>duplicate_number</td><td>1</td><td>0</td></tr>
+<tr><td>negative_margin</td><td>1</td><td>700</td></tr>
+<tr><td>no_price</td><td>1</td><td>0</td></tr>
+<tr><td>over_billed</td><td>1</td><td>600</td></tr>
+<tr><td>pending_aging</td><td>2</td><td>0</td></tr>
+<tr><td>rejected_with_cost</td><td>1</td><td>4800</td></tr>
+</tbody></table></div>
+<h2>All rows (9)</h2>
+<div class="wrap"><table><thead><tr><th scope="col">job</th><th scope="col">change order</th><th scope="col">description</th><th scope="col">state</th><th scope="col">amount</th><th scope="col">billed</th><th scope="col">unbilled</th><th scope="col">status</th><th scope="col">reasons</th></tr></thead><tbody>
+<tr><td>24-101</td><td>CO-005</td><td>Added soffit framing</td><td>pending</td><td>4200</td><td>2000</td><td>0</td><td>billing_error</td><td>2000 has been billed on CO-005, which is pending. Owners usually reject billing on unapproved changes. Pending 46 days since 2026-10-01 for 4200. Follow up with the owner for a decision.</td></tr>
+<tr><td>24-102</td><td>CO-102</td><td>Additional crickets</td><td>approved</td><td>3000</td><td>3600</td><td>0</td><td>billing_error</td><td>Billed 3600 is more than the approved 3000.</td></tr>
+<tr><td>24-101</td><td>CO-002</td><td>Upgraded lighting</td><td>approved</td><td>8000</td><td>3000</td><td>5000</td><td>unbilled</td><td>Approved for 8000 on 2026-09-30; 3000 billed so far, 5000 not yet on a pay application.</td></tr>
+<tr><td>24-101</td><td>PCO-003</td><td>Unforeseen rock excavation</td><td>pending</td><td>12500</td><td>0</td><td>0</td><td>review</td><td>Pending 67 days since 2026-09-10 for 12500. Follow up with the owner for a decision.</td></tr>
+<tr><td>24-101</td><td>PCO-004</td><td>Owner-requested door hardware</td><td>pending</td><td></td><td>0</td><td>0</td><td>review</td><td>Pending with no price (estimated cost 1200). Price it and submit it.</td></tr>
+<tr><td>24-102</td><td>CO-101</td><td>Roof drain relocation</td><td>approved</td><td>6500</td><td>6500</td><td>0</td><td>review</td><td>Priced at 6500 against an estimated cost of 7200: 700 below cost.</td></tr>
+<tr><td>24-102</td><td>CO-104</td><td>Parapet cap</td><td>approved</td><td>2500</td><td>2500</td><td>0</td><td>review</td><td>CO-104 appears 2 times on job 24-102 (&quot;Parapet cap&quot; 2500, &quot;Parapet cap entered twice&quot; 2500). Only the first is counted; correct the log.</td></tr>
+<tr><td>24-102</td><td>PCO-103</td><td>Deck repair</td><td>rejected</td><td>9000</td><td>0</td><td>0</td><td>review</td><td>Rejected, with 4800 of estimated cost. Decide whether to absorb it, rework the pricing or pursue a claim.</td></tr>
+<tr><td>24-101</td><td>CO-001</td><td>Added outlets in exam rooms</td><td>approved</td><td>5000</td><td>5000</td><td>0</td><td>ok</td><td></td></tr>
+</tbody></table></div>
+<h2>Limits</h2><ul><li>Reads only the files you give it. It does not log in to your accounting system, project management system, bank, surety, insurer or any government portal.</li><li>Thresholds, percentages, rates and dates come from the settings file you supply; the defaults it used are listed in the result.</li><li>Not legal, tax, lien, insurance, surety or accounting advice. A person decides what to bill, pay, hold, send or file.</li><li>Whether a change is owed under your contract is not decided here; Volga reads the status and amounts your log records.</li></ul>
+<p class="mut" style="margin-top:32px">Written by a Fairbuild agent from your files. Nothing was sent or paid.</p>
+</main></body></html>

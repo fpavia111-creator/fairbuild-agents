@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Delivery tickets against supplier invoices</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b6760;--line:#e4e0d8;--ok:#1f7a4d;--bad:#b42318;--warn:#a15c07;--card:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#161514;--fg:#ecebe8;--mut:#a29d94;--line:#34312d;--ok:#4ade80;--bad:#f87171;--warn:#fbbf24;--card:#1f1e1c}}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,Segoe UI,"Hiragino Sans","Yu Gothic UI","Microsoft YaHei","PingFang SC","Malgun Gothic","Apple SD Gothic Neo","Noto Sans CJK",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:17px;margin:28px 0 8px}
+.mut{color:var(--mut)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+table{border-collapse:collapse;width:100%;background:var(--card);font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{font-weight:600}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.tiles{display:flex;gap:12px;flex-wrap:wrap}.tile{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;min-width:120px}
+.tile b{display:block;font-size:22px}code{font-size:13px;overflow-wrap:anywhere}pre{overflow-x:auto}
+.wrap{overflow-x:auto;max-width:100%}svg,img{max-width:100%;height:auto}figure{margin:16px 0}p,li,h1,h2,h3{overflow-wrap:break-word}
+</style></head><body><main>
+<h1>Delivery tickets against supplier invoices</h1>
+<p class="mut">6 invoice line(s), 29140 billed: 4 overbilled by 5380 against tickets and agreed prices, 2 to review. 1 delivered ticket(s) not invoiced (about 3000 to accrue).</p>
+<h2>By supplier</h2><div class="wrap"><table><thead><tr><th scope="col">supplier</th><th scope="col">lines</th><th scope="col">billed</th><th scope="col">overbilled</th></tr></thead><tbody>
+<tr><td>Sample Lumber Supply</td><td>3</td><td>13750</td><td>5050</td></tr>
+<tr><td>Sample Ready Mix</td><td>2</td><td>12870</td><td>330</td></tr>
+<tr><td>Example Block Co</td><td>1</td><td>2520</td><td>0</td></tr>
+</tbody></table></div>
+<h2>By finding</h2><div class="wrap"><table><thead><tr><th scope="col">code</th><th scope="col">count</th><th scope="col">amount</th></tr></thead><tbody>
+<tr><td>extension_off</td><td>1</td><td>100</td></tr>
+<tr><td>no_ticket</td><td>1</td><td>0</td></tr>
+<tr><td>price_over_agreed</td><td>1</td><td>150</td></tr>
+<tr><td>qty_over_ticket</td><td>1</td><td>330</td></tr>
+<tr><td>ticket_billed_twice</td><td>1</td><td>4800</td></tr>
+<tr><td>ticket_not_invoiced</td><td>1</td><td>3000</td></tr>
+</tbody></table></div>
+<h2>All rows (7)</h2>
+<div class="wrap"><table><thead><tr><th scope="col">invoice number</th><th scope="col">ticket</th><th scope="col">supplier</th><th scope="col">material</th><th scope="col">quantity</th><th scope="col">unit price</th><th scope="col">amount</th><th scope="col">status</th><th scope="col">reasons</th></tr></thead><tbody>
+<tr><td>SL-88120</td><td>DT-503</td><td>Sample Lumber Supply</td><td>2x6 studs</td><td>600</td><td>6.75</td><td>4050</td><td>overbilled</td><td>Billed 6.75 a unit; the agreed price for 2x6 studs is 6.5.</td></tr>
+<tr><td>SL-88341</td><td>DT-504</td><td>Sample Lumber Supply</td><td>OSB sheathing</td><td>200</td><td>24</td><td>4900</td><td>overbilled</td><td>200 × 24 is 4800; the line says 4900.</td></tr>
+<tr><td>SL-88342</td><td>DT-504</td><td>Sample Lumber Supply</td><td>OSB sheathing</td><td>200</td><td>24</td><td>4800</td><td>overbilled</td><td>Ticket DT-504 (200 EA) was already billed on SL-88341.</td></tr>
+<tr><td>SRM-7702</td><td>DT-502</td><td>Sample Ready Mix</td><td>Concrete 4000 psi</td><td>38</td><td>165</td><td>6270</td><td>overbilled</td><td>Billed 38 CY; ticket DT-502 shows 36 delivered: 2 over.</td></tr>
+<tr><td>EBC-310</td><td></td><td>Example Block Co</td><td>CMU 8in</td><td>1200</td><td>2.1</td><td>2520</td><td>review</td><td>No delivery ticket on this line; ticket DT-505 matches by supplier, material and quantity. Get the signed ticket before approving.</td></tr>
+<tr><td></td><td>DT-506</td><td>Sample Ready Mix</td><td>Concrete 3000 psi</td><td>20</td><td>150</td><td>3000</td><td>review</td><td>Delivered 2026-11-10 (20 CY), not invoiced after 6 days. Accrue about 3000 at the agreed price.</td></tr>
+<tr><td>SRM-7701</td><td>DT-501</td><td>Sample Ready Mix</td><td>Concrete 4000 psi</td><td>40</td><td>165</td><td>6600</td><td>ok</td><td></td></tr>
+</tbody></table></div>
+<h2>Limits</h2><ul><li>Reads only the files you give it. It does not log in to your accounting system, project management system, bank, surety, insurer or any government portal.</li><li>Thresholds, percentages, rates and dates come from the settings file you supply; the defaults it used are listed in the result.</li><li>Not legal, tax, lien, insurance, surety or accounting advice. A person decides what to bill, pay, hold, send or file.</li><li>Mekong compares the quantities and prices in your files. It does not read scanned tickets; tickets typed with the wrong quantity give wrong results.</li></ul>
+<p class="mut" style="margin-top:32px">Written by a Fairbuild agent from your files. Nothing was sent or paid.</p>
+</main></body></html>

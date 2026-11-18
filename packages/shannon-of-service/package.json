@@ -1,6 +1,7 @@
 {
   "name": "shannon-of-service",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/shannon-of-service",
   "description": "Shannon of Service: service and trade tickets with technician timesheets (ServiceTitan layouts recognised): utilisation per technician from working against paid hours, revenue per paid hour, recall rate, completed tickets not invoiced and zero-dollar tickets. Technician names are masked in what the AI model sees. Drafts billing follow-ups. Never invoices a customer or runs payroll.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

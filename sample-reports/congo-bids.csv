@@ -1,0 +1,7 @@
+bid_package,bidder,base_bid,plugs,leveled_bid,rank,responsive,status,findings,reasons,decision,decided_by
+09 Drywall,Test Drywall Co,248000,0,248000,1,yes,ok,,,,
+09 Drywall,Sample Interiors LLC,231500,18000,249500,2,yes,leveled,scope_gap has_exclusions,Does not include insulation (plug 18000); leveled bid is 249500. Exclusions: Insulation by others.,,
+09 Drywall,Example Wallboard Inc,189000,0,189000,,no,non_responsive,late_bid no_bond missing_addenda low_outlier,"Received 2026-11-10 14:10, after the due time 2026-11-10 14:00. No bid bond with the bid. Acknowledges 1 of 2 addenda. Base bid 189000 is 18.36% below the package median 231500. Confirm the bidder's scope and quantities before relying on it.",,
+26 Electrical,Example Electric Inc,412000,0,412000,1,yes,ok,,,,
+26 Electrical,Sample Power Co,398000,35000,433000,2,yes,leveled,scope_gap has_exclusions,Does not include fire alarm (plug 35000); leveled bid is 433000. Exclusions: Fire alarm excluded.,,
+26 Electrical,Test Circuit LLC,455000,0,455000,3,yes,ok,,,,

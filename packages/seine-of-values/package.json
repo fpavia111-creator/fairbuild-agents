@@ -1,6 +1,7 @@
 {
   "name": "seine-of-values",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/seine-of-values",
   "description": "Seine of Values: the schedule of values line by line against what has been billed and what the field says is in place: lines billed ahead of progress (over billing), lines billed behind it (money not yet asked for), a schedule of values that does not add up to the contract, approved change orders missing from it, and billing on zero-value lines. Drafts the project manager memo. Never changes a billing.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

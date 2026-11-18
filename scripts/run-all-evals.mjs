@@ -23,4 +23,4 @@ for (const r of rows) console.log(`${r.agent.padEnd(32)} ${String(r.passed).padS
 console.log(`\n${rows.length} agent(s), ${total} eval case(s), ${failed} failed, ${short} agent(s) under ${MIN} cases; fewest ${Math.min(...rows.map((r) => r.cases))}, most ${Math.max(...rows.map((r) => r.cases))}.`);
 const out = join(ROOT, 'fairbuild-out', 'evals'); mkdirSync(out, { recursive: true });
 writeFileSync(join(out, 'summary.json'), JSON.stringify({ ran_at: new Date().toISOString(), node: process.version, agents: rows, total, failed }, null, 2));
-process.exit(failed || short ? 1 : 0);
+process.exitCode = failed || short ? 1 : 0;

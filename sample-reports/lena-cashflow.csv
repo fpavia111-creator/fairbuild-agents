@@ -1,0 +1,4 @@
+job,cash_in,cash_out,net,unpaid_billed,unpaid_over_days,status,findings,reasons,decision,decided_by
+24-102,100000,150000,-50000,42500,42500,negative,cash_negative slow_collection negative_trend,"Paid out 150000 and collected 100000: the job is 50000 cash negative, with 42500 billed and unpaid for more than 60 days. AR-2003 (42500, 88 days) unpaid past 60 days. Net cash was negative in each of the last 2 months (2026-10 -35000, 2026-11 -30000).",,
+24-103,135000,160500,-25500,15000,0,negative,cash_negative,Paid out 160500 and collected 135000: the job is 25500 cash negative.,,
+24-101,245000,216400,28600,0,0,ok,,,,

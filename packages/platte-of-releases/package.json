@@ -1,6 +1,7 @@
 {
   "name": "platte-of-releases",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/platte-of-releases",
   "description": "Platte of Releases: the release check before a subcontractor is paid: project manager approval, the owner paid for that month (pay-when-paid, if you use it), a conditional lien waiver for the invoice, a current insurance certificate, a W-9 on file and retainage withheld at the subcontract rate. Each invoice is cleared or held with its reasons, and payment releases are recorded only after one named person's click. Never pays.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

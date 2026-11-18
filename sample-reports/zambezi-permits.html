@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Permits and inspections as of 2026-11-16</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b6760;--line:#e4e0d8;--ok:#1f7a4d;--bad:#b42318;--warn:#a15c07;--card:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#161514;--fg:#ecebe8;--mut:#a29d94;--line:#34312d;--ok:#4ade80;--bad:#f87171;--warn:#fbbf24;--card:#1f1e1c}}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,Segoe UI,"Hiragino Sans","Yu Gothic UI","Microsoft YaHei","PingFang SC","Malgun Gothic","Apple SD Gothic Neo","Noto Sans CJK",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:17px;margin:28px 0 8px}
+.mut{color:var(--mut)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+table{border-collapse:collapse;width:100%;background:var(--card);font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{font-weight:600}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.tiles{display:flex;gap:12px;flex-wrap:wrap}.tile{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;min-width:120px}
+.tile b{display:block;font-size:22px}code{font-size:13px;overflow-wrap:anywhere}pre{overflow-x:auto}
+.wrap{overflow-x:auto;max-width:100%}svg,img{max-width:100%;height:auto}figure{margin:16px 0}p,li,h1,h2,h3{overflow-wrap:break-word}
+</style></head><body><main>
+<h1>Permits and inspections as of 2026-11-16</h1>
+<p class="mut">4 permit(s) and 7 inspection(s) as of 2026-11-16: 4 need action (expired permits, failed inspections not rebooked, overdue results, unknown permits), 2 coming up. 5 calendar event(s).</p>
+<h2>Calendar</h2><div class="wrap"><table><thead><tr><th scope="col">date</th><th scope="col">event</th></tr></thead><tbody>
+<tr><td>2026-11-20</td><td>Rough electrical inspection, job 24-101</td></tr>
+<tr><td>2026-11-25</td><td>Mechanical rough inspection, job 24-102</td></tr>
+<tr><td>2026-12-01</td><td>Permit EP-2026-0333 expires (Electrical, job 24-101)</td></tr>
+<tr><td>2027-05-01</td><td>Permit BP-2026-0141 expires (Building, job 24-101)</td></tr>
+<tr><td>2027-05-10</td><td>Permit PP-2026-0212 expires (Plumbing, job 24-102)</td></tr>
+</tbody></table></div>
+<h2>By job</h2><div class="wrap"><table><thead><tr><th scope="col">job</th><th scope="col">permits</th><th scope="col">inspections</th><th scope="col">action</th></tr></thead><tbody>
+<tr><td>24-101</td><td>2</td><td>3</td><td>1</td></tr>
+<tr><td>24-102</td><td>2</td><td>4</td><td>3</td></tr>
+</tbody></table></div>
+<h2>By finding</h2><div class="wrap"><table><thead><tr><th scope="col">code</th><th scope="col">count</th></tr></thead><tbody>
+<tr><td>failed_no_reinspection</td><td>1</td></tr>
+<tr><td>inspection_overdue</td><td>1</td></tr>
+<tr><td>inspection_upcoming</td><td>2</td></tr>
+<tr><td>permit_expired</td><td>1</td></tr>
+<tr><td>permit_expiring</td><td>1</td></tr>
+<tr><td>permit_missing</td><td>1</td></tr>
+</tbody></table></div>
+<h2>All rows (11)</h2>
+<div class="wrap"><table><thead><tr><th scope="col">kind</th><th scope="col">job</th><th scope="col">permit number</th><th scope="col">type</th><th scope="col">date</th><th scope="col">result</th><th scope="col">status</th><th scope="col">reasons</th></tr></thead><tbody>
+<tr><td>inspection</td><td>24-101</td><td>BP-2026-0141</td><td>Framing</td><td>2026-11-05</td><td>fail</td><td>action</td><td>Framing on job 24-101 failed on 2026-11-05 and no re-inspection is booked.</td></tr>
+<tr><td>permit</td><td>24-102</td><td>RP-2026-0090</td><td>Roofing</td><td>2026-10-15</td><td></td><td>action</td><td>Roofing permit RP-2026-0090 expired on 2026-10-15 and is not closed out. Renew it or close it out with Sample County.</td></tr>
+<tr><td>inspection</td><td>24-102</td><td>RP-2026-0090</td><td>Roof final</td><td>2026-11-10</td><td></td><td>action</td><td>Roof final was scheduled for 2026-11-10 and has no result 6 day(s) later. Record the result or rebook it.</td></tr>
+<tr><td>inspection</td><td>24-102</td><td>MP-2026-0999</td><td>Mechanical rough</td><td>2026-11-25</td><td></td><td>action</td><td>Inspection &quot;Mechanical rough&quot; is on permit MP-2026-0999, which is not in your permit log. Check the permit was pulled. Mechanical rough on 2026-11-25, in 9 day(s).</td></tr>
+<tr><td>inspection</td><td>24-101</td><td>EP-2026-0333</td><td>Rough electrical</td><td>2026-11-20</td><td></td><td>soon</td><td>Rough electrical on 2026-11-20, in 4 day(s).</td></tr>
+<tr><td>permit</td><td>24-101</td><td>EP-2026-0333</td><td>Electrical</td><td>2026-12-01</td><td></td><td>soon</td><td>Electrical permit EP-2026-0333 expires on 2026-12-01, in 15 day(s).</td></tr>
+<tr><td>inspection</td><td>24-101</td><td>BP-2026-0141</td><td>Footing</td><td>2026-06-10</td><td>pass</td><td>ok</td><td></td></tr>
+<tr><td>permit</td><td>24-101</td><td>BP-2026-0141</td><td>Building</td><td>2027-05-01</td><td></td><td>ok</td><td></td></tr>
+<tr><td>inspection</td><td>24-102</td><td>PP-2026-0212</td><td>Underground plumbing</td><td>2026-10-01</td><td>fail</td><td>ok</td><td></td></tr>
+<tr><td>inspection</td><td>24-102</td><td>PP-2026-0212</td><td>Underground plumbing</td><td>2026-10-08</td><td>pass</td><td>ok</td><td></td></tr>
+<tr><td>permit</td><td>24-102</td><td>PP-2026-0212</td><td>Plumbing</td><td>2027-05-10</td><td></td><td>ok</td><td></td></tr>
+</tbody></table></div>
+<h2>Limits</h2><ul><li>Reads only the files you give it. It does not log in to your accounting system, project management system, bank, surety, insurer or any government portal.</li><li>Thresholds, percentages, rates and dates come from the settings file you supply; the defaults it used are listed in the result.</li><li>Not legal, tax, lien, insurance, surety or accounting advice. A person decides what to bill, pay, hold, send or file.</li><li>Zambezi reads your permit and inspection logs. It does not check a jurisdiction&#39;s portal; a permit can expire on other rules (no inspection in a set time) that only the jurisdiction knows.</li></ul>
+<p class="mut" style="margin-top:32px">Written by a Fairbuild agent from your files. Nothing was sent or paid.</p>
+</main></body></html>

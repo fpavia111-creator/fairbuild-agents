@@ -29,4 +29,4 @@ for (const n of readdirSync(PK).filter((x) => /-of-/.test(x)).sort()) {
   }
 }
 console.log(`${sources} source(s) checked, ${clashes} clash(es)`);
-process.exit(clashes ? 1 : 0);
+process.exitCode = clashes ? 1 : 0;

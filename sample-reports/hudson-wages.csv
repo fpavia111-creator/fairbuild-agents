@@ -1,0 +1,9 @@
+job,week_ending,worker,worker_id,classification,hours,overtime_hours,rate_paid,fringe_paid,required_rate,required_fringe,owed,status,findings,reasons,decision,decided_by
+24-102,2026-11-07,Casey Sample,7722,Roofer,40,4,30,12.5,31.5,12.5,69,underpaid,underpaid,Paid 30 + 12.5 fringe per hour; the determination for Roofer is 31.5 + 12.5 (overtime 47.25 + 12.5). Short 69 for 40 straight and 4 overtime hour(s).,,
+24-102,2026-11-07,Riley Test,3355,Laborer Group 1,40,0,24,0,22.1,9.85,318,underpaid,underpaid,Paid 24 + 0 fringe per hour; the determination for Laborer Group 1 is 22.1 + 9.85. Short 318 for 40 straight hour(s).,,
+24-102,2026-11-14,Jordan Example,4411,Roofer,44,0,32,12.5,31.5,12.5,63,underpaid,ot_not_paid,"44 straight-time hours in one week: 4 hour(s) past 40 are overtime, 63 short at 1.5 times the base rate.",,
+24-102,2026-11-07,Morgan Example,,Roofer,38,0,32,12.5,31.5,12.5,0,review,missing_worker_id,No identifying number for Morgan Example. The report needs the worker's id or the last four digits of the SSN.,,
+24-102,2026-11-14,Casey Sample,7722,Sheet Metal Worker,16,0,38,15,,,0,review,no_rate,"""Sheet Metal Worker"" is not on the wage determination you supplied. Use the determination's classification, or add a conformance rate.",,
+24-102,2026-11-14,Riley Test,900-12-3456,Laborer Group 1,40,0,24,8,22.1,9.85,0,review,full_ssn_on_report,The worker id for Riley Test looks like a full Social Security number. Use only the last four digits or an employee id on a certified payroll.,,
+24-102,2026-11-14,Taylor Sample,5566,Roofer,40,0,32,12.5,31.5,12.5,0,review,duplicate_line,Taylor Sample appears 2 times for the week ending 2026-11-14 in the same classification. Only one line is counted; correct the payroll.,,
+24-102,2026-11-07,Jordan Example,4411,Roofer,40,0,32,12.5,31.5,12.5,0,ok,,,,

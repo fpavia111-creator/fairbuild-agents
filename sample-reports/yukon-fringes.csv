@@ -1,0 +1,7 @@
+union,fund,month,workers,hours,rate,due,remitted,difference,due_date,remitted_date,status,findings,reasons,decision,decided_by
+Local 100,Pension,2026-10,3,500,6.25,3125,3000,-125,2026-11-15,2026-11-12,short,under_remitted hours_mismatch,Remitted 3000; 500 hours at 6.25 is 3125. The remittance reports 480 hours; payroll shows 500.,,
+Local 100,Training,2026-10,3,500,0.75,375,0,-375,2026-11-15,,short,not_remitted,"Nothing remitted to Training for 2026-10: 500 hours at 0.75 is 375, due 2026-11-15.",,
+Local 200,Health and Welfare,2026-10,2,310,8.1,2511,2511,0,2026-11-15,2026-11-18,review,late,"Remitted 2026-11-18, after the due date 2026-11-15. Check the agreement for liquidated damages or interest.",,
+Local 200,Pension,2026-10,2,310,5,1550,1600,50,2026-11-15,2026-11-10,review,over_remitted,Remitted 1600; 310 hours at 5 is 1550. Ask the fund for a credit or apply it to next month.,,
+Local 300,,2026-10,1,80,,,0,0,2026-11-15,,review,no_rate,80 hour(s) for Local 300 in 2026-10 and no fund rates for this local. Add its rates to check the remittance.,,
+Local 100,Health and Welfare,2026-10,3,500,9.5,4750,4750,0,2026-11-15,2026-11-12,ok,,,,

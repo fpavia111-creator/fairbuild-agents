@@ -1,6 +1,7 @@
 {
   "name": "brazos-of-backcharges",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/brazos-of-backcharges",
   "description": "Brazos of Backcharges: backcharges to subcontractors from notice to recovery: notices sent late or not at all, agreed backcharges never deducted, deductions that differ from what was agreed, disputes dragging on, backcharges with no backup, and backcharges larger than what you still owe or hold on that subcontractor. Drafts backcharge notices and records one-click approvals to deduct. Never deducts or pays.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Union fringe remittances</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b6760;--line:#e4e0d8;--ok:#1f7a4d;--bad:#b42318;--warn:#a15c07;--card:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#161514;--fg:#ecebe8;--mut:#a29d94;--line:#34312d;--ok:#4ade80;--bad:#f87171;--warn:#fbbf24;--card:#1f1e1c}}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,Segoe UI,"Hiragino Sans","Yu Gothic UI","Microsoft YaHei","PingFang SC","Malgun Gothic","Apple SD Gothic Neo","Noto Sans CJK",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:17px;margin:28px 0 8px}
+.mut{color:var(--mut)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+table{border-collapse:collapse;width:100%;background:var(--card);font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{font-weight:600}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.tiles{display:flex;gap:12px;flex-wrap:wrap}.tile{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;min-width:120px}
+.tile b{display:block;font-size:22px}code{font-size:13px;overflow-wrap:anywhere}pre{overflow-x:auto}
+.wrap{overflow-x:auto;max-width:100%}svg,img{max-width:100%;height:auto}figure{margin:16px 0}p,li,h1,h2,h3{overflow-wrap:break-word}
+</style></head><body><main>
+<h1>Union fringe remittances</h1>
+<p class="mut">6 fund-month(s) for 3 local(s): 12311 due, 11861 remitted. 2 short by 500 in total, 50 over, 3 to review.</p>
+<h2>By fund</h2><div class="wrap"><table><thead><tr><th scope="col">fund</th><th scope="col">months</th><th scope="col">due</th><th scope="col">remitted</th><th scope="col">short</th></tr></thead><tbody>
+<tr><td>Local 100 Pension</td><td>1</td><td>3125</td><td>3000</td><td>125</td></tr>
+<tr><td>Local 100 Training</td><td>1</td><td>375</td><td>0</td><td>375</td></tr>
+<tr><td>Local 200 Health and Welfare</td><td>1</td><td>2511</td><td>2511</td><td>0</td></tr>
+<tr><td>Local 200 Pension</td><td>1</td><td>1550</td><td>1600</td><td>0</td></tr>
+<tr><td>Local 300</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+<tr><td>Local 100 Health and Welfare</td><td>1</td><td>4750</td><td>4750</td><td>0</td></tr>
+</tbody></table></div>
+<h2>By finding</h2><div class="wrap"><table><thead><tr><th scope="col">code</th><th scope="col">count</th><th scope="col">amount</th></tr></thead><tbody>
+<tr><td>hours_mismatch</td><td>1</td><td>0</td></tr>
+<tr><td>late</td><td>1</td><td>0</td></tr>
+<tr><td>no_rate</td><td>1</td><td>0</td></tr>
+<tr><td>not_remitted</td><td>1</td><td>375</td></tr>
+<tr><td>over_remitted</td><td>1</td><td>50</td></tr>
+<tr><td>under_remitted</td><td>1</td><td>125</td></tr>
+</tbody></table></div>
+<h2>All rows (6)</h2>
+<div class="wrap"><table><thead><tr><th scope="col">union</th><th scope="col">fund</th><th scope="col">month</th><th scope="col">hours</th><th scope="col">due</th><th scope="col">remitted</th><th scope="col">difference</th><th scope="col">status</th><th scope="col">reasons</th></tr></thead><tbody>
+<tr><td>Local 100</td><td>Pension</td><td>2026-10</td><td>500</td><td>3125</td><td>3000</td><td>-125</td><td>short</td><td>Remitted 3000; 500 hours at 6.25 is 3125. The remittance reports 480 hours; payroll shows 500.</td></tr>
+<tr><td>Local 100</td><td>Training</td><td>2026-10</td><td>500</td><td>375</td><td>0</td><td>-375</td><td>short</td><td>Nothing remitted to Training for 2026-10: 500 hours at 0.75 is 375, due 2026-11-15.</td></tr>
+<tr><td>Local 200</td><td>Health and Welfare</td><td>2026-10</td><td>310</td><td>2511</td><td>2511</td><td>0</td><td>review</td><td>Remitted 2026-11-18, after the due date 2026-11-15. Check the agreement for liquidated damages or interest.</td></tr>
+<tr><td>Local 200</td><td>Pension</td><td>2026-10</td><td>310</td><td>1550</td><td>1600</td><td>50</td><td>review</td><td>Remitted 1600; 310 hours at 5 is 1550. Ask the fund for a credit or apply it to next month.</td></tr>
+<tr><td>Local 300</td><td></td><td>2026-10</td><td>80</td><td></td><td>0</td><td>0</td><td>review</td><td>80 hour(s) for Local 300 in 2026-10 and no fund rates for this local. Add its rates to check the remittance.</td></tr>
+<tr><td>Local 100</td><td>Health and Welfare</td><td>2026-10</td><td>500</td><td>4750</td><td>4750</td><td>0</td><td>ok</td><td></td></tr>
+</tbody></table></div>
+<h2>Limits</h2><ul><li>Reads only the files you give it. It does not log in to your accounting system, project management system, bank, surety, insurer or any government portal.</li><li>Thresholds, percentages, rates and dates come from the settings file you supply; the defaults it used are listed in the result.</li><li>Not legal, tax, lien, insurance, surety or accounting advice. A person decides what to bill, pay, hold, send or file.</li><li>Rates, due dates and late charges come from your collective bargaining agreements; Yukon uses only the rates and due day you supply.</li></ul>
+<p class="mut" style="margin-top:32px">Written by a Fairbuild agent from your files. Nothing was sent or paid.</p>
+</main></body></html>

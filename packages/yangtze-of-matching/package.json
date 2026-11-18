@@ -1,6 +1,7 @@
 {
   "name": "yangtze-of-matching",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/yangtze-of-matching",
   "description": "Yangtze of Matching: three-way match for construction: each AP invoice against its subcontract or PO and the work or delivery your project manager approved: invoices with no commitment, a different vendor or job, cumulative billing past the commitment or past what was approved, no receipt or approval yet, and retainage not withheld. Holds or clears each invoice for review and records one-click payment approvals. Never pays.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

@@ -1,6 +1,7 @@
 {
   "name": "tagus-of-salestax",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/tagus-of-salestax",
   "description": "Tagus of Sales Tax: tax charged on material invoices against the rates you supply for each job's jurisdiction: tax not charged (use tax to accrue), tax charged at another jurisdiction's rate, tax overcharged, tax charged on jobs you mark exempt, and deliveries to a different jurisdiction than the job. Drafts refund requests to vendors. Never files a return or posts an entry; not tax advice.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

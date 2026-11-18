@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Work in progress, period ending 2026-10-31</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b6760;--line:#e4e0d8;--ok:#1f7a4d;--bad:#b42318;--warn:#a15c07;--card:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#161514;--fg:#ecebe8;--mut:#a29d94;--line:#34312d;--ok:#4ade80;--bad:#f87171;--warn:#fbbf24;--card:#1f1e1c}}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,Segoe UI,"Hiragino Sans","Yu Gothic UI","Microsoft YaHei","PingFang SC","Malgun Gothic","Apple SD Gothic Neo","Noto Sans CJK",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:17px;margin:28px 0 8px}
+.mut{color:var(--mut)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+table{border-collapse:collapse;width:100%;background:var(--card);font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{font-weight:600}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.tiles{display:flex;gap:12px;flex-wrap:wrap}.tile{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;min-width:120px}
+.tile b{display:block;font-size:22px}code{font-size:13px;overflow-wrap:anywhere}pre{overflow-x:auto}
+.wrap{overflow-x:auto;max-width:100%}svg,img{max-width:100%;height:auto}figure{margin:16px 0}p,li,h1,h2,h3{overflow-wrap:break-word}
+</style></head><body><main>
+<h1>Work in progress, period ending 2026-10-31</h1>
+<p class="mut">WIP at 2026-10-31: 7 job(s), earned 868243.9 against billed 849300. Over billings 30000, under billings 63943.9 (net -33943.9). Loss provision 3500 on 1 job(s); 3 job(s) to review.</p>
+<h2>Totals</h2><div class="wrap"><table><thead><tr><th scope="col">contract</th><th scope="col">estimated cost</th><th scope="col">cost to date</th><th scope="col">earned revenue</th><th scope="col">billed to date</th><th scope="col">over billings</th><th scope="col">under billings</th><th scope="col">loss provision</th></tr></thead><tbody>
+<tr><td>1605000</td><td>1299000</td><td>768500</td><td>868243.9</td><td>849300</td><td>30000</td><td>63943.9</td><td>3500</td></tr>
+</tbody></table></div>
+<h2>By finding</h2><div class="wrap"><table><thead><tr><th scope="col">code</th><th scope="col">count</th><th scope="col">amount</th></tr></thead><tbody>
+<tr><td>cost_exceeds_estimate</td><td>1</td><td>2000</td></tr>
+<tr><td>loss_job</td><td>1</td><td>3500</td></tr>
+<tr><td>no_estimate</td><td>1</td><td>0</td></tr>
+<tr><td>under_billed_large</td><td>1</td><td>47743.9</td></tr>
+</tbody></table></div>
+<h2>All rows (7)</h2>
+<div class="wrap"><table><thead><tr><th scope="col">job</th><th scope="col">contract amount</th><th scope="col">estimated cost</th><th scope="col">cost to date</th><th scope="col">percent complete</th><th scope="col">earned revenue</th><th scope="col">billed to date</th><th scope="col">over billed</th><th scope="col">under billed</th><th scope="col">loss provision</th><th scope="col">status</th></tr></thead><tbody>
+<tr><td>24-103</td><td>200000</td><td>214000</td><td>160500</td><td>75</td><td>150000</td><td>150000</td><td>0</td><td>0</td><td>3500</td><td>loss</td></tr>
+<tr><td>23-095</td><td>180000</td><td>150000</td><td>152000</td><td>100</td><td>180000</td><td>180000</td><td>0</td><td>0</td><td>0</td><td>review</td></tr>
+<tr><td>24-102</td><td>260000</td><td>205000</td><td>150000</td><td>73.17</td><td>190243.9</td><td>142500</td><td>0</td><td>47743.9</td><td>0</td><td>review</td></tr>
+<tr><td>24-105</td><td>90000</td><td></td><td>12000</td><td></td><td></td><td>15000</td><td>0</td><td>0</td><td>0</td><td>review</td></tr>
+<tr><td>24-101</td><td>455000</td><td>390000</td><td>234000</td><td>60</td><td>273000</td><td>256800</td><td>0</td><td>16200</td><td>0</td><td>ok</td></tr>
+<tr><td>24-104</td><td>300000</td><td>240000</td><td>60000</td><td>25</td><td>75000</td><td>105000</td><td>30000</td><td>0</td><td>0</td><td>ok</td></tr>
+<tr><td>24-106</td><td>120000</td><td>100000</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>ok</td></tr>
+</tbody></table></div>
+<h2>Limits</h2><ul><li>Reads only the files you give it. It does not log in to your accounting system, project management system, bank, surety, insurer or any government portal.</li><li>Thresholds, percentages, rates and dates come from the settings file you supply; the defaults it used are listed in the result.</li><li>Not legal, tax, lien, insurance, surety or accounting advice. A person decides what to bill, pay, hold, send or file.</li><li>The cost-to-cost method assumes cost to date measures progress; uninstalled materials or front-loaded costs distort it. Your accountant decides the method and the entries.</li></ul>
+<p class="mut" style="margin-top:32px">Written by a Fairbuild agent from your files. Nothing was sent or paid.</p>
+</main></body></html>

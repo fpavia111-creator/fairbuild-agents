@@ -1,0 +1,7 @@
+backcharge,job,vendor,date,description,amount,deducted,open_amount,state,status,findings,reasons,decision,decided_by
+BC-03,24-102,Example Roofing LLC,2026-10-28,Interior damage from roof leak,6500,0,6500,disputed,at_risk,unrecoverable,Open backcharges on Example Roofing LLC total 6500; you still owe or hold 0 on its subcontracts. Recover the rest another way.,,
+BC-02,24-101,Example Electric Inc,2026-10-20,Repair of damaged ceiling grid,2400,0,2400,notified,action,late_notice,"Notice sent 2026-11-05, 16 days after the work on 2026-10-20; your subcontracts allow 7. The subcontractor may reject it as late.",,
+BC-04,23-095,Example Storefronts LLC,2026-08-15,Glass replacement,1800,1500,300,deducted,action,deducted_mismatch,1500 was deducted against a backcharge of 1800.,,
+BC-01,24-101,Test Drywall Co,2026-10-05,Cleanup after drywall,1200,0,1200,agreed,action,not_deducted,"Agreed, and 1200 has not been deducted from a payment 41 days after notice.",,
+BC-05,24-101,Sample Painting Co,2026-11-12,Overspray cleanup,650,0,650,proposed,review,no_backup,"No backup (photos, time and material tickets) recorded.",,
+BC-06,24-101,Example Concrete LLC,2026-09-10,Pump truck standby,900,900,0,deducted,closed,,,,
