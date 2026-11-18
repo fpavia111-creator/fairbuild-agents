@@ -39,7 +39,7 @@ export const EXPORTS = Object.freeze(Object.fromEntries([
   e('procore_inspections', 'Procore', 'Inspections list, export to CSV', ['Inspection Type', 'Inspection Date', 'Status']),
   e('servicetitan_jobs', 'ServiceTitan', 'Jobs report exported to Excel', ['Job #', 'Business Unit', 'Job Type', 'Technician']),
   e('servicetitan_timesheets', 'ServiceTitan', 'Technician timesheet report exported to Excel', ['Technician', 'Timesheet Code', 'Hours']),
-  e('wh347_payroll_lines', 'Certified payroll (WH-347 layout)', 'Certified payroll lines typed or exported in the WH-347 column order', ['Work Classification', 'Rate of Pay', 'Total Hours']),
+  e('wh347_payroll_lines', 'Certified payroll (WH-347 layout)', 'Certified payroll lines typed or exported in the WH-347 column order', ['Work Classification', 'Rate of Pay', ['Total Hours', 'Straight Time Hours']]),
   e('sage300_timecards', 'Sage 300 Construction and Real Estate', 'Payroll timecard entry export', ['Employee', 'Job', 'Cost Code', 'Regular Hours', 'Overtime Hours']),
 ].map((x) => [x.id, x])));
 

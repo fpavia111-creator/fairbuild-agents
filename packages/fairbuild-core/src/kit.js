@@ -155,7 +155,8 @@ export function standardTools(cfg) {
       handler: async (a, ctx) => {
         const r = await run(a, ctx); const given = String(a[ex.arg]).trim(); const want = given.toLowerCase();
         const keys = (x) => [].concat(ex.key(x)).filter((k) => k !== null && k !== undefined && k !== '').map((k) => String(k).trim());
-        const hit = (x) => keys(x).some((k) => k.toLowerCase() === want || (ex.personal && ctx.personal && ctx.personal.same(k, given, ex.personal)));
+        // The model sees masked keys ("2026-11-07 PERSON-3f2a9c1d"): a key matches as written, as a pseudonym, or in its masked form.
+        const hit = (x) => keys(x).some((k) => k.toLowerCase() === want || (ex.personal && ctx.personal && (ctx.personal.same(k, given, ex.personal) || ctx.personal.maskText(k).toLowerCase() === want)));
         const it = r.items.find(hit) || (want.length >= 3 ? r.items.find((x) => keys(x).some((k) => k.toLowerCase().includes(want))) : null);
         if (!it) throw new Error(`${ex.arg} "${given.slice(0, 80)}" not found; pass one from ${prefix}_check (first few: ${r.items.slice(0, 5).map((x) => keys(x)[0]).join(', ') || 'none'})`);
         return { summary: ex.describe(it), item: it };
