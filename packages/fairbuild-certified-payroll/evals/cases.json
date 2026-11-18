@@ -58,12 +58,14 @@
           "Riley Test",
           "Morgan Example",
           "Taylor Sample",
-          "900-12-3456",
-          "4411"
+          "900-12-3456"
         ],
         "contains": [
           "PERSON-",
           "personal_data"
+        ],
+        "not_matches": [
+          "(?<![0-9A-Za-z])4411(?![0-9A-Za-z])"
         ]
       }
     },

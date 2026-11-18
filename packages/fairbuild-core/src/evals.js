@@ -9,7 +9,7 @@ function get(obj, path) {
 /**
  * Fixture-based private evals. Each case:
  * { id, tool, args, mode?, auto_actions?, approve?: "Person name" (approve once, then run),
- *   expect: { status?, decision?, contains?: [..], not_contains?: [..], matches?: [regex..],
+ *   expect: { status?, decision?, contains?: [..], not_contains?: [..], matches?: [regex..], not_matches?: [regex..],
  *   equals?: { "result.path": value }, min?/max?: { path: n }, length?: { path: n }, max_ms? } }
  * Paths in args resolve against the cases file's folder, or its "root" field.
  * Evals are deterministic tool-level checks; they do not call a model.
@@ -30,6 +30,8 @@ export async function runEvals(manifest, cases, { root, stateDir = null } = {}) 
     for (const s of e.contains || []) if (!textOut.includes(s)) fails.push(`missing "${s}"`);
     for (const s of e.not_contains || []) if (textOut.includes(s)) fails.push(`unexpected "${s}"`);
     for (const s of e.matches || []) if (!new RegExp(s).test(textOut)) fails.push(`no match for /${s}/`);
+    // not_matches: for short values (a 4-digit id) that a random hex pseudonym or hash could contain by chance.
+    for (const s of e.not_matches || []) if (new RegExp(s).test(textOut)) fails.push(`unexpected match for /${s}/`);
     if (e.max_ms !== undefined && ms > e.max_ms) fails.push(`took ${ms} ms > ${e.max_ms} ms`);
     for (const [p, v] of Object.entries(e.min || {})) { const got = get(out, p); if (!(Number(got) >= v)) fails.push(`${p} = ${JSON.stringify(got)}, expected >= ${v}`); }
     for (const [p, v] of Object.entries(e.max || {})) { const got = get(out, p); if (!(Number(got) <= v)) fails.push(`${p} = ${JSON.stringify(got)}, expected <= ${v}`); }
