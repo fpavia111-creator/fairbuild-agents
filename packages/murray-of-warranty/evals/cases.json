@@ -1,0 +1,369 @@
+{
+  "suite": "murray-of-warranty",
+  "root": "..",
+  "data_note": "Fictional homes, homeowners, subcontractors and callbacks in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "check-totals",
+      "tool": "murray_check",
+      "args": {
+        "callbacks": "fixtures/callbacks.csv",
+        "jobs": "fixtures/jobs.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.callbacks": 6,
+          "result.cost": 3470,
+          "result.open": 2,
+          "result.to_backcharge": 1750,
+          "result.possibly_billable": 1400,
+          "result.billable": 1,
+          "result.backcharge": 3,
+          "result.review": 1,
+          "result.ok": 1
+        }
+      }
+    },
+    {
+      "id": "every-planted-issue",
+      "tool": "murray_check",
+      "args": {
+        "callbacks": "fixtures/callbacks.csv",
+        "jobs": "fixtures/jobs.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "contains": [
+          "out_of_warranty",
+          "backcharge_candidate",
+          "repeat_callback",
+          "open_too_long",
+          "no_responsible_party"
+        ]
+      }
+    },
+    {
+      "id": "homeowners-masked",
+      "tool": "murray_check",
+      "args": {
+        "callbacks": "fixtures/callbacks.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "not_contains": [
+          "Avery Example",
+          "Quinn Test",
+          "555-0111"
+        ],
+        "contains": [
+          "PERSON-",
+          "[PHONE]"
+        ]
+      }
+    },
+    {
+      "id": "explain-repeat",
+      "tool": "murray_explain",
+      "args": {
+        "callbacks": "fixtures/callbacks.csv",
+        "jobs": "fixtures/jobs.csv",
+        "as_of": "2026-11-16",
+        "callback_id": "CB-102"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "30 day(s) earlier (CB-101)",
+          "Open 15 days since 2026-11-01"
+        ]
+      }
+    },
+    {
+      "id": "explain-out-of-warranty",
+      "tool": "murray_explain",
+      "args": {
+        "callbacks": "fixtures/callbacks.csv",
+        "jobs": "fixtures/jobs.csv",
+        "as_of": "2026-11-16",
+        "callback_id": "CB-104"
+      },
+      "expect": {
+        "contains": [
+          "the warranty on job 22-050 ended 2026-03-01"
+        ],
+        "equals": {
+          "result.item.warranty_ends": "2026-03-01"
+        }
+      }
+    },
+    {
+      "id": "without-job-list",
+      "tool": "murray_check",
+      "args": {
+        "callbacks": "fixtures/callbacks.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "equals": {
+          "result.possibly_billable": 0,
+          "result.to_backcharge": 3150
+        }
+      }
+    },
+    {
+      "id": "short-windows",
+      "tool": "murray_check",
+      "args": {
+        "callbacks": "fixtures/callbacks.csv",
+        "jobs": "fixtures/jobs.csv",
+        "settings": "fixtures/settings-short.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "not_contains": [
+          "repeat_callback",
+          "open_too_long"
+        ]
+      }
+    },
+    {
+      "id": "settings-typo-is-named",
+      "tool": "murray_check",
+      "args": {
+        "callbacks": "fixtures/callbacks.csv",
+        "settings": "fixtures/settings-typo.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "warranty_settings"
+        ]
+      }
+    },
+    {
+      "id": "write-report-writes-files",
+      "tool": "murray_write_report",
+      "args": {
+        "callbacks": "fixtures/callbacks.csv",
+        "jobs": "fixtures/jobs.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "length": {
+          "result.files": 2
+        }
+      }
+    },
+    {
+      "id": "draft-notice",
+      "tool": "murray_draft_notice",
+      "mode": "auto",
+      "auto_actions": [
+        "murray_draft_notice"
+      ],
+      "args": {
+        "callbacks": "fixtures/callbacks.csv",
+        "jobs": "fixtures/jobs.csv",
+        "as_of": "2026-11-16",
+        "vendor": "Example Roofing LLC"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.id": "Example Roofing LLC",
+          "result.amount": 1450
+        },
+        "contains": [
+          "Nothing was sent"
+        ]
+      }
+    },
+    {
+      "id": "draft-notice-nothing-to-recover",
+      "tool": "murray_draft_notice",
+      "mode": "auto",
+      "auto_actions": [
+        "murray_draft_notice"
+      ],
+      "args": {
+        "callbacks": "fixtures/callbacks.csv",
+        "jobs": "fixtures/jobs.csv",
+        "as_of": "2026-11-16",
+        "vendor": "Example Paving Co"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "nothing to recover"
+        ]
+      }
+    },
+    {
+      "id": "policy-invented-tool",
+      "tool": "murray_pay_everything_now",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-file-outside-root",
+      "tool": "murray_check",
+      "args": {
+        "callbacks": "../../../outside-the-root.csv",
+        "jobs": "fixtures/jobs.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside"
+        ]
+      }
+    },
+    {
+      "id": "policy-missing-argument-named",
+      "tool": "murray_check",
+      "args": {},
+      "expect": {
+        "status": "error",
+        "contains": [
+          "callbacks"
+        ]
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reads",
+      "tool": "murray_check",
+      "mode": "review",
+      "args": {
+        "callbacks": "fixtures/callbacks.csv",
+        "jobs": "fixtures/jobs.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reports",
+      "tool": "murray_write_report",
+      "mode": "review",
+      "args": {
+        "callbacks": "fixtures/callbacks.csv",
+        "jobs": "fixtures/jobs.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-blocks-draft",
+      "tool": "murray_draft_notice",
+      "mode": "review",
+      "args": {
+        "callbacks": "fixtures/callbacks.csv",
+        "jobs": "fixtures/jobs.csv",
+        "as_of": "2026-11-16",
+        "vendor": "Example Roofing LLC"
+      },
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-murray-request-send-one-click-in-auto",
+      "tool": "murray_request_send",
+      "mode": "auto",
+      "args": {
+        "draft": "fairbuild-out/drafts/example.md",
+        "draft_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expect": {
+        "status": "needs_approval"
+      }
+    },
+    {
+      "id": "policy-refuses-backcharge-post",
+      "tool": "backcharge_post",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-homeowner-contact",
+      "tool": "homeowner_contact",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-email-send",
+      "tool": "email_send",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "intl-de-check-totals",
+      "tool": "murray_check",
+      "args": {
+        "callbacks": "fixtures/intl/de/callbacks.csv",
+        "jobs": "fixtures/intl/de/jobs.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.callbacks": 6,
+          "result.cost": 3470,
+          "result.open": 2,
+          "result.to_backcharge": 1750,
+          "result.possibly_billable": 1400,
+          "result.billable": 1,
+          "result.backcharge": 3,
+          "result.review": 1,
+          "result.ok": 1
+        }
+      },
+      "note": "German export of the same data (fixtures/intl/de); must match the English case \"check-totals\"."
+    },
+    {
+      "id": "intl-ja-check-totals",
+      "tool": "murray_check",
+      "args": {
+        "callbacks": "fixtures/intl/ja/callbacks.csv",
+        "jobs": "fixtures/intl/ja/jobs.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.callbacks": 6,
+          "result.cost": 3470,
+          "result.open": 2,
+          "result.to_backcharge": 1750,
+          "result.possibly_billable": 1400,
+          "result.billable": 1,
+          "result.backcharge": 3,
+          "result.review": 1,
+          "result.ok": 1
+        }
+      },
+      "note": "Japanese export of the same data (fixtures/intl/ja); must match the English case \"check-totals\"."
+    }
+  ]
+}
