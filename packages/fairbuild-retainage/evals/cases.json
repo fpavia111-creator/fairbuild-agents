@@ -1,0 +1,435 @@
+{
+  "suite": "fairbuild-retainage",
+  "root": "..",
+  "data_note": "Fictional jobs, owners, subcontractors and amounts in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "check-totals",
+      "tool": "retainage_check",
+      "args": {
+        "receivable": "fixtures/receivable.csv",
+        "payable": "fixtures/payable.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.jobs": 6,
+          "result.subcontracts": 5,
+          "result.receivable": 111000,
+          "result.payable": 40100,
+          "result.net": 70900,
+          "result.to_bill": 15000,
+          "result.to_collect": 18000,
+          "result.owed_to_subs": 8000,
+          "result.over_withheld": 5000,
+          "result.collect": 2,
+          "result.pay": 1,
+          "result.review": 4,
+          "result.ok": 4
+        }
+      }
+    },
+    {
+      "id": "every-planted-issue",
+      "tool": "retainage_check",
+      "args": {
+        "receivable": "fixtures/receivable.csv",
+        "payable": "fixtures/payable.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "contains": [
+          "rate_off",
+          "over_withheld",
+          "release_overdue",
+          "release_unpaid",
+          "released_before_owner",
+          "release_owed_to_sub"
+        ]
+      }
+    },
+    {
+      "id": "explain-stop-at-percent",
+      "tool": "retainage_explain",
+      "args": {
+        "receivable": "fixtures/receivable.csv",
+        "as_of": "2026-11-16",
+        "key": "24-103"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "retainage stops at 50% of the contract"
+        ],
+        "equals": {
+          "result.item.findings.0.amount": 5000
+        }
+      }
+    },
+    {
+      "id": "explain-released-early",
+      "tool": "retainage_explain",
+      "args": {
+        "receivable": "fixtures/receivable.csv",
+        "payable": "fixtures/payable.csv",
+        "as_of": "2026-11-16",
+        "key": "SC-301"
+      },
+      "expect": {
+        "contains": [
+          "released to Example Storefronts LLC while the owner still holds 18000"
+        ],
+        "equals": {
+          "result.item.status": "review"
+        }
+      }
+    },
+    {
+      "id": "release-days-setting",
+      "tool": "retainage_check",
+      "args": {
+        "receivable": "fixtures/receivable.csv",
+        "settings": "fixtures/settings-120.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "contains": [
+          "release_due"
+        ],
+        "not_contains": [
+          "release_overdue"
+        ],
+        "equals": {
+          "result.to_bill": 15000
+        }
+      }
+    },
+    {
+      "id": "receivable-alone",
+      "tool": "retainage_check",
+      "args": {
+        "receivable": "fixtures/receivable.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "equals": {
+          "result.subcontracts": 0,
+          "result.payable": 0,
+          "result.receivable": 111000
+        }
+      }
+    },
+    {
+      "id": "not-yet-completed",
+      "tool": "retainage_check",
+      "args": {
+        "receivable": "fixtures/receivable.csv",
+        "as_of": "2026-05-01"
+      },
+      "expect": {
+        "not_contains": [
+          "release_overdue",
+          "release_unpaid"
+        ]
+      }
+    },
+    {
+      "id": "settings-typo-is-named",
+      "tool": "retainage_check",
+      "args": {
+        "receivable": "fixtures/receivable.csv",
+        "settings": "fixtures/settings-typo.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "retainage_settings"
+        ]
+      }
+    },
+    {
+      "id": "write-report-writes-files",
+      "tool": "retainage_write_report",
+      "args": {
+        "receivable": "fixtures/receivable.csv",
+        "payable": "fixtures/payable.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "length": {
+          "result.files": 2
+        }
+      }
+    },
+    {
+      "id": "draft-release",
+      "tool": "retainage_draft_release",
+      "mode": "auto",
+      "auto_actions": [
+        "retainage_draft_release"
+      ],
+      "args": {
+        "receivable": "fixtures/receivable.csv",
+        "as_of": "2026-11-16",
+        "job": "23-090"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.id": "23-090",
+          "result.amount": 15000
+        },
+        "contains": [
+          "Nothing was sent"
+        ]
+      }
+    },
+    {
+      "id": "draft-release-not-complete",
+      "tool": "retainage_draft_release",
+      "mode": "auto",
+      "auto_actions": [
+        "retainage_draft_release"
+      ],
+      "args": {
+        "receivable": "fixtures/receivable.csv",
+        "as_of": "2026-11-16",
+        "job": "24-101"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "no retainage ready to bill"
+        ]
+      }
+    },
+    {
+      "id": "payment-approval-recorded",
+      "tool": "retainage_request_payment",
+      "approve": "Dana Example",
+      "args": {
+        "receivable": "fixtures/receivable.csv",
+        "payable": "fixtures/payable.csv",
+        "as_of": "2026-11-16",
+        "commitment": "SC-401",
+        "amount": 8000
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.record.approved_amount": 8000,
+          "result.record.approved_by": "Dana Example"
+        },
+        "contains": [
+          "Nothing was paid"
+        ]
+      }
+    },
+    {
+      "id": "payment-over-held-refused",
+      "tool": "retainage_request_payment",
+      "approve": "Dana Example",
+      "args": {
+        "receivable": "fixtures/receivable.csv",
+        "payable": "fixtures/payable.csv",
+        "as_of": "2026-11-16",
+        "commitment": "SC-401",
+        "amount": 9000
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "more than the 8000 still held"
+        ]
+      }
+    },
+    {
+      "id": "policy-invented-tool",
+      "tool": "retainage_pay_everything_now",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-file-outside-root",
+      "tool": "retainage_check",
+      "args": {
+        "receivable": "../../../outside-the-root.csv",
+        "payable": "fixtures/payable.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside"
+        ]
+      }
+    },
+    {
+      "id": "policy-missing-argument-named",
+      "tool": "retainage_check",
+      "args": {},
+      "expect": {
+        "status": "error",
+        "contains": [
+          "receivable"
+        ]
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reads",
+      "tool": "retainage_check",
+      "mode": "review",
+      "args": {
+        "receivable": "fixtures/receivable.csv",
+        "payable": "fixtures/payable.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reports",
+      "tool": "retainage_write_report",
+      "mode": "review",
+      "args": {
+        "receivable": "fixtures/receivable.csv",
+        "payable": "fixtures/payable.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-blocks-draft",
+      "tool": "retainage_draft_release",
+      "mode": "review",
+      "args": {
+        "receivable": "fixtures/receivable.csv",
+        "as_of": "2026-11-16",
+        "job": "23-090"
+      },
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-retainage-request-send-one-click-in-auto",
+      "tool": "retainage_request_send",
+      "mode": "auto",
+      "args": {
+        "draft": "fairbuild-out/drafts/example.md",
+        "draft_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expect": {
+        "status": "needs_approval"
+      }
+    },
+    {
+      "id": "policy-retainage-request-payment-one-click-in-auto",
+      "tool": "retainage_request_payment",
+      "mode": "auto",
+      "args": {
+        "receivable": "fixtures/receivable.csv",
+        "payable": "fixtures/payable.csv",
+        "as_of": "2026-11-16",
+        "commitment": "SC-401",
+        "amount": 8000
+      },
+      "expect": {
+        "status": "needs_approval"
+      }
+    },
+    {
+      "id": "policy-refuses-ap-pay-retainage",
+      "tool": "ap_pay_retainage",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-invoice-create",
+      "tool": "invoice_create",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-email-send",
+      "tool": "email_send",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "intl-de-check-totals",
+      "tool": "retainage_check",
+      "args": {
+        "receivable": "fixtures/intl/de/receivable.csv",
+        "payable": "fixtures/intl/de/payable.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.jobs": 6,
+          "result.subcontracts": 5,
+          "result.receivable": 111000,
+          "result.payable": 40100,
+          "result.net": 70900,
+          "result.to_bill": 15000,
+          "result.to_collect": 18000,
+          "result.owed_to_subs": 8000,
+          "result.over_withheld": 5000,
+          "result.collect": 2,
+          "result.pay": 1,
+          "result.review": 4,
+          "result.ok": 4
+        }
+      },
+      "note": "German export of the same data (fixtures/intl/de); must match the English case \"check-totals\"."
+    },
+    {
+      "id": "intl-ja-check-totals",
+      "tool": "retainage_check",
+      "args": {
+        "receivable": "fixtures/intl/ja/receivable.csv",
+        "payable": "fixtures/intl/ja/payable.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.jobs": 6,
+          "result.subcontracts": 5,
+          "result.receivable": 111000,
+          "result.payable": 40100,
+          "result.net": 70900,
+          "result.to_bill": 15000,
+          "result.to_collect": 18000,
+          "result.owed_to_subs": 8000,
+          "result.over_withheld": 5000,
+          "result.collect": 2,
+          "result.pay": 1,
+          "result.review": 4,
+          "result.ok": 4
+        }
+      },
+      "note": "Japanese export of the same data (fixtures/intl/ja); must match the English case \"check-totals\"."
+    }
+  ]
+}

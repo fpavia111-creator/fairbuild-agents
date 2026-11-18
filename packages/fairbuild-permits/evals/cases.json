@@ -1,0 +1,356 @@
+{
+  "suite": "fairbuild-permits",
+  "root": "..",
+  "data_note": "Fictional permits and inspections in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "check-totals",
+      "tool": "permits_check",
+      "args": {
+        "permits": "fixtures/permits.csv",
+        "inspections": "fixtures/inspections.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.permits": 4,
+          "result.inspections": 7,
+          "result.action": 4,
+          "result.soon": 2,
+          "result.ok": 5,
+          "result.calendar_events": 5
+        }
+      }
+    },
+    {
+      "id": "every-planted-issue",
+      "tool": "permits_check",
+      "args": {
+        "permits": "fixtures/permits.csv",
+        "inspections": "fixtures/inspections.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "contains": [
+          "permit_expired",
+          "permit_missing",
+          "failed_no_reinspection",
+          "inspection_overdue",
+          "permit_expiring",
+          "inspection_upcoming"
+        ]
+      }
+    },
+    {
+      "id": "explain-expired-permit",
+      "tool": "permits_explain",
+      "args": {
+        "permits": "fixtures/permits.csv",
+        "as_of": "2026-11-16",
+        "item": "RP-2026-0090"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "Roofing permit RP-2026-0090 expired on 2026-10-15"
+        ]
+      }
+    },
+    {
+      "id": "failure-then-pass-is-resolved",
+      "tool": "permits_explain",
+      "args": {
+        "permits": "fixtures/permits.csv",
+        "inspections": "fixtures/inspections.csv",
+        "as_of": "2026-11-16",
+        "item": "24-102 Underground plumbing 2026-10-01"
+      },
+      "expect": {
+        "equals": {
+          "result.item.status": "ok",
+          "result.item.result": "fail"
+        }
+      }
+    },
+    {
+      "id": "calendar-events-in-date-order",
+      "tool": "permits_check",
+      "args": {
+        "permits": "fixtures/permits.csv",
+        "inspections": "fixtures/inspections.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "equals": {
+          "result.events.0.date": "2026-11-20",
+          "result.events.4.date": "2027-05-10"
+        }
+      }
+    },
+    {
+      "id": "shorter-windows",
+      "tool": "permits_check",
+      "args": {
+        "permits": "fixtures/permits.csv",
+        "inspections": "fixtures/inspections.csv",
+        "settings": "fixtures/settings-short.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "equals": {
+          "result.soon": 0
+        },
+        "not_contains": [
+          "permit_expiring",
+          "inspection_upcoming"
+        ]
+      }
+    },
+    {
+      "id": "permits-alone",
+      "tool": "permits_check",
+      "args": {
+        "permits": "fixtures/permits.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "equals": {
+          "result.inspections": 0,
+          "result.action": 1,
+          "result.soon": 1
+        }
+      }
+    },
+    {
+      "id": "settings-typo-is-named",
+      "tool": "permits_check",
+      "args": {
+        "permits": "fixtures/permits.csv",
+        "settings": "fixtures/settings-typo.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "permit_settings"
+        ]
+      }
+    },
+    {
+      "id": "write-report-writes-files",
+      "tool": "permits_write_report",
+      "args": {
+        "permits": "fixtures/permits.csv",
+        "inspections": "fixtures/inspections.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "length": {
+          "result.files": 2
+        }
+      }
+    },
+    {
+      "id": "write-calendar",
+      "tool": "permits_write_calendar",
+      "args": {
+        "permits": "fixtures/permits.csv",
+        "inspections": "fixtures/inspections.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.events": 5
+        },
+        "contains": [
+          "permits-calendar.ics",
+          "Nothing was sent"
+        ]
+      }
+    },
+    {
+      "id": "draft-notice",
+      "tool": "permits_draft_notice",
+      "mode": "auto",
+      "auto_actions": [
+        "permits_draft_notice"
+      ],
+      "args": {
+        "permits": "fixtures/permits.csv",
+        "inspections": "fixtures/inspections.csv",
+        "as_of": "2026-11-16",
+        "job": "24-102"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.id": "24-102",
+          "result.items": 3
+        },
+        "contains": [
+          "Nothing was sent"
+        ]
+      }
+    },
+    {
+      "id": "policy-invented-tool",
+      "tool": "permits_pay_everything_now",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-file-outside-root",
+      "tool": "permits_check",
+      "args": {
+        "permits": "../../../outside-the-root.csv",
+        "inspections": "fixtures/inspections.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside"
+        ]
+      }
+    },
+    {
+      "id": "policy-missing-argument-named",
+      "tool": "permits_check",
+      "args": {},
+      "expect": {
+        "status": "error",
+        "contains": [
+          "permits"
+        ]
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reads",
+      "tool": "permits_check",
+      "mode": "review",
+      "args": {
+        "permits": "fixtures/permits.csv",
+        "inspections": "fixtures/inspections.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reports",
+      "tool": "permits_write_report",
+      "mode": "review",
+      "args": {
+        "permits": "fixtures/permits.csv",
+        "inspections": "fixtures/inspections.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-blocks-draft",
+      "tool": "permits_draft_notice",
+      "mode": "review",
+      "args": {
+        "permits": "fixtures/permits.csv",
+        "inspections": "fixtures/inspections.csv",
+        "as_of": "2026-11-16",
+        "job": "24-102"
+      },
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-permits-request-send-one-click-in-auto",
+      "tool": "permits_request_send",
+      "mode": "auto",
+      "args": {
+        "draft": "fairbuild-out/drafts/example.md",
+        "draft_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expect": {
+        "status": "needs_approval"
+      }
+    },
+    {
+      "id": "policy-refuses-permit-portal-submit",
+      "tool": "permit_portal_submit",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-inspection-schedule",
+      "tool": "inspection_schedule",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-email-send",
+      "tool": "email_send",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "intl-de-check-totals",
+      "tool": "permits_check",
+      "args": {
+        "permits": "fixtures/intl/de/permits.csv",
+        "inspections": "fixtures/intl/de/inspections.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.permits": 4,
+          "result.inspections": 7,
+          "result.action": 4,
+          "result.soon": 2,
+          "result.ok": 5,
+          "result.calendar_events": 5
+        }
+      },
+      "note": "German export of the same data (fixtures/intl/de); must match the English case \"check-totals\"."
+    },
+    {
+      "id": "intl-ja-check-totals",
+      "tool": "permits_check",
+      "args": {
+        "permits": "fixtures/intl/ja/permits.csv",
+        "inspections": "fixtures/intl/ja/inspections.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.permits": 4,
+          "result.inspections": 7,
+          "result.action": 4,
+          "result.soon": 2,
+          "result.ok": 5,
+          "result.calendar_events": 5
+        }
+      },
+      "note": "Japanese export of the same data (fixtures/intl/ja); must match the English case \"check-totals\"."
+    }
+  ]
+}

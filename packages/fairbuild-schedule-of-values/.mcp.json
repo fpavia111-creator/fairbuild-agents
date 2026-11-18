@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairbuild-schedule-of-values": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairbuild-schedule-of-values@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

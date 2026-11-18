@@ -1,0 +1,21 @@
+{
+  "name": "fairbuild-three-way-match",
+  "version": "0.1.0",
+  "description": "Fairbuild Three-Way Match: three-way match for construction: each AP invoice against its subcontract or PO and the work or delivery your project manager approved: invoices with no commitment, a different vendor or job, cumulative billing past the commitment or past what was approved, no receipt or approval yet, and retainage not withheld. Holds or clears each invoice for review and records one-click payment approvals. Never pays.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/fairbuild-three-way-match#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "construction",
+    "contractors",
+    "construction-accounting",
+    "fairbuild",
+    "three-way-match",
+    "ap-approval",
+    "invoice-matching"
+  ]
+}

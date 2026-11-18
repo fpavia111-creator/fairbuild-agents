@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairbuild-equipment-rentals": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairbuild-equipment-rentals@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

@@ -13,8 +13,8 @@ import { AgentRuntime, LIMITS } from '../packages/fairbuild-core/src/index.js';
 const PK = join(dirname(fileURLToPath(import.meta.url)), '..', 'packages');
 const force = process.argv.includes('--force');
 const only = process.argv.slice(2).filter((a) => !a.startsWith('--'));
-const WORDS = { costcodes: 'Cost Codes', changeorders: 'Change Orders', payapps: 'Pay Apps', salestax: 'Sales Tax', punchlists: 'Punch Lists', timecards: 'Timecards', backcharges: 'Backcharges', changeorder: 'Change Orders' };
-const titleOf = (n) => n.split('-').map((w) => (w === 'of' ? 'of' : WORDS[w] || w[0].toUpperCase() + w.slice(1))).join(' ');
+// Display title: the package description starts with it ("Fairbuild WIP Schedule: ..."), acronyms kept.
+const titleOf = (n) => JSON.parse(readFileSync(join(PK, n, 'package.json'), 'utf8')).description.split(':')[0].trim();
 const esc = (s) => String(s ?? '').replace(/\|/g, '\\|').replace(/\n/g, ' ');
 
 function findings(x, out = new Map()) {
@@ -26,11 +26,11 @@ function findings(x, out = new Map()) {
   return out;
 }
 
-for (const n of readdirSync(PK).filter((x) => /-of-/.test(x) && (!only.length || only.includes(x))).sort()) {
+for (const n of readdirSync(PK).filter((x) => /^fairbuild-(?!core$)/.test(x) && (!only.length || only.includes(x))).sort()) {
   const dir = join(PK, n); const file = join(dir, 'README.md');
   if (existsSync(file) && !force) { console.log(`${n}: README.md kept`); continue; }
   const { manifest: m } = await import(pathToFileURL(join(dir, 'src', 'index.js')).href);
-  const prefix = m.tools[0].name.split('_')[0];
+  const prefix = ((t) => (t ? t.name.slice(0, -6) : m.tools[0].name.split('_')[0]))(m.tools.find((t) => /_check$/.test(t.name))); // the job prefix may be several words (payment_release)
   const check = m.tools.find((t) => t.name === `${prefix}_check`);
   const cases = JSON.parse(readFileSync(join(dir, 'evals', 'cases.json'), 'utf8')).cases;
   // Every check case that runs (richest first), so codes only one settings file turns on are shown too.

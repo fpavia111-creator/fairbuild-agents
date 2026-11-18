@@ -1,0 +1,58 @@
+{
+  "name": "fairbuild-timecards",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairbuild-timecards",
+  "description": "Fairbuild Timecards: field timecards against crew assignments, job status and the cost codes in each job budget: hours on a job the worker was not assigned to that day, on a closed job, or on a cost code the job has no budget for; days longer than your limit; weekend work; and entries made twice. Worker names are masked in what the AI model sees. Drafts recode requests. Never edits a timecard or runs payroll.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairbuild-timecards": "bin/fairbuild-timecards.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairbuild-timecards.js demo",
+    "eval": "node bin/fairbuild-timecards.js eval"
+  },
+  "dependencies": {
+    "fairbuild-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairbuild-agents.git",
+    "directory": "packages/fairbuild-timecards"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/fairbuild-timecards#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairbuild-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "construction",
+    "contractors",
+    "construction-accounting",
+    "fairbuild",
+    "timecards",
+    "labor-allocation",
+    "job-costing"
+  ]
+}

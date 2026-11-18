@@ -12,16 +12,16 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PK = join(ROOT, 'packages'); const OUT = join(ROOT, 'sample-reports');
 mkdirSync(OUT, { recursive: true });
 const rows = [];
-for (const n of readdirSync(PK).filter((x) => /-of-/.test(x)).sort()) {
+for (const n of readdirSync(PK).filter((x) => /^fairbuild-(?!core$)/.test(x)).sort()) {
   const { manifest } = await import(pathToFileURL(join(PK, n, 'src', 'index.js')).href);
-  const prefix = manifest.tools[0].name.split('_')[0];
+  const prefix = ((t) => (t ? t.name.slice(0, -6) : manifest.tools[0].name.split('_')[0]))(manifest.tools.find((t) => /_check$/.test(t.name))); // the job prefix may be several words (payment_release)
   const cases = JSON.parse(readFileSync(join(PK, n, 'evals', 'cases.json'), 'utf8')).cases;
   const c = cases.find((x) => x.tool === `${prefix}_write_report` && !x.mode && !x.id.startsWith('policy-'));
   if (!c) { console.error(`${n}: no write_report eval case to take arguments from`); process.exitCode = 1; continue; }
   const root = mkdtempSync(join(tmpdir(), `${n}-sample-`)); cpSync(join(PK, n), root, { recursive: true, filter: (s) => !/node_modules|[\/]\.fairbuild|fairbuild-out/.test(s.slice(join(PK, n).length)) });
   const r = await new AgentRuntime(manifest, { root, audit: false, memory: false }).call(`${prefix}_write_report`, c.args);
   if (r.status !== 'executed') { console.error(`${n}: ${r.reason || r.error}`); process.exitCode = 1; rmSync(root, { recursive: true, force: true }); continue; }
-  const short = n.replace(/-of-/, '-');
+  const short = n.replace(/^fairbuild-/, '');
   for (const f of r.result.files) { const ext = f.split('.').pop(); writeFileSync(join(OUT, `${short}.${ext}`), readFileSync(join(root, f))); }
   rmSync(root, { recursive: true, force: true });
   const title = manifest.tools.find((t) => t.name === `${prefix}_write_report`).title || n;

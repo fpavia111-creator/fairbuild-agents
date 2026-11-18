@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairbuild-sub-compliance": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairbuild-sub-compliance@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

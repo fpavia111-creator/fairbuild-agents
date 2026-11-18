@@ -34,7 +34,7 @@ const CANARY = {
 };
 
 let agentsWith = 0, planted = 0, calls = 0; const leaks = [];
-for (const n of readdirSync(PK).filter((x) => /-of-/.test(x) && (!only.length || only.includes(x))).sort()) {
+for (const n of readdirSync(PK).filter((x) => /^fairbuild-(?!core$)/.test(x) && (!only.length || only.includes(x))).sort()) {
   const { manifest } = await import(pathToFileURL(join(PK, n, 'src', 'index.js')).href);
   const cases = JSON.parse(readFileSync(join(PK, n, 'evals', 'cases.json'), 'utf8')).cases.filter((c) => !c.id.startsWith('intl-'));
   // Personal headers for this agent: personal field names and every English alias of them.

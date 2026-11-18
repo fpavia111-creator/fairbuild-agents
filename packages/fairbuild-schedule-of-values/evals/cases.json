@@ -1,0 +1,368 @@
+{
+  "suite": "fairbuild-schedule-of-values",
+  "root": "..",
+  "data_note": "Fictional jobs and schedules of values in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "check-totals",
+      "tool": "sov_check",
+      "args": {
+        "sov": "fixtures/sov.csv",
+        "jobs": "fixtures/jobs.csv",
+        "change_orders": "fixtures/change-orders.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.jobs": 2,
+          "result.lines": 13,
+          "result.scheduled": 710000,
+          "result.billed": 393300,
+          "result.billed_ahead": 16200,
+          "result.billed_behind": 41800,
+          "result.co_not_on_sov": 5000,
+          "result.ahead": 2,
+          "result.behind": 2,
+          "result.review": 2,
+          "result.ok": 8
+        }
+      }
+    },
+    {
+      "id": "every-planted-issue",
+      "tool": "sov_check",
+      "args": {
+        "sov": "fixtures/sov.csv",
+        "jobs": "fixtures/jobs.csv",
+        "change_orders": "fixtures/change-orders.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "contains": [
+          "billed_ahead",
+          "billed_behind",
+          "sov_not_equal_contract",
+          "co_not_on_sov",
+          "billed_on_zero_line",
+          "no_field_percent"
+        ],
+        "not_contains": [
+          "CO-002 (8000) has no line",
+          "PCO-003"
+        ]
+      }
+    },
+    {
+      "id": "explain-drywall",
+      "tool": "sov_explain",
+      "args": {
+        "sov": "fixtures/sov.csv",
+        "line": "24-101 4"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "9400 billed ahead of the work"
+        ],
+        "equals": {
+          "result.item.status": "ahead",
+          "result.item.earned": 9600
+        }
+      }
+    },
+    {
+      "id": "explain-roofing-behind",
+      "tool": "sov_explain",
+      "args": {
+        "sov": "fixtures/sov.csv",
+        "line": "24-102 2"
+      },
+      "expect": {
+        "contains": [
+          "27000 not yet billed"
+        ],
+        "equals": {
+          "result.item.status": "behind"
+        }
+      }
+    },
+    {
+      "id": "explain-job-level",
+      "tool": "sov_explain",
+      "args": {
+        "sov": "fixtures/sov.csv",
+        "jobs": "fixtures/jobs.csv",
+        "change_orders": "fixtures/change-orders.csv",
+        "line": "24-101 JOB"
+      },
+      "expect": {
+        "contains": [
+          "adds up to 450000; the revised contract is 455000",
+          "Approved change order CO-001 (5000) has no line"
+        ]
+      }
+    },
+    {
+      "id": "wider-thresholds",
+      "tool": "sov_check",
+      "args": {
+        "sov": "fixtures/sov.csv",
+        "settings": "fixtures/settings-20.json"
+      },
+      "expect": {
+        "equals": {
+          "result.ahead": 1,
+          "result.behind": 0,
+          "result.billed_ahead": 6800,
+          "result.settings_used.ahead_pts": 20
+        }
+      }
+    },
+    {
+      "id": "net-over-under-by-job",
+      "tool": "sov_check",
+      "args": {
+        "sov": "fixtures/sov.csv"
+      },
+      "expect": {
+        "equals": {
+          "result.by_job.24-101.billed_ahead": 16200,
+          "result.by_job.24-101.billed_behind": 14800,
+          "result.by_job.24-102.billed_behind": 27000
+        }
+      }
+    },
+    {
+      "id": "settings-typo-is-named",
+      "tool": "sov_check",
+      "args": {
+        "sov": "fixtures/sov.csv",
+        "settings": "fixtures/settings-typo.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "sov_settings"
+        ]
+      }
+    },
+    {
+      "id": "write-report-writes-files",
+      "tool": "sov_write_report",
+      "args": {
+        "sov": "fixtures/sov.csv",
+        "jobs": "fixtures/jobs.csv"
+      },
+      "expect": {
+        "status": "executed",
+        "length": {
+          "result.files": 2
+        }
+      }
+    },
+    {
+      "id": "draft-memo",
+      "tool": "sov_draft_memo",
+      "mode": "auto",
+      "auto_actions": [
+        "sov_draft_memo"
+      ],
+      "args": {
+        "sov": "fixtures/sov.csv",
+        "job": "24-101"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.id": "24-101",
+          "result.lines": 3
+        },
+        "contains": [
+          "Nothing was sent"
+        ]
+      }
+    },
+    {
+      "id": "draft-memo-unknown-job",
+      "tool": "sov_draft_memo",
+      "mode": "auto",
+      "auto_actions": [
+        "sov_draft_memo"
+      ],
+      "args": {
+        "sov": "fixtures/sov.csv",
+        "job": "99-1"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "not in the schedule of values"
+        ]
+      }
+    },
+    {
+      "id": "policy-invented-tool",
+      "tool": "sov_pay_everything_now",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-file-outside-root",
+      "tool": "sov_check",
+      "args": {
+        "sov": "../../../outside-the-root.csv",
+        "jobs": "fixtures/jobs.csv",
+        "change_orders": "fixtures/change-orders.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside"
+        ]
+      }
+    },
+    {
+      "id": "policy-missing-argument-named",
+      "tool": "sov_check",
+      "args": {},
+      "expect": {
+        "status": "error",
+        "contains": [
+          "sov"
+        ]
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reads",
+      "tool": "sov_check",
+      "mode": "review",
+      "args": {
+        "sov": "fixtures/sov.csv",
+        "jobs": "fixtures/jobs.csv",
+        "change_orders": "fixtures/change-orders.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reports",
+      "tool": "sov_write_report",
+      "mode": "review",
+      "args": {
+        "sov": "fixtures/sov.csv",
+        "jobs": "fixtures/jobs.csv"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-blocks-draft",
+      "tool": "sov_draft_memo",
+      "mode": "review",
+      "args": {
+        "sov": "fixtures/sov.csv",
+        "job": "24-101"
+      },
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-sov-request-send-one-click-in-auto",
+      "tool": "sov_request_send",
+      "mode": "auto",
+      "args": {
+        "draft": "fairbuild-out/drafts/example.md",
+        "draft_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expect": {
+        "status": "needs_approval"
+      }
+    },
+    {
+      "id": "policy-refuses-billing-update",
+      "tool": "billing_update",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-payapp-submit",
+      "tool": "payapp_submit",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-email-send",
+      "tool": "email_send",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "intl-de-check-totals",
+      "tool": "sov_check",
+      "args": {
+        "sov": "fixtures/intl/de/sov.csv",
+        "jobs": "fixtures/intl/de/jobs.csv",
+        "change_orders": "fixtures/intl/de/change-orders.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.jobs": 2,
+          "result.lines": 13,
+          "result.scheduled": 710000,
+          "result.billed": 393300,
+          "result.billed_ahead": 16200,
+          "result.billed_behind": 41800,
+          "result.co_not_on_sov": 5000,
+          "result.ahead": 2,
+          "result.behind": 2,
+          "result.review": 2,
+          "result.ok": 8
+        }
+      },
+      "note": "German export of the same data (fixtures/intl/de); must match the English case \"check-totals\"."
+    },
+    {
+      "id": "intl-ja-check-totals",
+      "tool": "sov_check",
+      "args": {
+        "sov": "fixtures/intl/ja/sov.csv",
+        "jobs": "fixtures/intl/ja/jobs.csv",
+        "change_orders": "fixtures/intl/ja/change-orders.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.jobs": 2,
+          "result.lines": 13,
+          "result.scheduled": 710000,
+          "result.billed": 393300,
+          "result.billed_ahead": 16200,
+          "result.billed_behind": 41800,
+          "result.co_not_on_sov": 5000,
+          "result.ahead": 2,
+          "result.behind": 2,
+          "result.review": 2,
+          "result.ok": 8
+        }
+      },
+      "note": "Japanese export of the same data (fixtures/intl/ja); must match the English case \"check-totals\"."
+    }
+  ]
+}

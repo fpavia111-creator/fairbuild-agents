@@ -1,0 +1,21 @@
+{
+  "name": "fairbuild-punch-lists",
+  "version": "0.1.0",
+  "description": "Fairbuild Punch Lists: punch list items by job, trade and subcontractor (Procore punch list exports recognised): items past due, open too long, reopened, with no one assigned, and open items on subcontractors you have already paid in full. Drafts punch notices to subcontractors. Never closes an item or charges a subcontractor.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/fairbuild-punch-lists#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "construction",
+    "contractors",
+    "construction-accounting",
+    "fairbuild",
+    "punch-list",
+    "closeout",
+    "subcontractors"
+  ]
+}

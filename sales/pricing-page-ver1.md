@@ -8,14 +8,14 @@ These prices are proposals for Kurt to confirm. They sit above the restaurant fa
 
 | Package | Agents | Setup |
 |---|---|---|
-| Job cost and WIP pack | rhine-of-costcodes, danube-of-commitments, volga-of-changeorders, loire-of-wip, lena-of-cashflow | $3,500 |
-| Billing and retainage pack | thames-of-payapps, seine-of-values, nile-of-retainage | $2,000 |
-| Subcontractor payment pack | yangtze-of-matching, platte-of-releases, tiber-of-waivers, ganges-of-insurance, indus-of-compliance, brazos-of-backcharges | $4,000 |
-| Payables cleanup pack | orinoco-of-vendors, mekong-of-tickets, tagus-of-salestax, colorado-of-equipment | $2,500 |
-| Payroll and labor pack | hudson-of-wages, yukon-of-fringes, columbia-of-timecards (set to your wage determinations and fringe rates) | $3,000 |
-| Field and closeout pack | zambezi-of-permits, oder-of-submittals, elbe-of-punchlists, douro-of-closeout | $2,000 |
-| Bids, backlog and bonding pack | congo-of-bids, limpopo-of-backlog, vistula-of-bonding | $2,000 |
-| Service and warranty pack | shannon-of-service, murray-of-warranty | $1,500 |
+| Job cost and WIP pack | fairbuild-job-cost, fairbuild-commitments, fairbuild-change-orders, fairbuild-wip-schedule, fairbuild-job-cash-flow | $3,500 |
+| Billing and retainage pack | fairbuild-pay-applications, fairbuild-schedule-of-values, fairbuild-retainage | $2,000 |
+| Subcontractor payment pack | fairbuild-three-way-match, fairbuild-payment-release, fairbuild-lien-waivers, fairbuild-insurance-certificates, fairbuild-sub-compliance, fairbuild-backcharges | $4,000 |
+| Payables cleanup pack | fairbuild-duplicate-vendors, fairbuild-delivery-tickets, fairbuild-sales-tax, fairbuild-equipment-rentals | $2,500 |
+| Payroll and labor pack | fairbuild-certified-payroll, fairbuild-union-fringes, fairbuild-timecards (set to your wage determinations and fringe rates) | $3,000 |
+| Field and closeout pack | fairbuild-permits, fairbuild-submittals, fairbuild-punch-lists, fairbuild-closeout | $2,000 |
+| Bids, backlog and bonding pack | fairbuild-bid-leveling, fairbuild-backlog, fairbuild-bonding-capacity | $2,000 |
+| Service and warranty pack | fairbuild-service-tickets, fairbuild-warranty-callbacks | $1,500 |
 | Whole back office | all 30 agents, two training sessions | $12,000 |
 
 ## Several companies

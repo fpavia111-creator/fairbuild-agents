@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairbuild-change-orders": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairbuild-change-orders@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

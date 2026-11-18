@@ -1,0 +1,342 @@
+{
+  "suite": "fairbuild-wip-schedule",
+  "root": "..",
+  "data_note": "Seven fictional jobs in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "check-totals",
+      "tool": "wip_check",
+      "args": {
+        "wip": "fixtures/wip.csv",
+        "settings": "fixtures/settings.json",
+        "period_end": "2026-10-31"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.jobs": 7,
+          "result.earned_revenue": 868243.9,
+          "result.billed_to_date": 849300,
+          "result.over_billings": 30000,
+          "result.under_billings": 63943.9,
+          "result.net_over_under": -33943.9,
+          "result.loss_provision": 3500,
+          "result.loss": 1,
+          "result.review": 3,
+          "result.ok": 3
+        }
+      }
+    },
+    {
+      "id": "every-planted-issue",
+      "tool": "wip_check",
+      "args": {
+        "wip": "fixtures/wip.csv",
+        "settings": "fixtures/settings.json",
+        "period_end": "2026-10-31"
+      },
+      "expect": {
+        "contains": [
+          "loss_job",
+          "no_estimate",
+          "cost_exceeds_estimate",
+          "under_billed_large"
+        ],
+        "not_contains": [
+          "billed_over_contract"
+        ]
+      }
+    },
+    {
+      "id": "explain-loss-job",
+      "tool": "wip_explain",
+      "args": {
+        "wip": "fixtures/wip.csv",
+        "period_end": "2026-10-31",
+        "job": "24-103"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "an expected loss of 14000, of which 10500 is already in gross profit to date; 3500 more"
+        ],
+        "equals": {
+          "result.item.loss_provision": 3500,
+          "result.item.percent_complete": 75
+        }
+      }
+    },
+    {
+      "id": "explain-cost-past-estimate",
+      "tool": "wip_explain",
+      "args": {
+        "wip": "fixtures/wip.csv",
+        "period_end": "2026-10-31",
+        "job": "23-095"
+      },
+      "expect": {
+        "contains": [
+          "percent complete is held at 100%"
+        ],
+        "equals": {
+          "result.item.earned_revenue": 180000,
+          "result.item.under_billed": 0
+        }
+      }
+    },
+    {
+      "id": "over-billing-is-not-a-finding",
+      "tool": "wip_explain",
+      "args": {
+        "wip": "fixtures/wip.csv",
+        "period_end": "2026-10-31",
+        "job": "24-104"
+      },
+      "expect": {
+        "equals": {
+          "result.item.over_billed": 30000,
+          "result.item.status": "ok"
+        }
+      }
+    },
+    {
+      "id": "under-alert-setting",
+      "tool": "wip_check",
+      "args": {
+        "wip": "fixtures/wip.csv",
+        "settings": "fixtures/settings-25.json",
+        "period_end": "2026-10-31"
+      },
+      "expect": {
+        "equals": {
+          "result.review": 2,
+          "result.settings_used.under_alert_pct": 25
+        },
+        "not_contains": [
+          "under_billed_large"
+        ]
+      }
+    },
+    {
+      "id": "settings-typo-is-named",
+      "tool": "wip_check",
+      "args": {
+        "wip": "fixtures/wip.csv",
+        "settings": "fixtures/settings-typo.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "wip_settings"
+        ]
+      }
+    },
+    {
+      "id": "bad-period-end",
+      "tool": "wip_check",
+      "args": {
+        "wip": "fixtures/wip.csv",
+        "period_end": "end of October"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "period_end must be a date"
+        ]
+      }
+    },
+    {
+      "id": "write-report-writes-files",
+      "tool": "wip_write_report",
+      "args": {
+        "wip": "fixtures/wip.csv",
+        "period_end": "2026-10-31"
+      },
+      "expect": {
+        "status": "executed",
+        "length": {
+          "result.files": 2
+        }
+      }
+    },
+    {
+      "id": "draft-journal",
+      "tool": "wip_draft_journal",
+      "mode": "auto",
+      "auto_actions": [
+        "wip_draft_journal"
+      ],
+      "args": {
+        "wip": "fixtures/wip.csv",
+        "period_end": "2026-10-31"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.id": "2026-10-31",
+          "result.amount": -33943.9
+        },
+        "contains": [
+          "Nothing was sent"
+        ]
+      }
+    },
+    {
+      "id": "policy-invented-tool",
+      "tool": "wip_pay_everything_now",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-file-outside-root",
+      "tool": "wip_check",
+      "args": {
+        "wip": "../../../outside-the-root.csv",
+        "settings": "fixtures/settings.json",
+        "period_end": "2026-10-31"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside"
+        ]
+      }
+    },
+    {
+      "id": "policy-missing-argument-named",
+      "tool": "wip_check",
+      "args": {},
+      "expect": {
+        "status": "error",
+        "contains": [
+          "wip"
+        ]
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reads",
+      "tool": "wip_check",
+      "mode": "review",
+      "args": {
+        "wip": "fixtures/wip.csv",
+        "settings": "fixtures/settings.json",
+        "period_end": "2026-10-31"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reports",
+      "tool": "wip_write_report",
+      "mode": "review",
+      "args": {
+        "wip": "fixtures/wip.csv",
+        "period_end": "2026-10-31"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-blocks-draft",
+      "tool": "wip_draft_journal",
+      "mode": "review",
+      "args": {
+        "wip": "fixtures/wip.csv",
+        "period_end": "2026-10-31"
+      },
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-wip-request-post-one-click-in-auto",
+      "tool": "wip_request_post",
+      "mode": "auto",
+      "args": {
+        "draft": "fairbuild-out/drafts/example.md",
+        "draft_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expect": {
+        "status": "needs_approval"
+      }
+    },
+    {
+      "id": "policy-refuses-gl-post",
+      "tool": "gl_post",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-estimate-update",
+      "tool": "estimate_update",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-email-send",
+      "tool": "email_send",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "intl-de-check-totals",
+      "tool": "wip_check",
+      "args": {
+        "wip": "fixtures/intl/de/wip.csv",
+        "settings": "fixtures/settings.json",
+        "period_end": "2026-10-31"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.jobs": 7,
+          "result.earned_revenue": 868243.9,
+          "result.billed_to_date": 849300,
+          "result.over_billings": 30000,
+          "result.under_billings": 63943.9,
+          "result.net_over_under": -33943.9,
+          "result.loss_provision": 3500,
+          "result.loss": 1,
+          "result.review": 3,
+          "result.ok": 3
+        }
+      },
+      "note": "German export of the same data (fixtures/intl/de); must match the English case \"check-totals\"."
+    },
+    {
+      "id": "intl-ja-check-totals",
+      "tool": "wip_check",
+      "args": {
+        "wip": "fixtures/intl/ja/wip.csv",
+        "settings": "fixtures/settings.json",
+        "period_end": "2026-10-31"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.jobs": 7,
+          "result.earned_revenue": 868243.9,
+          "result.billed_to_date": 849300,
+          "result.over_billings": 30000,
+          "result.under_billings": 63943.9,
+          "result.net_over_under": -33943.9,
+          "result.loss_provision": 3500,
+          "result.loss": 1,
+          "result.review": 3,
+          "result.ok": 3
+        }
+      },
+      "note": "Japanese export of the same data (fixtures/intl/ja); must match the English case \"check-totals\"."
+    }
+  ]
+}

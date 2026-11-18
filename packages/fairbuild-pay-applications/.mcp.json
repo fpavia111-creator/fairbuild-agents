@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairbuild-pay-applications": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairbuild-pay-applications@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

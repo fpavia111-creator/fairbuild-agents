@@ -1,0 +1,22 @@
+{
+  "name": "fairbuild-submittals",
+  "version": "0.1.0",
+  "description": "Fairbuild Submittals: the submittal register worked back from the date material is needed on site: submittals not yet submitted past their latest submit date (required on site less lead time and review time), reviews running over the allowed days, revise-and-resubmit not resubmitted, third and later revisions, approvals that came after the order-by date, and spec sections with no submittal. Ages ball-in-court. Drafts reminders. Never approves or changes a submittal.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/fairbuild-submittals#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "construction",
+    "contractors",
+    "construction-accounting",
+    "fairbuild",
+    "submittals",
+    "submittal-register",
+    "lead-time",
+    "procore"
+  ]
+}

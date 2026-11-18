@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairbuild-timecards": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairbuild-timecards@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

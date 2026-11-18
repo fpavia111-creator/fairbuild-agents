@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairbuild-closeout": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairbuild-closeout@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

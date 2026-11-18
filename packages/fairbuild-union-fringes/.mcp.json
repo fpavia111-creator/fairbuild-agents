@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairbuild-union-fringes": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairbuild-union-fringes@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

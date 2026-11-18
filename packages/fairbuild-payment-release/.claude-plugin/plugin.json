@@ -1,0 +1,21 @@
+{
+  "name": "fairbuild-payment-release",
+  "version": "0.1.0",
+  "description": "Fairbuild Payment Release: the release check before a subcontractor is paid: project manager approval, the owner paid for that month (pay-when-paid, if you use it), a conditional lien waiver for the invoice, a current insurance certificate, a W-9 on file and retainage withheld at the subcontract rate. Each invoice is cleared or held with its reasons, and payment releases are recorded only after one named person's click. Never pays.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/fairbuild-payment-release#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "construction",
+    "contractors",
+    "construction-accounting",
+    "fairbuild",
+    "payment-release",
+    "pay-when-paid",
+    "subcontractor-payments"
+  ]
+}

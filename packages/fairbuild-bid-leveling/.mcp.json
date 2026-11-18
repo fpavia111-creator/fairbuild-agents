@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairbuild-bid-leveling": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairbuild-bid-leveling@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

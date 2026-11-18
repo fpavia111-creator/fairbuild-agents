@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairbuild-warranty-callbacks": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairbuild-warranty-callbacks@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

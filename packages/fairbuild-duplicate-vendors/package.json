@@ -1,0 +1,58 @@
+{
+  "name": "fairbuild-duplicate-vendors",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairbuild-duplicate-vendors",
+  "description": "Fairbuild Duplicate Vendors: the vendor master and AP invoices for duplicates: vendors entered twice (same tax id, bank account, address, phone or name once legal forms are set aside), the same invoice entered under two numbers, two vendor records or twice for one vendor, duplicates already paid twice and duplicates still open. Drafts recovery letters. Never merges vendors, voids or pays.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairbuild-duplicate-vendors": "bin/fairbuild-duplicate-vendors.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairbuild-duplicate-vendors.js demo",
+    "eval": "node bin/fairbuild-duplicate-vendors.js eval"
+  },
+  "dependencies": {
+    "fairbuild-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairbuild-agents.git",
+    "directory": "packages/fairbuild-duplicate-vendors"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/fairbuild-duplicate-vendors#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairbuild-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "construction",
+    "contractors",
+    "construction-accounting",
+    "fairbuild",
+    "duplicate-payments",
+    "vendor-master",
+    "duplicate-invoices"
+  ]
+}

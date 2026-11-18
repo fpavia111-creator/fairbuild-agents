@@ -3,16 +3,17 @@
 // changelog, the shared tests (MCP stdio, arg docs, evals) and the contract tests.
 // The agent's own manifest, logic, demo, fixtures, evals and README are written by hand.
 //
-//   node scripts/new-agent.mjs <river>-of-<job> "<one-line description>" kw1,kw2 <logic module>
+//   node scripts/new-agent.mjs fairbuild-<what it does> "<one-line description>" kw1,kw2 <logic module> [tool_prefix]
+// Names follow the brief: fairbuild-<1 to 4 job words>, tool prefix short snake_case job words.
 import { mkdirSync, writeFileSync, existsSync, readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const repo = join(dirname(fileURLToPath(import.meta.url)), '..');
 const [name, description, kw = ''] = process.argv.slice(2);
-if (!name || !/^[a-z]+-of-[a-z]+$/.test(name) || !description) { console.error('usage: new-agent.mjs <river>-of-<job> "<description>" kw1,kw2'); process.exit(2); }
+if (!name || !/^fairbuild-[a-z0-9]+(-[a-z0-9]+){0,3}$/.test(name) || name === 'fairbuild-core' || !description) { console.error('usage: new-agent.mjs fairbuild-<what it does> "<description>" kw1,kw2 <logic module> [tool_prefix]'); process.exit(2); }
 const root = join(repo, 'packages', name);
-const prefix = name.split('-')[0];
+const prefix = process.argv[6] || name.replace(/^fairbuild-/, '').replace(/-/g, '_');
 const corePkg = JSON.parse(readFileSync(join(repo, 'packages/fairbuild-core/package.json'), 'utf8'));
 const write = (f, text, { keep = false } = {}) => { const p = join(root, f); if (keep && existsSync(p)) return; mkdirSync(dirname(p), { recursive: true }); writeFileSync(p, text); };
 

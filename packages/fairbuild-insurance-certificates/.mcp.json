@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairbuild-insurance-certificates": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairbuild-insurance-certificates@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

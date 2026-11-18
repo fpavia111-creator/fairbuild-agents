@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairbuild-retainage": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairbuild-retainage@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

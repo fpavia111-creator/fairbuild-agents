@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairbuild-service-tickets": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairbuild-service-tickets@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

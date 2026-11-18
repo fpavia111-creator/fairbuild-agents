@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairbuild-duplicate-vendors": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairbuild-duplicate-vendors@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

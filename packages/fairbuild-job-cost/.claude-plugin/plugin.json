@@ -1,0 +1,21 @@
+{
+  "name": "fairbuild-job-cost",
+  "version": "0.1.0",
+  "description": "Fairbuild Job Cost: job cost against budget by cost code and cost type, from your budget and job cost exports (Procore, Sage, Foundation, Vista, QuickBooks). Flags lines over or projected over budget, spend running ahead of progress, unbudgeted codes and budget math errors, and drafts the cost review memo. Never changes a budget.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/fairbuild-job-cost#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "construction",
+    "contractors",
+    "construction-accounting",
+    "fairbuild",
+    "job-cost",
+    "cost-codes",
+    "budget-variance"
+  ]
+}

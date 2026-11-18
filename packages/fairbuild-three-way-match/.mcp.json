@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairbuild-three-way-match": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairbuild-three-way-match@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

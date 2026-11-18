@@ -1,0 +1,375 @@
+{
+  "suite": "fairbuild-sub-compliance",
+  "root": "..",
+  "data_note": "Fictional subcontractors and compliance documents in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "check-totals",
+      "tool": "sub_compliance_check",
+      "args": {
+        "documents": "fixtures/documents.csv",
+        "requirements": "fixtures/requirements.json",
+        "vendors": "fixtures/vendors.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.vendors": 5,
+          "result.inactive_skipped": 1,
+          "result.documents": 27,
+          "result.missing": 5,
+          "result.review": 2,
+          "result.expiring": 1,
+          "result.ok": 19,
+          "result.vendors_compliant": 1
+        }
+      }
+    },
+    {
+      "id": "every-planted-issue",
+      "tool": "sub_compliance_check",
+      "args": {
+        "documents": "fixtures/documents.csv",
+        "requirements": "fixtures/requirements.json",
+        "vendors": "fixtures/vendors.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "contains": [
+          "document_missing",
+          "document_expired",
+          "document_rejected",
+          "emr_high",
+          "not_reviewed",
+          "document_expiring"
+        ],
+        "not_contains": [
+          "Sample Rebar Co"
+        ]
+      }
+    },
+    {
+      "id": "explain-emr",
+      "tool": "sub_compliance_explain",
+      "args": {
+        "documents": "fixtures/documents.csv",
+        "requirements": "fixtures/requirements.json",
+        "as_of": "2026-11-16",
+        "vendor": "Test Drywall Co EMR letter"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "Experience modification rate 1.35 is above your limit of 1.2"
+        ]
+      }
+    },
+    {
+      "id": "alias-reads-w9",
+      "tool": "sub_compliance_explain",
+      "args": {
+        "documents": "fixtures/documents.csv",
+        "requirements": "fixtures/requirements.json",
+        "as_of": "2026-11-16",
+        "vendor": "Test Drywall Co W-9"
+      },
+      "expect": {
+        "equals": {
+          "result.item.status": "ok",
+          "result.item.doc_status": "Approved"
+        }
+      }
+    },
+    {
+      "id": "trade-document-required",
+      "tool": "sub_compliance_explain",
+      "args": {
+        "documents": "fixtures/documents.csv",
+        "requirements": "fixtures/requirements.json",
+        "vendors": "fixtures/vendors.csv",
+        "as_of": "2026-11-16",
+        "vendor": "Example Electric Inc Electrical license"
+      },
+      "expect": {
+        "contains": [
+          "Electrical license expired on 2026-09-30"
+        ],
+        "equals": {
+          "result.item.status": "missing"
+        }
+      }
+    },
+    {
+      "id": "basic-requirements",
+      "tool": "sub_compliance_check",
+      "args": {
+        "documents": "fixtures/documents.csv",
+        "requirements": "fixtures/requirements-basic.json",
+        "vendors": "fixtures/vendors.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "equals": {
+          "result.documents": 10,
+          "result.missing": 1,
+          "result.review": 0,
+          "result.vendors_compliant": 4
+        }
+      }
+    },
+    {
+      "id": "without-vendor-list",
+      "tool": "sub_compliance_check",
+      "args": {
+        "documents": "fixtures/documents.csv",
+        "requirements": "fixtures/requirements-basic.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "equals": {
+          "result.vendors": 6,
+          "result.inactive_skipped": 0
+        }
+      }
+    },
+    {
+      "id": "requirements-schema-error",
+      "tool": "sub_compliance_check",
+      "args": {
+        "documents": "fixtures/documents.csv",
+        "requirements": "fixtures/requirements-typo.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "document_requirements"
+        ]
+      }
+    },
+    {
+      "id": "write-report-writes-files",
+      "tool": "sub_compliance_write_report",
+      "args": {
+        "documents": "fixtures/documents.csv",
+        "requirements": "fixtures/requirements.json",
+        "vendors": "fixtures/vendors.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "length": {
+          "result.files": 2
+        }
+      }
+    },
+    {
+      "id": "draft-request",
+      "tool": "sub_compliance_draft_request",
+      "mode": "auto",
+      "auto_actions": [
+        "sub_compliance_draft_request"
+      ],
+      "args": {
+        "documents": "fixtures/documents.csv",
+        "requirements": "fixtures/requirements.json",
+        "vendors": "fixtures/vendors.csv",
+        "as_of": "2026-11-16",
+        "vendor": "Sample Painting Co"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.id": "Sample Painting Co",
+          "result.documents": 2
+        },
+        "contains": [
+          "Nothing was sent"
+        ]
+      }
+    },
+    {
+      "id": "draft-request-complete-file",
+      "tool": "sub_compliance_draft_request",
+      "mode": "auto",
+      "auto_actions": [
+        "sub_compliance_draft_request"
+      ],
+      "args": {
+        "documents": "fixtures/documents.csv",
+        "requirements": "fixtures/requirements.json",
+        "vendors": "fixtures/vendors.csv",
+        "as_of": "2026-11-16",
+        "vendor": "Example Concrete LLC"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "file is complete"
+        ]
+      }
+    },
+    {
+      "id": "policy-invented-tool",
+      "tool": "sub_compliance_pay_everything_now",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-file-outside-root",
+      "tool": "sub_compliance_check",
+      "args": {
+        "documents": "../../../outside-the-root.csv",
+        "requirements": "fixtures/requirements.json",
+        "vendors": "fixtures/vendors.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside"
+        ]
+      }
+    },
+    {
+      "id": "policy-missing-argument-named",
+      "tool": "sub_compliance_check",
+      "args": {},
+      "expect": {
+        "status": "error",
+        "contains": [
+          "documents"
+        ]
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reads",
+      "tool": "sub_compliance_check",
+      "mode": "review",
+      "args": {
+        "documents": "fixtures/documents.csv",
+        "requirements": "fixtures/requirements.json",
+        "vendors": "fixtures/vendors.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reports",
+      "tool": "sub_compliance_write_report",
+      "mode": "review",
+      "args": {
+        "documents": "fixtures/documents.csv",
+        "requirements": "fixtures/requirements.json",
+        "vendors": "fixtures/vendors.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-blocks-draft",
+      "tool": "sub_compliance_draft_request",
+      "mode": "review",
+      "args": {
+        "documents": "fixtures/documents.csv",
+        "requirements": "fixtures/requirements.json",
+        "vendors": "fixtures/vendors.csv",
+        "as_of": "2026-11-16",
+        "vendor": "Sample Painting Co"
+      },
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-sub-compliance-request-send-one-click-in-auto",
+      "tool": "sub_compliance_request_send",
+      "mode": "auto",
+      "args": {
+        "draft": "fairbuild-out/drafts/example.md",
+        "draft_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expect": {
+        "status": "needs_approval"
+      }
+    },
+    {
+      "id": "policy-refuses-vendor-approve",
+      "tool": "vendor_approve",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-vendor-block",
+      "tool": "vendor_block",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-email-send",
+      "tool": "email_send",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "intl-de-check-totals",
+      "tool": "sub_compliance_check",
+      "args": {
+        "documents": "fixtures/intl/de/documents.csv",
+        "requirements": "fixtures/requirements.json",
+        "vendors": "fixtures/intl/de/vendors.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.vendors": 5,
+          "result.inactive_skipped": 1,
+          "result.documents": 27,
+          "result.missing": 5,
+          "result.review": 2,
+          "result.expiring": 1,
+          "result.ok": 19,
+          "result.vendors_compliant": 1
+        }
+      },
+      "note": "German export of the same data (fixtures/intl/de); must match the English case \"check-totals\"."
+    },
+    {
+      "id": "intl-ja-check-totals",
+      "tool": "sub_compliance_check",
+      "args": {
+        "documents": "fixtures/intl/ja/documents.csv",
+        "requirements": "fixtures/requirements.json",
+        "vendors": "fixtures/intl/ja/vendors.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.vendors": 5,
+          "result.inactive_skipped": 1,
+          "result.documents": 27,
+          "result.missing": 5,
+          "result.review": 2,
+          "result.expiring": 1,
+          "result.ok": 19,
+          "result.vendors_compliant": 1
+        }
+      },
+      "note": "Japanese export of the same data (fixtures/intl/ja); must match the English case \"check-totals\"."
+    }
+  ]
+}

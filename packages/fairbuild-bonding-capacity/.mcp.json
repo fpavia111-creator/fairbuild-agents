@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairbuild-bonding-capacity": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairbuild-bonding-capacity@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

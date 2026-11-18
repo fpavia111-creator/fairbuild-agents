@@ -1,0 +1,58 @@
+{
+  "name": "fairbuild-punch-lists",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairbuild-punch-lists",
+  "description": "Fairbuild Punch Lists: punch list items by job, trade and subcontractor (Procore punch list exports recognised): items past due, open too long, reopened, with no one assigned, and open items on subcontractors you have already paid in full. Drafts punch notices to subcontractors. Never closes an item or charges a subcontractor.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairbuild-punch-lists": "bin/fairbuild-punch-lists.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairbuild-punch-lists.js demo",
+    "eval": "node bin/fairbuild-punch-lists.js eval"
+  },
+  "dependencies": {
+    "fairbuild-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairbuild-agents.git",
+    "directory": "packages/fairbuild-punch-lists"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/fairbuild-punch-lists#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairbuild-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "construction",
+    "contractors",
+    "construction-accounting",
+    "fairbuild",
+    "punch-list",
+    "closeout",
+    "subcontractors"
+  ]
+}

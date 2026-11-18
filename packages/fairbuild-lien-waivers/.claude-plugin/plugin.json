@@ -1,0 +1,21 @@
+{
+  "name": "fairbuild-lien-waivers",
+  "version": "0.1.0",
+  "description": "Fairbuild Lien Waivers: every payment to a subcontractor or supplier matched to its lien waivers: payments made without a conditional waiver, unconditional waivers missing after the payment cleared, waivers for less than was paid, unsigned waivers, and final payments without final waivers. Drafts waiver requests. Never files or releases a lien and never pays.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/fairbuild-lien-waivers#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "construction",
+    "contractors",
+    "construction-accounting",
+    "fairbuild",
+    "lien-waivers",
+    "conditional-waiver",
+    "unconditional-waiver"
+  ]
+}

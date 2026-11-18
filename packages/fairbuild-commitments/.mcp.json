@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairbuild-commitments": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairbuild-commitments@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

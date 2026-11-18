@@ -1,0 +1,58 @@
+{
+  "name": "fairbuild-change-orders",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairbuild-change-orders",
+  "description": "Fairbuild Change Orders: the change order log by job: pending change orders waiting too long or with no price, approved change orders not yet billed, billing on unapproved or past the approved amount, change orders priced below cost, rejected changes that left cost behind, and numbers entered twice. Drafts owner follow-ups. Never approves or bills a change order.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairbuild-change-orders": "bin/fairbuild-change-orders.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairbuild-change-orders.js demo",
+    "eval": "node bin/fairbuild-change-orders.js eval"
+  },
+  "dependencies": {
+    "fairbuild-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairbuild-agents.git",
+    "directory": "packages/fairbuild-change-orders"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/fairbuild-change-orders#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairbuild-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "construction",
+    "contractors",
+    "construction-accounting",
+    "fairbuild",
+    "change-orders",
+    "pco",
+    "unbilled"
+  ]
+}

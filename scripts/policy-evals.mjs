@@ -23,14 +23,14 @@ const check = process.argv.includes('--check');
 const only = process.argv.slice(2).filter((a) => !a.startsWith('--'));
 const FILE = /\.(csv|tsv|json|jsonl|xlsx)$/i;
 let stale = 0;
-for (const n of readdirSync(PK).filter((x) => /-of-/.test(x) && (!only.length || only.includes(x))).sort()) {
+for (const n of readdirSync(PK).filter((x) => /^fairbuild-(?!core$)/.test(x) && (!only.length || only.includes(x))).sort()) {
   const casesFile = join(PK, n, 'evals', 'cases.json'); if (!existsSync(casesFile)) continue;
   const { manifest } = await import(pathToFileURL(join(PK, n, 'src', 'index.js')).href);
   const data = JSON.parse(readFileSync(casesFile, 'utf8')); const cases = data.cases || data;
   const own = cases.filter((c) => !c.id.startsWith('policy-') && !c.id.startsWith('intl-'));
   const intl = cases.filter((c) => c.id.startsWith('intl-'));
   const rule = (t) => manifest.policy.rules.find((r) => r.tool === t.name) || {};
-  const prefix = manifest.tools[0].name.split('_')[0];
+  const prefix = ((t) => (t ? t.name.slice(0, -6) : manifest.tools[0].name.split('_')[0]))(manifest.tools.find((t) => /_check$/.test(t.name))); // the job prefix may be several words (payment_release)
   const ok = (c) => !c.mode && (!c.expect || !c.expect.status || c.expect.status === 'executed');
   const firstCase = (tool) => own.find((c) => c.tool === tool.name && ok(c));
   const reads = manifest.tools.filter((t) => t.kind === 'read' && rule(t).decision === 'allow');

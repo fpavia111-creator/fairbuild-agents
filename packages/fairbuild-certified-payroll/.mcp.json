@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairbuild-certified-payroll": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairbuild-certified-payroll@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

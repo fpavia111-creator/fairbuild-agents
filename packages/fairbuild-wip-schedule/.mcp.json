@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairbuild-wip-schedule": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairbuild-wip-schedule@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

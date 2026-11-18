@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairbuild-job-cash-flow": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairbuild-job-cash-flow@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

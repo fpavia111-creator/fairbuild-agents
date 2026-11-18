@@ -7,7 +7,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const DEMO = ['rhine-of-costcodes', 'platte-of-releases'];
+const DEMO = ['fairbuild-job-cost', 'fairbuild-payment-release'];
 const COUNT = 30;
 
 const GROUPS = {

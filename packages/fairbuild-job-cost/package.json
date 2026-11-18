@@ -1,0 +1,58 @@
+{
+  "name": "fairbuild-job-cost",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairbuild-job-cost",
+  "description": "Fairbuild Job Cost: job cost against budget by cost code and cost type, from your budget and job cost exports (Procore, Sage, Foundation, Vista, QuickBooks). Flags lines over or projected over budget, spend running ahead of progress, unbudgeted codes and budget math errors, and drafts the cost review memo. Never changes a budget.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairbuild-job-cost": "bin/fairbuild-job-cost.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairbuild-job-cost.js demo",
+    "eval": "node bin/fairbuild-job-cost.js eval"
+  },
+  "dependencies": {
+    "fairbuild-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairbuild-agents.git",
+    "directory": "packages/fairbuild-job-cost"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/fairbuild-job-cost#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairbuild-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "construction",
+    "contractors",
+    "construction-accounting",
+    "fairbuild",
+    "job-cost",
+    "cost-codes",
+    "budget-variance"
+  ]
+}

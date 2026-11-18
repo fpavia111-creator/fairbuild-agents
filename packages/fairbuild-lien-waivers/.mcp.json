@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairbuild-lien-waivers": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairbuild-lien-waivers@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

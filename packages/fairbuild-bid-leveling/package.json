@@ -1,0 +1,58 @@
+{
+  "name": "fairbuild-bid-leveling",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairbuild-bid-leveling",
+  "description": "Fairbuild Bid Leveling: subcontractor bids tabulated and leveled by bid package: scope items a bidder left out priced at your plug values, bids missing addenda or a bid bond, late bids, and bids far below or above the others. Shows the lowest responsive leveled bid per package. Drafts scope clarification letters. Never awards, rejects or notifies a bidder.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairbuild-bid-leveling": "bin/fairbuild-bid-leveling.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairbuild-bid-leveling.js demo",
+    "eval": "node bin/fairbuild-bid-leveling.js eval"
+  },
+  "dependencies": {
+    "fairbuild-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairbuild-agents.git",
+    "directory": "packages/fairbuild-bid-leveling"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/fairbuild-bid-leveling#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairbuild-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "construction",
+    "contractors",
+    "construction-accounting",
+    "fairbuild",
+    "bid-leveling",
+    "bid-tabulation",
+    "subcontractor-bids"
+  ]
+}

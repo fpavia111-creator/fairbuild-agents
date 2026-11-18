@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairbuild-punch-lists": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairbuild-punch-lists@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

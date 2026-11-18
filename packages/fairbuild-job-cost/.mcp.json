@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairbuild-job-cost": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairbuild-job-cost@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

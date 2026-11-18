@@ -1,0 +1,58 @@
+{
+  "name": "fairbuild-permits",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairbuild-permits",
+  "description": "Fairbuild Permits: permits and inspections by job: permits expired or expiring, failed inspections with no re-inspection booked, inspections past their date with no result, inspections on permits you have no record of, and what is coming up. Writes a calendar file for permit expirations and inspections. Drafts notices to the project manager. Never applies to, renews with or schedules with a jurisdiction.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairbuild-permits": "bin/fairbuild-permits.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairbuild-permits.js demo",
+    "eval": "node bin/fairbuild-permits.js eval"
+  },
+  "dependencies": {
+    "fairbuild-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairbuild-agents.git",
+    "directory": "packages/fairbuild-permits"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/fairbuild-permits#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairbuild-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "construction",
+    "contractors",
+    "construction-accounting",
+    "fairbuild",
+    "permits",
+    "inspections",
+    "building-permits"
+  ]
+}

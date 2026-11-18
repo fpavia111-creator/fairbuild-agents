@@ -1,0 +1,368 @@
+{
+  "suite": "fairbuild-job-cash-flow",
+  "root": "..",
+  "data_note": "Fictional jobs, owners, vendors and cash in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "check-totals",
+      "tool": "cash_flow_check",
+      "args": {
+        "receipts": "fixtures/receipts.csv",
+        "disbursements": "fixtures/disbursements.csv",
+        "billings": "fixtures/billings.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.jobs": 3,
+          "result.cash_in": 480000,
+          "result.cash_out": 526900,
+          "result.net": -46900,
+          "result.negative": 2,
+          "result.ok": 1,
+          "result.unpaid_over_days": 42500,
+          "result.by_month.2026-10.net": -6400
+        }
+      }
+    },
+    {
+      "id": "every-planted-issue",
+      "tool": "cash_flow_check",
+      "args": {
+        "receipts": "fixtures/receipts.csv",
+        "disbursements": "fixtures/disbursements.csv",
+        "billings": "fixtures/billings.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "contains": [
+          "cash_negative",
+          "slow_collection",
+          "negative_trend"
+        ]
+      }
+    },
+    {
+      "id": "explain-negative-job",
+      "tool": "cash_flow_explain",
+      "args": {
+        "receipts": "fixtures/receipts.csv",
+        "disbursements": "fixtures/disbursements.csv",
+        "billings": "fixtures/billings.csv",
+        "as_of": "2026-11-16",
+        "job": "24-102"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "the job is 50000 cash negative, with 42500 billed and unpaid for more than 60 days",
+          "AR-2003 (42500, 88 days)"
+        ],
+        "equals": {
+          "result.item.unpaid_billed": 42500
+        }
+      }
+    },
+    {
+      "id": "recent-invoice-not-slow",
+      "tool": "cash_flow_explain",
+      "args": {
+        "receipts": "fixtures/receipts.csv",
+        "disbursements": "fixtures/disbursements.csv",
+        "billings": "fixtures/billings.csv",
+        "as_of": "2026-11-16",
+        "job": "24-103"
+      },
+      "expect": {
+        "equals": {
+          "result.item.unpaid_billed": 15000,
+          "result.item.unpaid_over_days": 0
+        },
+        "not_contains": [
+          "slow_collection"
+        ]
+      }
+    },
+    {
+      "id": "lenient-settings",
+      "tool": "cash_flow_check",
+      "args": {
+        "receipts": "fixtures/receipts.csv",
+        "disbursements": "fixtures/disbursements.csv",
+        "billings": "fixtures/billings.csv",
+        "settings": "fixtures/settings-lenient.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "equals": {
+          "result.unpaid_over_days": 0
+        },
+        "not_contains": [
+          "slow_collection",
+          "negative_trend"
+        ]
+      }
+    },
+    {
+      "id": "without-billings",
+      "tool": "cash_flow_check",
+      "args": {
+        "receipts": "fixtures/receipts.csv",
+        "disbursements": "fixtures/disbursements.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "equals": {
+          "result.negative": 2,
+          "result.unpaid_over_days": 0
+        }
+      }
+    },
+    {
+      "id": "settings-typo-is-named",
+      "tool": "cash_flow_check",
+      "args": {
+        "receipts": "fixtures/receipts.csv",
+        "disbursements": "fixtures/disbursements.csv",
+        "settings": "fixtures/settings-typo.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "cash_settings"
+        ]
+      }
+    },
+    {
+      "id": "write-report-writes-files",
+      "tool": "cash_flow_write_report",
+      "args": {
+        "receipts": "fixtures/receipts.csv",
+        "disbursements": "fixtures/disbursements.csv",
+        "billings": "fixtures/billings.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "length": {
+          "result.files": 2
+        }
+      }
+    },
+    {
+      "id": "draft-collection",
+      "tool": "cash_flow_draft_collection",
+      "mode": "auto",
+      "auto_actions": [
+        "cash_flow_draft_collection"
+      ],
+      "args": {
+        "receipts": "fixtures/receipts.csv",
+        "disbursements": "fixtures/disbursements.csv",
+        "billings": "fixtures/billings.csv",
+        "as_of": "2026-11-16",
+        "job": "24-102"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.id": "24-102",
+          "result.amount": 42500
+        },
+        "contains": [
+          "Nothing was sent"
+        ]
+      }
+    },
+    {
+      "id": "draft-collection-nothing-old",
+      "tool": "cash_flow_draft_collection",
+      "mode": "auto",
+      "auto_actions": [
+        "cash_flow_draft_collection"
+      ],
+      "args": {
+        "receipts": "fixtures/receipts.csv",
+        "disbursements": "fixtures/disbursements.csv",
+        "billings": "fixtures/billings.csv",
+        "as_of": "2026-11-16",
+        "job": "24-103"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "no owner invoice unpaid past 60 days"
+        ]
+      }
+    },
+    {
+      "id": "policy-invented-tool",
+      "tool": "cash_flow_pay_everything_now",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-file-outside-root",
+      "tool": "cash_flow_check",
+      "args": {
+        "receipts": "../../../outside-the-root.csv",
+        "disbursements": "fixtures/disbursements.csv",
+        "billings": "fixtures/billings.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside"
+        ]
+      }
+    },
+    {
+      "id": "policy-missing-argument-named",
+      "tool": "cash_flow_check",
+      "args": {},
+      "expect": {
+        "status": "error",
+        "contains": [
+          "receipts"
+        ]
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reads",
+      "tool": "cash_flow_check",
+      "mode": "review",
+      "args": {
+        "receipts": "fixtures/receipts.csv",
+        "disbursements": "fixtures/disbursements.csv",
+        "billings": "fixtures/billings.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reports",
+      "tool": "cash_flow_write_report",
+      "mode": "review",
+      "args": {
+        "receipts": "fixtures/receipts.csv",
+        "disbursements": "fixtures/disbursements.csv",
+        "billings": "fixtures/billings.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-blocks-draft",
+      "tool": "cash_flow_draft_collection",
+      "mode": "review",
+      "args": {
+        "receipts": "fixtures/receipts.csv",
+        "disbursements": "fixtures/disbursements.csv",
+        "billings": "fixtures/billings.csv",
+        "as_of": "2026-11-16",
+        "job": "24-102"
+      },
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-cash-flow-request-send-one-click-in-auto",
+      "tool": "cash_flow_request_send",
+      "mode": "auto",
+      "args": {
+        "draft": "fairbuild-out/drafts/example.md",
+        "draft_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expect": {
+        "status": "needs_approval"
+      }
+    },
+    {
+      "id": "policy-refuses-bank-transfer",
+      "tool": "bank_transfer",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-ap-hold-payments",
+      "tool": "ap_hold_payments",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-email-send",
+      "tool": "email_send",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "intl-de-check-totals",
+      "tool": "cash_flow_check",
+      "args": {
+        "receipts": "fixtures/intl/de/receipts.csv",
+        "disbursements": "fixtures/intl/de/disbursements.csv",
+        "billings": "fixtures/intl/de/billings.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.jobs": 3,
+          "result.cash_in": 480000,
+          "result.cash_out": 526900,
+          "result.net": -46900,
+          "result.negative": 2,
+          "result.ok": 1,
+          "result.unpaid_over_days": 42500,
+          "result.by_month.2026-10.net": -6400
+        }
+      },
+      "note": "German export of the same data (fixtures/intl/de); must match the English case \"check-totals\"."
+    },
+    {
+      "id": "intl-ja-check-totals",
+      "tool": "cash_flow_check",
+      "args": {
+        "receipts": "fixtures/intl/ja/receipts.csv",
+        "disbursements": "fixtures/intl/ja/disbursements.csv",
+        "billings": "fixtures/intl/ja/billings.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.jobs": 3,
+          "result.cash_in": 480000,
+          "result.cash_out": 526900,
+          "result.net": -46900,
+          "result.negative": 2,
+          "result.ok": 1,
+          "result.unpaid_over_days": 42500,
+          "result.by_month.2026-10.net": -6400
+        }
+      },
+      "note": "Japanese export of the same data (fixtures/intl/ja); must match the English case \"check-totals\"."
+    }
+  ]
+}

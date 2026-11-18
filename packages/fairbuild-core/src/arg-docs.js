@@ -13,14 +13,13 @@ const words = (s) => s.replace(/_/g, ' ');
 
 /** Glossary for names whose meaning is the same in every pack. Returns null when unsure. */
 function glossary(arg, props, toolName) {
-  const prefix = toolName.split('_')[0];
   const sha = /^(.+)_sha256$/.exec(arg);
   if (sha && props[sha[1]]) return `SHA-256 of the ${words(sha[1])} file's text, exactly as returned when it was written. The call is refused if the file changed since, so the approval covers exactly what was reviewed.`;
   if (props[`${arg}_sha256`]) return `Path under --root to the ${words(arg)} file written by the earlier step (the file you reviewed).`;
   const col = /^(.+)_column$/.exec(arg);
   if (col) return `Name of the column in the input file that holds the ${words(col[1])}.`;
   switch (arg) {
-    case 'out_dir': return `Folder under --root for the files this writes (default fairbuild-out/${prefix}).`;
+    case 'out_dir': return 'Folder under --root for the files this writes (default under fairbuild-out/).';
     case 'as_of': return 'Date to measure ages, due dates and deadlines from, as YYYY-MM-DD.';
     case 'reason': return 'Why, in a sentence. Kept with the request and in the audit log, so a reviewer can see it.';
     case 'title': return 'Title printed at the top of the report.';

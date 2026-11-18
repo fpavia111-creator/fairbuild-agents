@@ -1,0 +1,58 @@
+{
+  "name": "fairbuild-sales-tax",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairbuild-sales-tax",
+  "description": "Fairbuild Sales Tax: tax charged on material invoices against the rates you supply for each job's jurisdiction: tax not charged (use tax to accrue), tax charged at another jurisdiction's rate, tax overcharged, tax charged on jobs you mark exempt, and deliveries to a different jurisdiction than the job. Drafts refund requests to vendors. Never files a return or posts an entry; not tax advice.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairbuild-sales-tax": "bin/fairbuild-sales-tax.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairbuild-sales-tax.js demo",
+    "eval": "node bin/fairbuild-sales-tax.js eval"
+  },
+  "dependencies": {
+    "fairbuild-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairbuild-agents.git",
+    "directory": "packages/fairbuild-sales-tax"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/fairbuild-sales-tax#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairbuild-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "construction",
+    "contractors",
+    "construction-accounting",
+    "fairbuild",
+    "sales-tax",
+    "use-tax",
+    "materials-tax"
+  ]
+}

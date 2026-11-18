@@ -1,0 +1,363 @@
+{
+  "suite": "fairbuild-certified-payroll",
+  "root": "..",
+  "data_note": "Fictional workers, ids and wage rates in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "check-totals",
+      "tool": "certified_payroll_check",
+      "args": {
+        "payroll": "fixtures/payroll.csv",
+        "rates": "fixtures/rates.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.lines": 8,
+          "result.workers": 5,
+          "result.weeks": 2,
+          "result.hours": 302,
+          "result.owed": 450,
+          "result.underpaid": 3,
+          "result.review": 4,
+          "result.ok": 1
+        }
+      }
+    },
+    {
+      "id": "every-planted-issue",
+      "tool": "certified_payroll_check",
+      "args": {
+        "payroll": "fixtures/payroll.csv",
+        "rates": "fixtures/rates.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "contains": [
+          "underpaid",
+          "ot_not_paid",
+          "no_rate",
+          "duplicate_line",
+          "full_ssn_on_report",
+          "missing_worker_id"
+        ]
+      }
+    },
+    {
+      "id": "names-and-ssn-never-reach-the-model",
+      "tool": "certified_payroll_check",
+      "args": {
+        "payroll": "fixtures/payroll.csv",
+        "rates": "fixtures/rates.csv"
+      },
+      "expect": {
+        "not_contains": [
+          "Jordan Example",
+          "Casey Sample",
+          "Riley Test",
+          "Morgan Example",
+          "Taylor Sample",
+          "900-12-3456",
+          "4411"
+        ],
+        "contains": [
+          "PERSON-",
+          "personal_data"
+        ]
+      }
+    },
+    {
+      "id": "explain-underpaid-line",
+      "tool": "certified_payroll_explain",
+      "args": {
+        "payroll": "fixtures/payroll.csv",
+        "rates": "fixtures/rates.csv",
+        "worker": "2026-11-07 Casey Sample"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.item.owed": 69,
+          "result.item.status": "underpaid"
+        },
+        "not_contains": [
+          "Casey Sample"
+        ]
+      }
+    },
+    {
+      "id": "overtime-short",
+      "tool": "certified_payroll_check",
+      "args": {
+        "payroll": "fixtures/payroll.csv",
+        "rates": "fixtures/rates.csv"
+      },
+      "expect": {
+        "contains": [
+          "44 straight-time hours in one week: 4 hour(s) past 40 are overtime, 63 short at 1.5 times the base rate"
+        ]
+      }
+    },
+    {
+      "id": "underpaid-with-overtime",
+      "tool": "certified_payroll_check",
+      "args": {
+        "payroll": "fixtures/payroll.csv",
+        "rates": "fixtures/rates.csv"
+      },
+      "expect": {
+        "contains": [
+          "Short 69 for 40 straight and 4 overtime hour(s)",
+          "Short 318 for 40 straight hour(s)"
+        ]
+      }
+    },
+    {
+      "id": "classification-alias",
+      "tool": "certified_payroll_check",
+      "args": {
+        "payroll": "fixtures/payroll.csv",
+        "rates": "fixtures/rates.csv",
+        "settings": "fixtures/settings-alias.json"
+      },
+      "expect": {
+        "not_contains": [
+          "no_rate"
+        ],
+        "equals": {
+          "result.review": 3
+        }
+      }
+    },
+    {
+      "id": "wh347-layout",
+      "tool": "certified_payroll_check",
+      "args": {
+        "payroll": "fixtures/exports/wh347-lines.csv",
+        "rates": "fixtures/rates.csv"
+      },
+      "expect": {
+        "equals": {
+          "result.lines": 3,
+          "result.owed": 387,
+          "result.underpaid": 2
+        },
+        "contains": [
+          "wh347_payroll_lines"
+        ]
+      }
+    },
+    {
+      "id": "settings-typo-is-named",
+      "tool": "certified_payroll_check",
+      "args": {
+        "payroll": "fixtures/payroll.csv",
+        "rates": "fixtures/rates.csv",
+        "settings": "fixtures/settings-typo.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "wage_settings"
+        ]
+      }
+    },
+    {
+      "id": "write-report-writes-files",
+      "tool": "certified_payroll_write_report",
+      "args": {
+        "payroll": "fixtures/payroll.csv",
+        "rates": "fixtures/rates.csv"
+      },
+      "expect": {
+        "status": "executed",
+        "length": {
+          "result.files": 2
+        }
+      }
+    },
+    {
+      "id": "draft-corrections",
+      "tool": "certified_payroll_draft_corrections",
+      "mode": "auto",
+      "auto_actions": [
+        "certified_payroll_draft_corrections"
+      ],
+      "args": {
+        "payroll": "fixtures/payroll.csv",
+        "rates": "fixtures/rates.csv",
+        "label": "24-102 November",
+        "job": "24-102"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.id": "24-102 November",
+          "result.amount": 450
+        },
+        "contains": [
+          "Nothing was sent"
+        ],
+        "not_contains": [
+          "Casey Sample"
+        ]
+      }
+    },
+    {
+      "id": "policy-invented-tool",
+      "tool": "certified_payroll_pay_everything_now",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-file-outside-root",
+      "tool": "certified_payroll_check",
+      "args": {
+        "payroll": "../../../outside-the-root.csv",
+        "rates": "fixtures/rates.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside"
+        ]
+      }
+    },
+    {
+      "id": "policy-missing-argument-named",
+      "tool": "certified_payroll_check",
+      "args": {},
+      "expect": {
+        "status": "error",
+        "contains": [
+          "payroll"
+        ]
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reads",
+      "tool": "certified_payroll_check",
+      "mode": "review",
+      "args": {
+        "payroll": "fixtures/payroll.csv",
+        "rates": "fixtures/rates.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reports",
+      "tool": "certified_payroll_write_report",
+      "mode": "review",
+      "args": {
+        "payroll": "fixtures/payroll.csv",
+        "rates": "fixtures/rates.csv"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-blocks-draft",
+      "tool": "certified_payroll_draft_corrections",
+      "mode": "review",
+      "args": {
+        "payroll": "fixtures/payroll.csv",
+        "rates": "fixtures/rates.csv",
+        "label": "24-102 November",
+        "job": "24-102"
+      },
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-certified-payroll-request-send-one-click-in-auto",
+      "tool": "certified_payroll_request_send",
+      "mode": "auto",
+      "args": {
+        "draft": "fairbuild-out/drafts/example.md",
+        "draft_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expect": {
+        "status": "needs_approval"
+      }
+    },
+    {
+      "id": "policy-refuses-payroll-submit",
+      "tool": "payroll_submit",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-payroll-run",
+      "tool": "payroll_run",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-email-send",
+      "tool": "email_send",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "intl-de-check-totals",
+      "tool": "certified_payroll_check",
+      "args": {
+        "payroll": "fixtures/intl/de/payroll.csv",
+        "rates": "fixtures/intl/de/rates.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.lines": 8,
+          "result.workers": 5,
+          "result.weeks": 2,
+          "result.hours": 302,
+          "result.owed": 450,
+          "result.underpaid": 3,
+          "result.review": 4,
+          "result.ok": 1
+        }
+      },
+      "note": "German export of the same data (fixtures/intl/de); must match the English case \"check-totals\"."
+    },
+    {
+      "id": "intl-ja-check-totals",
+      "tool": "certified_payroll_check",
+      "args": {
+        "payroll": "fixtures/intl/ja/payroll.csv",
+        "rates": "fixtures/intl/ja/rates.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.lines": 8,
+          "result.workers": 5,
+          "result.weeks": 2,
+          "result.hours": 302,
+          "result.owed": 450,
+          "result.underpaid": 3,
+          "result.review": 4,
+          "result.ok": 1
+        }
+      },
+      "note": "Japanese export of the same data (fixtures/intl/ja); must match the English case \"check-totals\"."
+    }
+  ]
+}

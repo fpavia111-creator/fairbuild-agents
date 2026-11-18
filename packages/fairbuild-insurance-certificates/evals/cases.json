@@ -1,0 +1,353 @@
+{
+  "suite": "fairbuild-insurance-certificates",
+  "root": "..",
+  "data_note": "Fictional subcontractors, insurers and certificates in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "check-totals",
+      "tool": "coi_check",
+      "args": {
+        "certificates": "fixtures/certificates.csv",
+        "requirements": "fixtures/requirements.json",
+        "schedule": "fixtures/schedule.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.vendors": 6,
+          "result.certificates": 18,
+          "result.expired": 2,
+          "result.deficient": 2,
+          "result.expiring": 2,
+          "result.ok": 13,
+          "result.vendors_clear": 1
+        }
+      }
+    },
+    {
+      "id": "every-planted-issue",
+      "tool": "coi_check",
+      "args": {
+        "certificates": "fixtures/certificates.csv",
+        "requirements": "fixtures/requirements.json",
+        "schedule": "fixtures/schedule.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "contains": [
+          "coverage_missing",
+          "expired",
+          "limit_low",
+          "aggregate_low",
+          "no_additional_insured",
+          "lapse_during_work",
+          "expiring_soon"
+        ]
+      }
+    },
+    {
+      "id": "explain-roofing-limits",
+      "tool": "coi_explain",
+      "args": {
+        "certificates": "fixtures/certificates.csv",
+        "requirements": "fixtures/requirements.json",
+        "as_of": "2026-11-16",
+        "vendor": "Example Roofing LLC GL"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "each-occurrence limit is 500000; you require 1000000"
+        ],
+        "equals": {
+          "result.item.findings.0.amount": 500000
+        }
+      }
+    },
+    {
+      "id": "coverage-words-read",
+      "tool": "coi_explain",
+      "args": {
+        "certificates": "fixtures/certificates.csv",
+        "requirements": "fixtures/requirements.json",
+        "as_of": "2026-11-16",
+        "vendor": "Sample Mechanical Inc WC"
+      },
+      "expect": {
+        "equals": {
+          "result.item.coverage": "WC",
+          "result.item.status": "ok"
+        }
+      }
+    },
+    {
+      "id": "lapse-before-work-ends",
+      "tool": "coi_explain",
+      "args": {
+        "certificates": "fixtures/certificates.csv",
+        "requirements": "fixtures/requirements.json",
+        "schedule": "fixtures/schedule.csv",
+        "as_of": "2026-11-16",
+        "vendor": "Example Concrete LLC WC"
+      },
+      "expect": {
+        "contains": [
+          "WC ends 2027-01-01, before Example Concrete LLC finishes work on 2027-02-28 (24-101)"
+        ]
+      }
+    },
+    {
+      "id": "lighter-requirements",
+      "tool": "coi_check",
+      "args": {
+        "certificates": "fixtures/certificates.csv",
+        "requirements": "fixtures/requirements-gl-only.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "equals": {
+          "result.expired": 1,
+          "result.deficient": 0,
+          "result.expiring": 0,
+          "result.settings_used.expiring_days": 7
+        },
+        "not_contains": [
+          "coverage_missing",
+          "limit_low"
+        ]
+      }
+    },
+    {
+      "id": "requirements-schema-error",
+      "tool": "coi_check",
+      "args": {
+        "certificates": "fixtures/certificates.csv",
+        "requirements": "fixtures/requirements-typo.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "insurance_requirements"
+        ]
+      }
+    },
+    {
+      "id": "write-report-writes-files",
+      "tool": "coi_write_report",
+      "args": {
+        "certificates": "fixtures/certificates.csv",
+        "requirements": "fixtures/requirements.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "length": {
+          "result.files": 2
+        }
+      }
+    },
+    {
+      "id": "draft-request",
+      "tool": "coi_draft_request",
+      "mode": "auto",
+      "auto_actions": [
+        "coi_draft_request"
+      ],
+      "args": {
+        "certificates": "fixtures/certificates.csv",
+        "requirements": "fixtures/requirements.json",
+        "as_of": "2026-11-16",
+        "vendor": "Example Electric Inc"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.id": "Example Electric Inc",
+          "result.coverages": 2
+        },
+        "contains": [
+          "Nothing was sent"
+        ]
+      }
+    },
+    {
+      "id": "draft-request-clear-vendor",
+      "tool": "coi_draft_request",
+      "mode": "auto",
+      "auto_actions": [
+        "coi_draft_request"
+      ],
+      "args": {
+        "certificates": "fixtures/certificates.csv",
+        "requirements": "fixtures/requirements.json",
+        "as_of": "2026-11-16",
+        "vendor": "Sample Mechanical Inc"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "nothing to request"
+        ]
+      }
+    },
+    {
+      "id": "policy-invented-tool",
+      "tool": "coi_pay_everything_now",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-file-outside-root",
+      "tool": "coi_check",
+      "args": {
+        "certificates": "../../../outside-the-root.csv",
+        "requirements": "fixtures/requirements.json",
+        "schedule": "fixtures/schedule.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside"
+        ]
+      }
+    },
+    {
+      "id": "policy-missing-argument-named",
+      "tool": "coi_check",
+      "args": {},
+      "expect": {
+        "status": "error",
+        "contains": [
+          "certificates"
+        ]
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reads",
+      "tool": "coi_check",
+      "mode": "review",
+      "args": {
+        "certificates": "fixtures/certificates.csv",
+        "requirements": "fixtures/requirements.json",
+        "schedule": "fixtures/schedule.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reports",
+      "tool": "coi_write_report",
+      "mode": "review",
+      "args": {
+        "certificates": "fixtures/certificates.csv",
+        "requirements": "fixtures/requirements.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-blocks-draft",
+      "tool": "coi_draft_request",
+      "mode": "review",
+      "args": {
+        "certificates": "fixtures/certificates.csv",
+        "requirements": "fixtures/requirements.json",
+        "as_of": "2026-11-16",
+        "vendor": "Example Electric Inc"
+      },
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-coi-request-send-one-click-in-auto",
+      "tool": "coi_request_send",
+      "mode": "auto",
+      "args": {
+        "draft": "fairbuild-out/drafts/example.md",
+        "draft_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expect": {
+        "status": "needs_approval"
+      }
+    },
+    {
+      "id": "policy-refuses-vendor-block",
+      "tool": "vendor_block",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-insurer-contact",
+      "tool": "insurer_contact",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-email-send",
+      "tool": "email_send",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "intl-de-check-totals",
+      "tool": "coi_check",
+      "args": {
+        "certificates": "fixtures/intl/de/certificates.csv",
+        "requirements": "fixtures/requirements.json",
+        "schedule": "fixtures/intl/de/schedule.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.vendors": 6,
+          "result.certificates": 18,
+          "result.expired": 2,
+          "result.deficient": 2,
+          "result.expiring": 2,
+          "result.ok": 13,
+          "result.vendors_clear": 1
+        }
+      },
+      "note": "German export of the same data (fixtures/intl/de); must match the English case \"check-totals\"."
+    },
+    {
+      "id": "intl-ja-check-totals",
+      "tool": "coi_check",
+      "args": {
+        "certificates": "fixtures/intl/ja/certificates.csv",
+        "requirements": "fixtures/requirements.json",
+        "schedule": "fixtures/intl/ja/schedule.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.vendors": 6,
+          "result.certificates": 18,
+          "result.expired": 2,
+          "result.deficient": 2,
+          "result.expiring": 2,
+          "result.ok": 13,
+          "result.vendors_clear": 1
+        }
+      },
+      "note": "Japanese export of the same data (fixtures/intl/ja); must match the English case \"check-totals\"."
+    }
+  ]
+}

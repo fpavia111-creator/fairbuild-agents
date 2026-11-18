@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairbuild-permits": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairbuild-permits@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

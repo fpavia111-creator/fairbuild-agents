@@ -1,0 +1,58 @@
+{
+  "name": "fairbuild-three-way-match",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairbuild-three-way-match",
+  "description": "Fairbuild Three-Way Match: three-way match for construction: each AP invoice against its subcontract or PO and the work or delivery your project manager approved: invoices with no commitment, a different vendor or job, cumulative billing past the commitment or past what was approved, no receipt or approval yet, and retainage not withheld. Holds or clears each invoice for review and records one-click payment approvals. Never pays.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairbuild-three-way-match": "bin/fairbuild-three-way-match.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairbuild-three-way-match.js demo",
+    "eval": "node bin/fairbuild-three-way-match.js eval"
+  },
+  "dependencies": {
+    "fairbuild-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairbuild-agents.git",
+    "directory": "packages/fairbuild-three-way-match"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/fairbuild-three-way-match#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairbuild-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "construction",
+    "contractors",
+    "construction-accounting",
+    "fairbuild",
+    "three-way-match",
+    "ap-approval",
+    "invoice-matching"
+  ]
+}

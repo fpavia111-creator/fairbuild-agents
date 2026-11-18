@@ -60,7 +60,7 @@ main(manifest); // gives you: mcp | tools | call | demo | eval | approve | rejec
 ## Scaffold a new agent
 
 ```bash
-npx -y -p fairbuild-core fairbuild-new-agent iris-of-tests --dir packages
+npx -y -p fairbuild-core fairbuild-new-agent fairbuild-test-runs --dir packages
 ```
 
 The generated package passes `npm test`, `eval` and `npm pack --dry-run` as is. See `docs/build-an-agent.md` in the monorepo.
@@ -103,7 +103,7 @@ const KINDS = {
 const mem = memoryTools('acme', KINDS);   // acme_recall, acme_learn, acme_accept_learning, acme_retire_memory
 
 export const manifest = defineManifest({
-  name: 'acme-of-access', /* … */
+  name: 'fairbuild-example-job', /* … */
   memory: { prefix: 'acme', kinds: KINDS },
   tools: [
     { name: 'acme_review', kind: 'read', description: '…', handler: async (a, ctx) => {
@@ -262,7 +262,7 @@ A tool marked `tier: 'pro'` (optionally with a `feature` name) runs only with a 
 A key is `FAIRBUILD1.<payload>.<Ed25519 signature>` with licensee, plan, agents (`*` or package names), features, issue and expiry dates. It is checked offline against the public keys in `src/license-keys.js` (empty in this release, so nothing can be unlocked yet). There is no environment variable or config file that adds a trusted key.
 
 - Customer: `<pack> license install key.txt` (copies it to `.fairbuild/license.key`), `<pack> license status`, or set `FAIRBUILD_LICENSE` / `FAIRBUILD_LICENSE_FILE`. `fairbuild_info` shows the plan, expiry and which tools are unlocked, never the key.
-- Seller, on their own computer: `npx -p fairbuild-core fairbuild-license keygen --out ~/fairbuild-licence-keys`, paste the printed public key into `LICENSE_PUBLIC_KEYS`, release, then `fairbuild-license issue --key ~/fairbuild-licence-keys/private.pem --licensee "Customer" --plan pro --days 365 [--agents rhine-of-costcodes] --out customer.key` and `fairbuild-license verify customer.key --pubkey ~/fairbuild-licence-keys/public.pem`. Withdrawn licence ids go in `LICENSE_REVOKED_IDS` and take effect from the next release.
+- Seller, on their own computer: `npx -p fairbuild-core fairbuild-license keygen --out ~/fairbuild-licence-keys`, paste the printed public key into `LICENSE_PUBLIC_KEYS`, release, then `fairbuild-license issue --key ~/fairbuild-licence-keys/private.pem --licensee "Customer" --plan pro --days 365 [--agents fairbuild-job-cost] --out customer.key` and `fairbuild-license verify customer.key --pubkey ~/fairbuild-licence-keys/public.pem`. Withdrawn licence ids go in `LICENSE_REVOKED_IDS` and take effect from the next release.
 - `ctx.license` gives a handler `{ status, valid, plan, features, has(feature) }`.
 
 This is not copy protection: the packages are MIT-licensed source and anyone can remove the check. It draws a clear line for honest customers.
@@ -273,7 +273,7 @@ The manifest declares which host model a pack's prompts and evals target. An MCP
 
 ## Packs built on this core
 
-All 30 Fairbuild domain agents in the monorepo, from `brazos-of-backcharges` to `zambezi-of-permits`. Source: <https://github.com/fpavia111-creator/fairbuild-agents>.
+All 30 Fairbuild agents in the monorepo, from `fairbuild-backcharges` to `fairbuild-wip-schedule`, each named after what it does. Source: <https://github.com/fpavia111-creator/fairbuild-agents>.
 
 ## License
 

@@ -1,0 +1,58 @@
+{
+  "name": "fairbuild-insurance-certificates",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairbuild-insurance-certificates",
+  "description": "Fairbuild Insurance Certificates: subcontractor certificates of insurance against your requirements: required coverages missing, policies expired or expiring, limits below your minimums, missing additional insured, waiver of subrogation or primary and non-contributory wording, and policies that end before the sub's work does. Drafts certificate requests. Never contacts an insurer or blocks a vendor.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairbuild-insurance-certificates": "bin/fairbuild-insurance-certificates.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairbuild-insurance-certificates.js demo",
+    "eval": "node bin/fairbuild-insurance-certificates.js eval"
+  },
+  "dependencies": {
+    "fairbuild-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairbuild-agents.git",
+    "directory": "packages/fairbuild-insurance-certificates"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/fairbuild-insurance-certificates#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairbuild-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "construction",
+    "contractors",
+    "construction-accounting",
+    "fairbuild",
+    "certificate-of-insurance",
+    "coi",
+    "subcontractor-insurance"
+  ]
+}

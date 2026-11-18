@@ -1,0 +1,343 @@
+{
+  "suite": "fairbuild-punch-lists",
+  "root": "..",
+  "data_note": "Fictional punch items and subcontractor balances in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "check-totals",
+      "tool": "punch_list_check",
+      "args": {
+        "punch": "fixtures/punch.csv",
+        "payables": "fixtures/payables.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.items_total": 8,
+          "result.open": 6,
+          "result.closed": 2,
+          "result.past_due": 3,
+          "result.risk": 1,
+          "result.review": 1,
+          "result.by_job.24-101.open": 3
+        }
+      }
+    },
+    {
+      "id": "every-planted-issue",
+      "tool": "punch_list_check",
+      "args": {
+        "punch": "fixtures/punch.csv",
+        "payables": "fixtures/payables.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "contains": [
+          "sub_paid_in_full",
+          "past_due",
+          "reopened",
+          "open_too_long",
+          "no_assignee"
+        ]
+      }
+    },
+    {
+      "id": "explain-paid-in-full",
+      "tool": "punch_list_explain",
+      "args": {
+        "punch": "fixtures/punch.csv",
+        "payables": "fixtures/payables.csv",
+        "as_of": "2026-11-16",
+        "item": "P-5"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "Example Roofing LLC has been paid in full with no retainage left"
+        ],
+        "equals": {
+          "result.item.status": "risk"
+        }
+      }
+    },
+    {
+      "id": "without-balances",
+      "tool": "punch_list_check",
+      "args": {
+        "punch": "fixtures/punch.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "equals": {
+          "result.risk": 0,
+          "result.past_due": 3
+        },
+        "not_contains": [
+          "sub_paid_in_full"
+        ]
+      }
+    },
+    {
+      "id": "longer-aging",
+      "tool": "punch_list_check",
+      "args": {
+        "punch": "fixtures/punch.csv",
+        "settings": "fixtures/settings-90.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "not_contains": [
+          "open_too_long"
+        ]
+      }
+    },
+    {
+      "id": "procore-punch-export",
+      "tool": "punch_list_check",
+      "args": {
+        "punch": "fixtures/exports/procore-punch.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "equals": {
+          "result.items_total": 2,
+          "result.past_due": 1,
+          "result.open": 2
+        },
+        "contains": [
+          "procore_punch_list"
+        ]
+      }
+    },
+    {
+      "id": "settings-typo-is-named",
+      "tool": "punch_list_check",
+      "args": {
+        "punch": "fixtures/punch.csv",
+        "settings": "fixtures/settings-typo.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "punch_settings"
+        ]
+      }
+    },
+    {
+      "id": "write-report-writes-files",
+      "tool": "punch_list_write_report",
+      "args": {
+        "punch": "fixtures/punch.csv",
+        "payables": "fixtures/payables.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "length": {
+          "result.files": 2
+        }
+      }
+    },
+    {
+      "id": "draft-notice",
+      "tool": "punch_list_draft_notice",
+      "mode": "auto",
+      "auto_actions": [
+        "punch_list_draft_notice"
+      ],
+      "args": {
+        "punch": "fixtures/punch.csv",
+        "as_of": "2026-11-16",
+        "vendor": "Example Roofing LLC"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.items": 1
+        },
+        "contains": [
+          "Nothing was sent"
+        ]
+      }
+    },
+    {
+      "id": "draft-notice-nothing-open",
+      "tool": "punch_list_draft_notice",
+      "mode": "auto",
+      "auto_actions": [
+        "punch_list_draft_notice"
+      ],
+      "args": {
+        "punch": "fixtures/punch.csv",
+        "as_of": "2026-11-16",
+        "vendor": "Example Door Co"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "no open punch items"
+        ]
+      }
+    },
+    {
+      "id": "policy-invented-tool",
+      "tool": "punch_list_pay_everything_now",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-file-outside-root",
+      "tool": "punch_list_check",
+      "args": {
+        "punch": "../../../outside-the-root.csv",
+        "payables": "fixtures/payables.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside"
+        ]
+      }
+    },
+    {
+      "id": "policy-missing-argument-named",
+      "tool": "punch_list_check",
+      "args": {},
+      "expect": {
+        "status": "error",
+        "contains": [
+          "punch"
+        ]
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reads",
+      "tool": "punch_list_check",
+      "mode": "review",
+      "args": {
+        "punch": "fixtures/punch.csv",
+        "payables": "fixtures/payables.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reports",
+      "tool": "punch_list_write_report",
+      "mode": "review",
+      "args": {
+        "punch": "fixtures/punch.csv",
+        "payables": "fixtures/payables.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-blocks-draft",
+      "tool": "punch_list_draft_notice",
+      "mode": "review",
+      "args": {
+        "punch": "fixtures/punch.csv",
+        "as_of": "2026-11-16",
+        "vendor": "Example Roofing LLC"
+      },
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-punch-list-request-send-one-click-in-auto",
+      "tool": "punch_list_request_send",
+      "mode": "auto",
+      "args": {
+        "draft": "fairbuild-out/drafts/example.md",
+        "draft_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expect": {
+        "status": "needs_approval"
+      }
+    },
+    {
+      "id": "policy-refuses-punch-close",
+      "tool": "punch_close",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-backcharge-post",
+      "tool": "backcharge_post",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-email-send",
+      "tool": "email_send",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "intl-de-check-totals",
+      "tool": "punch_list_check",
+      "args": {
+        "punch": "fixtures/intl/de/punch.csv",
+        "payables": "fixtures/intl/de/payables.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.items_total": 8,
+          "result.open": 6,
+          "result.closed": 2,
+          "result.past_due": 3,
+          "result.risk": 1,
+          "result.review": 1,
+          "result.by_job.24-101.open": 3
+        }
+      },
+      "note": "German export of the same data (fixtures/intl/de); must match the English case \"check-totals\"."
+    },
+    {
+      "id": "intl-ja-check-totals",
+      "tool": "punch_list_check",
+      "args": {
+        "punch": "fixtures/intl/ja/punch.csv",
+        "payables": "fixtures/intl/ja/payables.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.items_total": 8,
+          "result.open": 6,
+          "result.closed": 2,
+          "result.past_due": 3,
+          "result.risk": 1,
+          "result.review": 1,
+          "result.by_job.24-101.open": 3
+        }
+      },
+      "note": "Japanese export of the same data (fixtures/intl/ja); must match the English case \"check-totals\"."
+    }
+  ]
+}

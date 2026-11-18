@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairbuild-backlog": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairbuild-backlog@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

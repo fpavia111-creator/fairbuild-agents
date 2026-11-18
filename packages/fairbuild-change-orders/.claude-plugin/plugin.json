@@ -1,0 +1,21 @@
+{
+  "name": "fairbuild-change-orders",
+  "version": "0.1.0",
+  "description": "Fairbuild Change Orders: the change order log by job: pending change orders waiting too long or with no price, approved change orders not yet billed, billing on unapproved or past the approved amount, change orders priced below cost, rejected changes that left cost behind, and numbers entered twice. Drafts owner follow-ups. Never approves or bills a change order.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/fairbuild-change-orders#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "construction",
+    "contractors",
+    "construction-accounting",
+    "fairbuild",
+    "change-orders",
+    "pco",
+    "unbilled"
+  ]
+}

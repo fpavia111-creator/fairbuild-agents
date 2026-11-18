@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairbuild-backcharges": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairbuild-backcharges@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

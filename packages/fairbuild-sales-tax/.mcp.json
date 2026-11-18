@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairbuild-sales-tax": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairbuild-sales-tax@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}
