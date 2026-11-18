@@ -4,7 +4,7 @@
 
 ## Scope
 
-30 agents (river names) and `fairbuild-core`, version 0.1.0 each, in six areas:
+30 agents, each named after what it does (`fairbuild-<job words>`), and `fairbuild-core`, version 0.1.0 each, in six areas:
 
 | Area | Agents |
 |---|---|
@@ -17,7 +17,7 @@
 
 They read files contractors already export: Procore (budget, commitments, change orders, submittals, punch list, inspections), Sage 100 and 300 Contractor (job cost, AP invoices, timecards), Foundation (job cost), Vista (job cost estimates and detail), QuickBooks (job estimates against actuals), Buildertrend (purchase orders, bills, change orders), ServiceTitan (jobs, timesheets), the WH-347 certified payroll layout, and plain spreadsheets.
 
-Every agent is read and report only. Nothing pays, files or releases a lien, submits or approves a pay application, posts to the ledger, runs or submits payroll, requests a bond or sends a message. Each agent writes one kind of draft (memo, letter, notice, request, journal, summary) marked DRAFT; sending it goes through a one-click request tool tied to the draft's hash. Five agents also record one-click money approvals for accounts payable to act on (`nile_request_payment`, `yukon_request_payment`, `yangtze_request_approval`, `brazos_request_deduction`, `platte_request_release`).
+Every agent is read and report only. Nothing pays, files or releases a lien, submits or approves a pay application, posts to the ledger, runs or submits payroll, requests a bond or sends a message. Each agent writes one kind of draft (memo, letter, notice, request, journal, summary) marked DRAFT; sending it goes through a one-click request tool tied to the draft's hash. Five agents also record one-click money approvals for accounts payable to act on (`retainage_request_payment`, `fringes_request_payment`, `three_way_match_request_approval`, `backcharges_request_deduction`, `payment_release_request_release`).
 
 ## The ver 6 checklist
 
