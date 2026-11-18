@@ -27,10 +27,10 @@ What `certified_payroll_check` flags, each with the first example it finds in th
 |---|---|
 | `underpaid` | Paid 30 + 12.5 fringe per hour; the determination for Roofer is 31.5 + 12.5 (overtime 47.25 + 12.5). Short 69 for 40 straight and 4 overtime hour(s). |
 | `ot_not_paid` | 44 straight-time hours in one week: 4 hour(s) past 40 are overtime, 63 short at 1.5 times the base rate. |
-| `missing_worker_id` | No identifying number for PERSON-c96f50f8. The report needs the worker's id or the last four digits of the SSN. |
+| `missing_worker_id` | No identifying number for PERSON-638f272c. The report needs the worker's id or the last four digits of the SSN. |
 | `no_rate` | "Sheet Metal Worker" is not on the wage determination you supplied. Use the determination's classification, or add a conformance rate. |
-| `full_ssn_on_report` | The worker id for PERSON-fac6e7c7 looks like a full Social Security number. Use only the last four digits or an employee id on a certified payroll. |
-| `duplicate_line` | PERSON-29828028 appears 2 times for the week ending 2026-11-14 in the same classification. Only one line is counted; correct the payroll. |
+| `full_ssn_on_report` | The worker id for PERSON-fd9ab9af looks like a full Social Security number. Use only the last four digits or an employee id on a certified payroll. |
+| `duplicate_line` | PERSON-241bd4c9 appears 2 times for the week ending 2026-11-14 in the same classification. Only one line is counted; correct the payroll. |
 
 <!-- generated:start -->
 
@@ -44,18 +44,18 @@ Fairbuild Certified Payroll demo (fictional workers and rates; names are masked 
 ▶ Check two weeks of certified payroll against the determination
   status: executed  decision: allow
   8 payroll line(s), 5 worker(s), 2 week(s), 302 hour(s): 3 line(s) paid below the determination (450 short), 4 to review.
-    2026-11-07 PERSON-156073d1  Roofer              short     69  underpaid underpaid
-    2026-11-07 PERSON-6e639809  Laborer Group 1     short    318  underpaid underpaid
-    2026-11-14 PERSON-014b0f40  Roofer              short     63  underpaid ot_not_paid
-    2026-11-07 PERSON-ae147831  Roofer              short      0  review    missing_worker_id
-    2026-11-14 PERSON-156073d1  Sheet Metal Worker  short      0  review    no_rate
-    2026-11-14 PERSON-6e639809  Laborer Group 1     short      0  review    full_ssn_on_report
-    2026-11-14 PERSON-2ef91788  Roofer              short      0  review    duplicate_line
-    2026-11-07 PERSON-014b0f40  Roofer              short      0  ok        
+    2026-11-07 PERSON-64c318d7  Roofer              short     69  underpaid underpaid
+    2026-11-07 PERSON-fd9ab9af  Laborer Group 1     short    318  underpaid underpaid
+    2026-11-14 PERSON-d1953839  Roofer              short     63  underpaid ot_not_paid
+    2026-11-07 PERSON-638f272c  Roofer              short      0  review    missing_worker_id
+    2026-11-14 PERSON-64c318d7  Sheet Metal Worker  short      0  review    no_rate
+    2026-11-14 PERSON-fd9ab9af  Laborer Group 1     short      0  review    full_ssn_on_report
+    2026-11-14 PERSON-241bd4c9  Roofer              short      0  review    duplicate_line
+    2026-11-07 PERSON-d1953839  Roofer              short      0  ok        
 
 ▶ Explain one line by its masked key
   status: executed  decision: allow
-  PERSON-156073d1 week ending 2026-11-07 (Roofer): underpaid. 40 straight + 4 overtime hour(s) at 30 + 12.5; rate 31.5 + 12.5; short 69. Paid 30 + 12.5 fringe per hour; the determination for Roofer is 31.5 + 12.5 (overtime 47.25 + 12.5). Short 69 for 40 straight and 4 overtime hour(s).
+  PERSON-64c318d7 week ending 2026-11-07 (Roofer): underpaid. 40 straight + 4 overtime hour(s) at 30 + 12.5; rate 31.5 + 12.5; short 69. Paid 30 + 12.5 fringe per hour; the determination for Roofer is 31.5 + 12.5 (overtime 47.25 + 12.5). Short 69 for 40 straight and 4 overtime hour(s).
 
 ▶ Write the worklist (the files keep the real names)
   status: executed  decision: allow

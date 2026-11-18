@@ -6,7 +6,7 @@ import { readdirSync, readFileSync, writeFileSync, mkdirSync, mkdtempSync, cpSyn
 import { join, dirname } from 'node:path';
 import { tmpdir } from 'node:os';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { AgentRuntime, htmlPage, escapeHtml } from '../packages/fairbuild-core/src/index.js';
+import { AgentRuntime, htmlPage, escapeHtml, DEMO_PERSONAL_KEY } from '../packages/fairbuild-core/src/index.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PK = join(ROOT, 'packages'); const OUT = join(ROOT, 'sample-reports');
@@ -19,7 +19,7 @@ for (const n of readdirSync(PK).filter((x) => /^fairbuild-(?!core$)/.test(x)).so
   const c = cases.find((x) => x.tool === `${prefix}_write_report` && !x.mode && !x.id.startsWith('policy-'));
   if (!c) { console.error(`${n}: no write_report eval case to take arguments from`); process.exitCode = 1; continue; }
   const root = mkdtempSync(join(tmpdir(), `${n}-sample-`)); cpSync(join(PK, n), root, { recursive: true, filter: (s) => !/node_modules|[\/]\.fairbuild|fairbuild-out/.test(s.slice(join(PK, n).length)) });
-  const r = await new AgentRuntime(manifest, { root, audit: false, memory: false }).call(`${prefix}_write_report`, c.args);
+  const r = await new AgentRuntime(manifest, { root, audit: false, memory: false, personalKey: DEMO_PERSONAL_KEY }).call(`${prefix}_write_report`, c.args);
   if (r.status !== 'executed') { console.error(`${n}: ${r.reason || r.error}`); process.exitCode = 1; rmSync(root, { recursive: true, force: true }); continue; }
   const short = n.replace(/^fairbuild-/, '');
   for (const f of r.result.files) { const ext = f.split('.').pop(); writeFileSync(join(OUT, `${short}.${ext}`), readFileSync(join(root, f))); }

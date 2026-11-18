@@ -8,7 +8,7 @@ import { readdirSync, readFileSync, writeFileSync, existsSync, mkdtempSync, cpSy
 import { join, dirname } from 'node:path';
 import { tmpdir } from 'node:os';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { AgentRuntime, LIMITS } from '../packages/fairbuild-core/src/index.js';
+import { AgentRuntime, LIMITS, DEMO_PERSONAL_KEY } from '../packages/fairbuild-core/src/index.js';
 
 const PK = join(dirname(fileURLToPath(import.meta.url)), '..', 'packages');
 const force = process.argv.includes('--force');
@@ -38,7 +38,7 @@ for (const n of readdirSync(PK).filter((x) => /^fairbuild-(?!core$)/.test(x) && 
   const c = runs[0];
   const root = mkdtempSync(join(tmpdir(), `${n}-readme-`));
   cpSync(dir, root, { recursive: true, filter: (s) => !/node_modules|[\\/]\.fairbuild|fairbuild-out/.test(s.slice(dir.length)) });
-  const rt = new AgentRuntime(m, { root, audit: false, memory: false });
+  const rt = new AgentRuntime(m, { root, audit: false, memory: false, personalKey: DEMO_PERSONAL_KEY });
   const codes = new Map();
   for (const x of runs) {
     const r = await rt.call(check.name, x.args);
