@@ -1,0 +1,410 @@
+{
+  "suite": "yukon-of-fringes",
+  "root": "..",
+  "data_note": "Fictional locals, funds, workers and hours in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "check-totals",
+      "tool": "yukon_check",
+      "args": {
+        "hours": "fixtures/hours.csv",
+        "rates": "fixtures/rates.csv",
+        "remittances": "fixtures/remittances.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-20"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.remittances": 6,
+          "result.unions": 3,
+          "result.due": 12311,
+          "result.remitted": 11861,
+          "result.short": 500,
+          "result.over": 50,
+          "result.short_count": 2,
+          "result.review": 3,
+          "result.ok": 1
+        }
+      }
+    },
+    {
+      "id": "every-planted-issue",
+      "tool": "yukon_check",
+      "args": {
+        "hours": "fixtures/hours.csv",
+        "rates": "fixtures/rates.csv",
+        "remittances": "fixtures/remittances.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-20"
+      },
+      "expect": {
+        "contains": [
+          "not_remitted",
+          "under_remitted",
+          "no_rate",
+          "hours_mismatch",
+          "over_remitted",
+          "late"
+        ]
+      }
+    },
+    {
+      "id": "explain-pension",
+      "tool": "yukon_explain",
+      "args": {
+        "hours": "fixtures/hours.csv",
+        "rates": "fixtures/rates.csv",
+        "remittances": "fixtures/remittances.csv",
+        "as_of": "2026-11-20",
+        "fund_month": "Local 100 Pension 2026-10"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "Remitted 3000; 500 hours at 6.25 is 3125",
+          "The remittance reports 480 hours; payroll shows 500"
+        ],
+        "equals": {
+          "result.item.workers": 3
+        }
+      }
+    },
+    {
+      "id": "worker-names-masked",
+      "tool": "yukon_check",
+      "args": {
+        "hours": "fixtures/hours.csv",
+        "rates": "fixtures/rates.csv",
+        "remittances": "fixtures/remittances.csv",
+        "as_of": "2026-11-20"
+      },
+      "expect": {
+        "not_contains": [
+          "Jordan Example",
+          "Riley Test"
+        ]
+      }
+    },
+    {
+      "id": "before-due-date",
+      "tool": "yukon_check",
+      "args": {
+        "hours": "fixtures/hours.csv",
+        "rates": "fixtures/rates.csv",
+        "remittances": "fixtures/remittances.csv",
+        "as_of": "2026-11-14"
+      },
+      "expect": {
+        "equals": {
+          "result.not_due": 1,
+          "result.short_count": 1
+        },
+        "not_contains": [
+          "not_remitted"
+        ]
+      }
+    },
+    {
+      "id": "later-due-day",
+      "tool": "yukon_check",
+      "args": {
+        "hours": "fixtures/hours.csv",
+        "rates": "fixtures/rates.csv",
+        "remittances": "fixtures/remittances.csv",
+        "settings": "fixtures/settings-20.json",
+        "as_of": "2026-11-25"
+      },
+      "expect": {
+        "not_contains": [
+          "late"
+        ],
+        "equals": {
+          "result.settings_used.due_day": 20
+        }
+      }
+    },
+    {
+      "id": "settings-typo-is-named",
+      "tool": "yukon_check",
+      "args": {
+        "hours": "fixtures/hours.csv",
+        "rates": "fixtures/rates.csv",
+        "remittances": "fixtures/remittances.csv",
+        "settings": "fixtures/settings-typo.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "fringe_settings"
+        ]
+      }
+    },
+    {
+      "id": "write-report-writes-files",
+      "tool": "yukon_write_report",
+      "args": {
+        "hours": "fixtures/hours.csv",
+        "rates": "fixtures/rates.csv",
+        "remittances": "fixtures/remittances.csv",
+        "as_of": "2026-11-20"
+      },
+      "expect": {
+        "status": "executed",
+        "length": {
+          "result.files": 2
+        }
+      }
+    },
+    {
+      "id": "draft-letter",
+      "tool": "yukon_draft_letter",
+      "mode": "auto",
+      "auto_actions": [
+        "yukon_draft_letter"
+      ],
+      "args": {
+        "hours": "fixtures/hours.csv",
+        "rates": "fixtures/rates.csv",
+        "remittances": "fixtures/remittances.csv",
+        "as_of": "2026-11-20",
+        "union": "Local 100"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.id": "Local 100",
+          "result.fund_months": 2
+        },
+        "contains": [
+          "Nothing was sent"
+        ]
+      }
+    },
+    {
+      "id": "payment-approval-recorded",
+      "tool": "yukon_request_payment",
+      "approve": "Dana Example",
+      "args": {
+        "hours": "fixtures/hours.csv",
+        "rates": "fixtures/rates.csv",
+        "remittances": "fixtures/remittances.csv",
+        "as_of": "2026-11-20",
+        "fund_month": "Local 100 Training 2026-10",
+        "amount": 375
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.record.approved_amount": 375
+        },
+        "contains": [
+          "Nothing was paid"
+        ]
+      }
+    },
+    {
+      "id": "payment-over-shortfall-refused",
+      "tool": "yukon_request_payment",
+      "approve": "Dana Example",
+      "args": {
+        "hours": "fixtures/hours.csv",
+        "rates": "fixtures/rates.csv",
+        "remittances": "fixtures/remittances.csv",
+        "as_of": "2026-11-20",
+        "fund_month": "Local 100 Pension 2026-10",
+        "amount": 500
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "more than the 125 shortfall"
+        ]
+      }
+    },
+    {
+      "id": "policy-invented-tool",
+      "tool": "yukon_pay_everything_now",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-file-outside-root",
+      "tool": "yukon_check",
+      "args": {
+        "hours": "../../../outside-the-root.csv",
+        "rates": "fixtures/rates.csv",
+        "remittances": "fixtures/remittances.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-20"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside"
+        ]
+      }
+    },
+    {
+      "id": "policy-missing-argument-named",
+      "tool": "yukon_check",
+      "args": {},
+      "expect": {
+        "status": "error",
+        "contains": [
+          "hours"
+        ]
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reads",
+      "tool": "yukon_check",
+      "mode": "review",
+      "args": {
+        "hours": "fixtures/hours.csv",
+        "rates": "fixtures/rates.csv",
+        "remittances": "fixtures/remittances.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-20"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reports",
+      "tool": "yukon_write_report",
+      "mode": "review",
+      "args": {
+        "hours": "fixtures/hours.csv",
+        "rates": "fixtures/rates.csv",
+        "remittances": "fixtures/remittances.csv",
+        "as_of": "2026-11-20"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-blocks-draft",
+      "tool": "yukon_draft_letter",
+      "mode": "review",
+      "args": {
+        "hours": "fixtures/hours.csv",
+        "rates": "fixtures/rates.csv",
+        "remittances": "fixtures/remittances.csv",
+        "as_of": "2026-11-20",
+        "union": "Local 100"
+      },
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-yukon-request-send-one-click-in-auto",
+      "tool": "yukon_request_send",
+      "mode": "auto",
+      "args": {
+        "draft": "fairbuild-out/drafts/example.md",
+        "draft_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expect": {
+        "status": "needs_approval"
+      }
+    },
+    {
+      "id": "policy-yukon-request-payment-one-click-in-auto",
+      "tool": "yukon_request_payment",
+      "mode": "auto",
+      "args": {
+        "hours": "fixtures/hours.csv",
+        "rates": "fixtures/rates.csv",
+        "remittances": "fixtures/remittances.csv",
+        "as_of": "2026-11-20",
+        "fund_month": "Local 100 Training 2026-10",
+        "amount": 375
+      },
+      "expect": {
+        "status": "needs_approval"
+      }
+    },
+    {
+      "id": "policy-refuses-fund-portal-submit",
+      "tool": "fund_portal_submit",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-ach-pay",
+      "tool": "ach_pay",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-email-send",
+      "tool": "email_send",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "intl-de-check-totals",
+      "tool": "yukon_check",
+      "args": {
+        "hours": "fixtures/intl/de/hours.csv",
+        "rates": "fixtures/intl/de/rates.csv",
+        "remittances": "fixtures/intl/de/remittances.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-20"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.remittances": 6,
+          "result.unions": 3,
+          "result.due": 12311,
+          "result.remitted": 11861,
+          "result.short": 500,
+          "result.over": 50,
+          "result.short_count": 2,
+          "result.review": 3,
+          "result.ok": 1
+        }
+      },
+      "note": "German export of the same data (fixtures/intl/de); must match the English case \"check-totals\"."
+    },
+    {
+      "id": "intl-ja-check-totals",
+      "tool": "yukon_check",
+      "args": {
+        "hours": "fixtures/intl/ja/hours.csv",
+        "rates": "fixtures/intl/ja/rates.csv",
+        "remittances": "fixtures/intl/ja/remittances.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-20"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.remittances": 6,
+          "result.unions": 3,
+          "result.due": 12311,
+          "result.remitted": 11861,
+          "result.short": 500,
+          "result.over": 50,
+          "result.short_count": 2,
+          "result.review": 3,
+          "result.ok": 1
+        }
+      },
+      "note": "Japanese export of the same data (fixtures/intl/ja); must match the English case \"check-totals\"."
+    }
+  ]
+}

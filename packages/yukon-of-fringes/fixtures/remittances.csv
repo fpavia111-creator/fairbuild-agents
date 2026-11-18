@@ -1,0 +1,5 @@
+union,union_fund,month,hours_reported,amount,remitted_date
+Local 100,Health and Welfare,2026-10,500,4750,2026-11-12
+Local 100,Pension,2026-10,480,3000,2026-11-12
+Local 200,Health and Welfare,2026-10,310,2511,2026-11-18
+Local 200,Pension,2026-10,310,1600,2026-11-10

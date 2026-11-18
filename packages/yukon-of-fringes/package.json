@@ -1,0 +1,56 @@
+{
+  "name": "yukon-of-fringes",
+  "version": "0.1.0",
+  "description": "Yukon of Fringes: union fringe benefit remittances by local, fund and month against the hours your payroll shows and the contribution rates you supply: funds paid short or not at all, paid over, paid late, hours reported that do not match payroll, and hours for a local with no rates. Drafts fund letters and records one-click approvals to pay a shortfall. Never pays a fund.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "yukon-of-fringes": "bin/yukon-of-fringes.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/yukon-of-fringes.js demo",
+    "eval": "node bin/yukon-of-fringes.js eval"
+  },
+  "dependencies": {
+    "fairbuild-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairbuild-agents.git",
+    "directory": "packages/yukon-of-fringes"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/yukon-of-fringes#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairbuild-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "construction",
+    "contractors",
+    "construction-accounting",
+    "fairbuild",
+    "union-fringe",
+    "fringe-benefits",
+    "union-remittance"
+  ]
+}
