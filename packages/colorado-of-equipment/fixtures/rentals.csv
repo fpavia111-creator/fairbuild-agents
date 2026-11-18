@@ -1,0 +1,7 @@
+equipment_id,description,vendor,job,invoice_number,period_from,period_to,off_rent_date,amount,day_rate,week_rate,month_rate
+EQ-R100,Excavator 20t,Sample Equipment Rentals,24-102,RI-9001,2026-10-01,2026-10-28,,6400,450,1600,4800
+EQ-R101,Scissor lift 26ft,Example Lift Rentals,24-101,RI-9002,2026-10-15,2026-11-11,2026-11-01,1400,120,350,1500
+EQ-R102,Light tower,Sample Equipment Rentals,24-101,RI-9003,2026-10-01,2026-10-28,,600,60,150,600
+EQ-R103,Plate compactor,Example Lift Rentals,24-102,RI-9004,2026-11-01,2026-11-14,,700,90,350,900
+EQ-R103,Plate compactor,Example Lift Rentals,24-102,RI-9005,2026-11-10,2026-11-23,,700,90,350,900
+EQ-R104,Skid steer,Sample Equipment Rentals,,RI-9006,2026-11-01,2026-11-07,,400,120,400,1100

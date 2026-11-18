@@ -1,0 +1,56 @@
+{
+  "name": "colorado-of-equipment",
+  "version": "0.1.0",
+  "description": "Colorado of Equipment: equipment rental invoices against the agreed day, week and month rates, the off-rent date and the hours the machine was used: billed above the cheapest rate combination, billed after it was called off, the same days billed twice, rentals sitting idle, and rentals with no job. Drafts credit requests. Never calls a rental off or pays.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "colorado-of-equipment": "bin/colorado-of-equipment.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/colorado-of-equipment.js demo",
+    "eval": "node bin/colorado-of-equipment.js eval"
+  },
+  "dependencies": {
+    "fairbuild-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairbuild-agents.git",
+    "directory": "packages/colorado-of-equipment"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/colorado-of-equipment#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairbuild-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "construction",
+    "contractors",
+    "construction-accounting",
+    "fairbuild",
+    "equipment-rental",
+    "equipment-costs",
+    "rental-invoices"
+  ]
+}
