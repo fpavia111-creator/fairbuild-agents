@@ -1,0 +1,14 @@
+job,item,status,due_date,received_date
+23-090,Final lien waivers,Received,2026-09-15,2026-09-10
+23-090,Warranties,Received,2026-09-15,2026-09-12
+23-090,O and M manuals,Pending,2026-09-15,
+23-090,As-built drawings,Rejected,2026-09-30,2026-09-28
+23-090,Punch list closed,Complete,2026-10-01,2026-10-01
+23-090,Certificate of occupancy,Received,2026-08-20,2026-08-20
+23-095,Final lien waivers,Received,2026-07-31,2026-07-20
+23-095,Warranties,Received,2026-07-31,2026-07-22
+23-095,O&M manuals,Received,2026-07-31,2026-07-22
+23-095,As-built drawings,Approved,2026-07-31,2026-07-25
+23-095,Punch list closed,Complete,2026-07-15,2026-07-14
+23-095,Certificate of occupancy,Received,2026-07-01,2026-07-01
+23-095,Final pay application,Approved,2026-08-15,2026-08-10

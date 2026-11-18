@@ -1,0 +1,5 @@
+{
+  "required": ["Final lien waivers", "Warranties", "O&M manuals", "As-built drawings", "Punch list closed", "Certificate of occupancy", "Final pay application"],
+  "grace_days": 30,
+  "item_aliases": { "O and M manuals": "O&M manuals" }
+}
