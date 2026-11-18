@@ -68,6 +68,25 @@
       }
     },
     {
+      "id": "explain-underpaid-line",
+      "tool": "hudson_explain",
+      "args": {
+        "payroll": "fixtures/payroll.csv",
+        "rates": "fixtures/rates.csv",
+        "worker": "2026-11-07 Casey Sample"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.item.owed": 69,
+          "result.item.status": "underpaid"
+        },
+        "not_contains": [
+          "Casey Sample"
+        ]
+      }
+    },
+    {
       "id": "overtime-short",
       "tool": "hudson_check",
       "args": {
