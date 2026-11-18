@@ -1,0 +1,5 @@
+permit_number,job,type,jurisdiction,issued,expires,status
+BP-2026-0141,24-101,Building,Example City,2026-05-01,2027-05-01,Active
+EP-2026-0333,24-101,Electrical,Example City,2026-06-01,2026-12-01,Active
+RP-2026-0090,24-102,Roofing,Sample County,2026-04-15,2026-10-15,Active
+PP-2026-0212,24-102,Plumbing,Sample County,2026-05-10,2027-05-10,Active

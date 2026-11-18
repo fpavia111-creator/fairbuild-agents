@@ -1,0 +1,5 @@
+Genehmigung;Projekt;Typ;Steuergebiet;Datum;Ablaufdatum;Zustand
+BP-2026-0141;24-101;Building;Example City;01.05.2026;01.05.2027;Active
+EP-2026-0333;24-101;Electrical;Example City;01.06.2026;01.12.2026;Active
+RP-2026-0090;24-102;Roofing;Sample County;15.04.2026;15.10.2026;Active
+PP-2026-0212;24-102;Plumbing;Sample County;10.05.2026;10.05.2027;Active
