@@ -1,0 +1,10 @@
+item,description,scheduled_value,previous,this_period,stored_materials,completed_stored,percent,balance,retainage
+1,General conditions,48000,24000,4800,0,28800,60.0,19200,2880
+2,Cast-in-place concrete,128000,80000,16000,0,96000,75.0,32000,9600
+3,Rough carpentry,22000,18000,3000,0,21000,95.45,1000,2100
+4,Drywall and framing,64000,0,9000,9000,19000,29.69,45000,1900
+5,Electrical,92000,30000,15000,0,45000,48.91,47000,4500
+6,Doors and hardware,18000,6000,0,14000,20000,111.11,-2000,2000
+7,Painting,30000,6000,6000,0,12000,40.0,18000,900
+8,Change order CO-002 lighting,8000,0,3000,0,3000,37.5,5000,300
+9,Sitework,40000,12000,0,0,12000,30.0,28000,1200

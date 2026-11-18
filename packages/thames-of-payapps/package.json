@@ -1,0 +1,57 @@
+{
+  "name": "thames-of-payapps",
+  "version": "0.1.0",
+  "description": "Thames of Pay Apps: checks the arithmetic of a pay application in the G702/G703 layout before it goes out or before you approve a subcontractor's: each line's completed and stored total, percent and balance, retainage at your rates, lines billed past their scheduled value, work from previous applications that does not match the last one, and the summary page totals down to the payment due. Never submits or approves a pay application.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "thames-of-payapps": "bin/thames-of-payapps.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/thames-of-payapps.js demo",
+    "eval": "node bin/thames-of-payapps.js eval"
+  },
+  "dependencies": {
+    "fairbuild-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairbuild-agents.git",
+    "directory": "packages/thames-of-payapps"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/thames-of-payapps#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairbuild-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "construction",
+    "contractors",
+    "construction-accounting",
+    "fairbuild",
+    "pay-application",
+    "g702",
+    "g703",
+    "progress-billing"
+  ]
+}

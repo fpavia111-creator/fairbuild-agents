@@ -1,0 +1,14 @@
+{
+  "job": "24-101",
+  "application": 7,
+  "period_to": "2026-10-31",
+  "original_contract_sum": 442000,
+  "net_change_orders": 8000,
+  "contract_sum_to_date": 450000,
+  "total_completed_stored": 256800,
+  "total_retainage": 25380,
+  "total_earned_less_retainage": 231420,
+  "less_previous_certificates": 160200,
+  "current_payment_due": 72220,
+  "balance_to_finish_incl_retainage": 218580
+}
