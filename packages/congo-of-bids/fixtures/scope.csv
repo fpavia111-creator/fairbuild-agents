@@ -1,0 +1,8 @@
+bid_package,item,plug_value
+09 Drywall,framing,60000
+09 Drywall,board,90000
+09 Drywall,tape,40000
+09 Drywall,insulation,18000
+26 Electrical,power,200000
+26 Electrical,lighting,150000
+26 Electrical,fire alarm,35000

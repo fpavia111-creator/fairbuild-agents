@@ -1,0 +1,342 @@
+{
+  "suite": "congo-of-bids",
+  "root": "..",
+  "data_note": "Fictional bidders, packages, prices and plug values in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "check-totals",
+      "tool": "congo_check",
+      "args": {
+        "bids": "fixtures/bids.csv",
+        "scope": "fixtures/scope.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.packages": 2,
+          "result.bids": 6,
+          "result.responsive": 5,
+          "result.non_responsive": 1,
+          "result.leveled": 2,
+          "result.ok": 3,
+          "result.plugs_added": 53000,
+          "result.by_package.09 Drywall.low_leveled": "Test Drywall Co 248000",
+          "result.by_package.26 Electrical.low_leveled": "Example Electric Inc 412000"
+        }
+      }
+    },
+    {
+      "id": "every-planted-issue",
+      "tool": "congo_check",
+      "args": {
+        "bids": "fixtures/bids.csv",
+        "scope": "fixtures/scope.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "contains": [
+          "late_bid",
+          "no_bond",
+          "missing_addenda",
+          "scope_gap",
+          "low_outlier",
+          "has_exclusions"
+        ]
+      }
+    },
+    {
+      "id": "explain-leveled",
+      "tool": "congo_explain",
+      "args": {
+        "bids": "fixtures/bids.csv",
+        "scope": "fixtures/scope.csv",
+        "bid": "Sample Power Co"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "Does not include fire alarm (plug 35000); leveled bid is 433000"
+        ],
+        "equals": {
+          "result.item.rank": 2
+        }
+      }
+    },
+    {
+      "id": "low-base-not-lowest-leveled",
+      "tool": "congo_check",
+      "args": {
+        "bids": "fixtures/bids.csv",
+        "scope": "fixtures/scope.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "equals": {
+          "result.by_package.09 Drywall.low_base": "Example Wallboard Inc 189000",
+          "result.by_package.09 Drywall.responsive": 2
+        }
+      }
+    },
+    {
+      "id": "without-scope-checklist",
+      "tool": "congo_check",
+      "args": {
+        "bids": "fixtures/bids.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "equals": {
+          "result.plugs_added": 0,
+          "result.leveled": 0,
+          "result.by_package.26 Electrical.low_leveled": "Sample Power Co 398000"
+        }
+      }
+    },
+    {
+      "id": "lenient-settings",
+      "tool": "congo_check",
+      "args": {
+        "bids": "fixtures/bids.csv",
+        "scope": "fixtures/scope.csv",
+        "settings": "fixtures/settings-lenient.json"
+      },
+      "expect": {
+        "equals": {
+          "result.non_responsive": 0,
+          "result.by_package.09 Drywall.low_leveled": "Example Wallboard Inc 189000"
+        },
+        "not_contains": [
+          "low_outlier"
+        ]
+      }
+    },
+    {
+      "id": "settings-typo-is-named",
+      "tool": "congo_check",
+      "args": {
+        "bids": "fixtures/bids.csv",
+        "settings": "fixtures/settings-typo.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "bid_settings"
+        ]
+      }
+    },
+    {
+      "id": "write-report-writes-files",
+      "tool": "congo_write_report",
+      "args": {
+        "bids": "fixtures/bids.csv",
+        "scope": "fixtures/scope.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "executed",
+        "length": {
+          "result.files": 2
+        }
+      }
+    },
+    {
+      "id": "draft-clarification",
+      "tool": "congo_draft_clarification",
+      "mode": "auto",
+      "auto_actions": [
+        "congo_draft_clarification"
+      ],
+      "args": {
+        "bids": "fixtures/bids.csv",
+        "scope": "fixtures/scope.csv",
+        "bidder": "Sample Power Co"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.id": "Sample Power Co"
+        },
+        "contains": [
+          "Nothing was sent"
+        ]
+      }
+    },
+    {
+      "id": "draft-nothing-to-clarify",
+      "tool": "congo_draft_clarification",
+      "mode": "auto",
+      "auto_actions": [
+        "congo_draft_clarification"
+      ],
+      "args": {
+        "bids": "fixtures/bids.csv",
+        "scope": "fixtures/scope.csv",
+        "bidder": "Test Circuit LLC"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "nothing to clarify"
+        ]
+      }
+    },
+    {
+      "id": "policy-invented-tool",
+      "tool": "congo_pay_everything_now",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-file-outside-root",
+      "tool": "congo_check",
+      "args": {
+        "bids": "../../../outside-the-root.csv",
+        "scope": "fixtures/scope.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside"
+        ]
+      }
+    },
+    {
+      "id": "policy-missing-argument-named",
+      "tool": "congo_check",
+      "args": {},
+      "expect": {
+        "status": "error",
+        "contains": [
+          "bids"
+        ]
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reads",
+      "tool": "congo_check",
+      "mode": "review",
+      "args": {
+        "bids": "fixtures/bids.csv",
+        "scope": "fixtures/scope.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reports",
+      "tool": "congo_write_report",
+      "mode": "review",
+      "args": {
+        "bids": "fixtures/bids.csv",
+        "scope": "fixtures/scope.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-blocks-draft",
+      "tool": "congo_draft_clarification",
+      "mode": "review",
+      "args": {
+        "bids": "fixtures/bids.csv",
+        "scope": "fixtures/scope.csv",
+        "bidder": "Sample Power Co"
+      },
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-congo-request-send-one-click-in-auto",
+      "tool": "congo_request_send",
+      "mode": "auto",
+      "args": {
+        "draft": "fairbuild-out/drafts/example.md",
+        "draft_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expect": {
+        "status": "needs_approval"
+      }
+    },
+    {
+      "id": "policy-refuses-award-contract",
+      "tool": "award_contract",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-bid-reject-notice",
+      "tool": "bid_reject_notice",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-email-send",
+      "tool": "email_send",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "intl-de-check-totals",
+      "tool": "congo_check",
+      "args": {
+        "bids": "fixtures/intl/de/bids.csv",
+        "scope": "fixtures/intl/de/scope.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.packages": 2,
+          "result.bids": 6,
+          "result.responsive": 5,
+          "result.non_responsive": 1,
+          "result.leveled": 2,
+          "result.ok": 3,
+          "result.plugs_added": 53000,
+          "result.by_package.09 Drywall.low_leveled": "Test Drywall Co 248000",
+          "result.by_package.26 Electrical.low_leveled": "Example Electric Inc 412000"
+        }
+      },
+      "note": "German export of the same data (fixtures/intl/de); must match the English case \"check-totals\"."
+    },
+    {
+      "id": "intl-ja-check-totals",
+      "tool": "congo_check",
+      "args": {
+        "bids": "fixtures/intl/ja/bids.csv",
+        "scope": "fixtures/intl/ja/scope.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.packages": 2,
+          "result.bids": 6,
+          "result.responsive": 5,
+          "result.non_responsive": 1,
+          "result.leveled": 2,
+          "result.ok": 3,
+          "result.plugs_added": 53000,
+          "result.by_package.09 Drywall.low_leveled": "Test Drywall Co 248000",
+          "result.by_package.26 Electrical.low_leveled": "Example Electric Inc 412000"
+        }
+      },
+      "note": "Japanese export of the same data (fixtures/intl/ja); must match the English case \"check-totals\"."
+    }
+  ]
+}

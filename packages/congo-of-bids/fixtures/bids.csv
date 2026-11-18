@@ -1,0 +1,7 @@
+bid_package,bidder,base_bid,includes,exclusions,bond,addenda_acknowledged,received_at
+09 Drywall,Test Drywall Co,248000,framing;board;tape;insulation,,yes,2,2026-11-10T13:55
+09 Drywall,Sample Interiors LLC,231500,framing;board;tape,Insulation by others,yes,2,2026-11-10T13:40
+09 Drywall,Example Wallboard Inc,189000,framing;board;tape;insulation,,no,1,2026-11-10T14:10
+26 Electrical,Example Electric Inc,412000,power;lighting;fire alarm,,yes,2,2026-11-10T13:30
+26 Electrical,Sample Power Co,398000,power;lighting,Fire alarm excluded,yes,2,2026-11-10T13:45
+26 Electrical,Test Circuit LLC,455000,power;lighting;fire alarm,,yes,2,2026-11-10T13:50
