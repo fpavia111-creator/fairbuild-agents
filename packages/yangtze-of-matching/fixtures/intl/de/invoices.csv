@@ -1,0 +1,9 @@
+Rechnungsnummer;Lieferant;Projekt;Auftragsnummer NU;Rechnungsdatum;Betrag;Einbehalt
+EC-2210;Example Concrete LLC;24-101;SC-101;20.10.2026;56.000,00;5.600,00
+EC-2231;Example Concrete LLC;24-101;SC-101;10.11.2026;40.000,00;4.000,00
+EE-5501;Example Electric Inc;24-101;SC-103;28.10.2026;45.000,00;4.500,00
+SL-88120;Sample Lumber Supply;24-101;PO-201;12.10.2026;14.400,00;0,00
+SL-88341;Sample Lumber Supply;24-101;PO-201;03.11.2026;11.000,00;0,00
+SG-55;Sample Glass Co;24-102;PO-204;12.11.2026;4.800,00;0,00
+EX-77;Example Glazing LLC;24-102;SC-199;05.11.2026;8.800,00;0,00
+EE-5502;Example Electric Inc;24-102;SC-103;14.11.2026;3.000,00;0,00

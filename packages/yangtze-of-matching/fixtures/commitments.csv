@@ -1,0 +1,5 @@
+commitment,commitment_type,job,vendor,cost_code,revised_amount,retainage_pct
+SC-101,Subcontract,24-101,Example Concrete LLC,03-300,131500,10
+SC-103,Subcontract,24-101,Example Electric Inc,26-000,92000,10
+PO-201,Purchase order,24-101,Sample Lumber Supply,06-100,9000,0
+PO-204,Purchase order,24-102,Sample Glass Co,08-800,12000,0
