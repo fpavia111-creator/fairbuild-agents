@@ -38,6 +38,9 @@ function realish(p) {
 export function safePath(root, p) {
   if (typeof p !== 'string' || !p) throw new Error('path is required');
   if (p.includes('\0')) throw new Error('path contains a NUL byte');
+  // No file system takes a name over 255 characters, and on Windows a recursive mkdir of one
+  // never returned (found by the hostile argument pass: out_dir of 200,000 characters).
+  if (p.length > 1024 || p.split(/[\\/]/).some((s) => s.length > 255)) throw new Error(`path is too long (${p.length} characters; at most 1,024, and 255 per folder or file name)`);
   const r = resolve(root);
   const abs = resolve(r, p);
   if (!within(r, abs)) throw new Error(`path "${p}" is outside the allowed root`);

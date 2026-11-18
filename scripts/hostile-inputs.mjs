@@ -115,9 +115,15 @@ async function argsPass(n) {
       for (const [label, val] of [['null', null], ['42', 42], ['[[]]', [[]]], ['{}', { a: { b: 1 } }], ['200,000 chars', 'A'.repeat(200000)], ['""', ''], ['NUL', 'a\0b'], ['-1', -1], ['1e308', 1e308], ['true', true],
         ['../ x6', '../../../../../../etc/passwd'], ['/etc/passwd', '/etc/passwd'], ['../escape', '../escape-' + n], ['a folder', 'fixtures'], ['missing file', 'fixtures/nope-does-not-exist.csv']]) muts.push([`${k} = ${label}`, { ...base, [k]: val }]);
     }
+    // The eval cases before this tool's first case are run once (a send needs its draft written
+    // first), and that folder is copied for every bad value. Replaying them for each of the
+    // hundreds of bad values made one agent take more than five minutes.
+    const setup = sandbox(n);
+    try { for (let i = 0; i < idx; i++) await call(manifest, setup.root, cases[i].tool, cases[i].args || {}); } catch { /* setup only */ }
     for (const [label, args] of muts) {
-      const { parent, root } = sandbox(n); const where = `${t.name} [${label}]`; info.calls++;
-      try { for (let i = 0; i < idx; i++) await call(manifest, root, cases[i].tool, cases[i].args || {}); } catch { /* setup only */ }
+      const parent = mkdtempSync(join(tmpdir(), 'fairbuild-hostile-')); const root = join(parent, 'root');
+      cpSync(setup.root, root, { recursive: true });
+      const where = `${t.name} [${label}]`; info.calls++;
       const t0 = Date.now(); let out;
       try { out = await call(manifest, root, t.name, args); } catch (e) { add({ n, kind: 'THROW', where, detail: String(e.stack || e).slice(0, 240) }); rmSync(parent, { recursive: true, force: true }); continue; }
       const ms = Date.now() - t0; const reason = String(out.reason || ''); const txt = JSON.stringify(out);
@@ -129,6 +135,7 @@ async function argsPass(n) {
       for (const f of walk(parent)) { const rel = relative(parent, f); if (!rel.startsWith('root')) add({ n, kind: 'WROTE_OUTSIDE_ROOT', where, detail: rel }); }
       rmSync(parent, { recursive: true, force: true });
     }
+    rmSync(setup.parent, { recursive: true, force: true });
   }
 }
 
