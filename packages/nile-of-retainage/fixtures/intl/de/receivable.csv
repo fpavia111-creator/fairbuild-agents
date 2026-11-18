@@ -1,0 +1,7 @@
+Projekt;Bauherr;Auftragssumme;Gesamt abgerechnet;Einbehalt %;Einbehalt;stop_at_percent;retainage_billed;retainage_collected;Fertigstellung;Fertigstellungsgrad
+24-101;Example Health Partners;450.000,00;270.000,00;10;27.000,00;;0,00;0,00;;60
+24-102;Sample County Library;520.000,00;400.000,00;10;36.000,00;;0,00;0,00;;77
+23-090;Example School District;300.000,00;300.000,00;5;15.000,00;;0,00;0,00;15.08.2026;100
+23-095;Sample Retail LLC;180.000,00;180.000,00;10;18.000,00;;18.000,00;0,00;30.06.2026;100
+24-103;Example Clinic Annex;200.000,00;150.000,00;10;15.000,00;50;0,00;0,00;;75
+22-050;Sample Parks Department;90.000,00;90.000,00;10;9.000,00;;9.000,00;9.000,00;01.03.2026;100

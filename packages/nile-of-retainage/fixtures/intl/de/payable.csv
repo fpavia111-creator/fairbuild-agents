@@ -1,0 +1,6 @@
+Auftragsnummer NU;Projekt;Lieferant;Abgerechnet;Einbehalt %;Einbehalt;retainage_released;Zustand
+SC-101;24-101;Example Concrete LLC;96.000,00;10;9.600,00;0,00;Open
+SC-201;23-090;Sample Mechanical Inc;120.000,00;10;12.000,00;0,00;Closed
+SC-301;23-095;Example Storefronts LLC;60.000,00;10;6.000,00;6.000,00;Closed
+SC-302;24-102;Sample Roofing Co;150.000,00;5;10.500,00;0,00;Open
+SC-401;22-050;Example Paving Co;80.000,00;10;8.000,00;0,00;Closed

@@ -1,0 +1,7 @@
+job,client,contract_amount,billed_to_date,retainage_pct,retainage_held,stop_at_percent,retainage_billed,retainage_collected,completion_date,percent_complete
+24-101,Example Health Partners,450000,270000,10,27000,,0,0,,60
+24-102,Sample County Library,520000,400000,10,36000,,0,0,,77
+23-090,Example School District,300000,300000,5,15000,,0,0,2026-08-15,100
+23-095,Sample Retail LLC,180000,180000,10,18000,,18000,0,2026-06-30,100
+24-103,Example Clinic Annex,200000,150000,10,15000,50,0,0,,75
+22-050,Sample Parks Department,90000,90000,10,9000,,9000,9000,2026-03-01,100

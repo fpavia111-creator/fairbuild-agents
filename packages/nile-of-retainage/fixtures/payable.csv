@@ -1,0 +1,6 @@
+commitment,job,vendor,invoiced,retainage_pct,retainage_held,retainage_released,status
+SC-101,24-101,Example Concrete LLC,96000,10,9600,0,Open
+SC-201,23-090,Sample Mechanical Inc,120000,10,12000,0,Closed
+SC-301,23-095,Example Storefronts LLC,60000,10,6000,6000,Closed
+SC-302,24-102,Sample Roofing Co,150000,5,10500,0,Open
+SC-401,22-050,Example Paving Co,80000,10,8000,0,Closed
