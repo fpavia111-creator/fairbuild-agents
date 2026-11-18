@@ -17,7 +17,8 @@ test('arg docs: glossary, argDocs, inline wins, shared objects untouched', () =>
   const shared = { type: 'string' };
   const m = defineManifest(base({ argDocs: { widget: 'Generic widget', 'docs_scan.kept': 'never used' } }));
   const p = m.tools[0].inputSchema.properties;
-  assert.match(p.out_dir.description, /fairbuild-out\/docs/);
+  // The default folder is the agent's own (fairbuild-out/<job words>); a tool name cannot tell it, so the fallback text names the parent.
+  assert.match(p.out_dir.description, /default under fairbuild-out\//);
   assert.match(p.proposal_sha256.description, /SHA-256 of the proposal file/);
   assert.match(p.proposal.description, /Path under --root to the proposal file/);
   assert.match(p.amount_column.description, /holds the amount/);
