@@ -1,0 +1,8 @@
+invoice_number,vendor,job,jurisdiction,amount,tax
+SL-88120,Sample Lumber Supply,24-101,Example City,4050,334.13
+SL-88341,Sample Lumber Supply,24-101,Example City,4800,0
+SRM-7701,Sample Ready Mix,24-101,Example City,6600,462
+EBC-310,Example Block Co,24-102,Sample County,2520,176.40
+EBC-311,Example Block Co,24-102,Sample County,1800,148.50
+SG-55,Sample Glass Co,24-201,Sample County,4800,336
+SP-20,Sample Paint Supply,24-102,Test Township,900,58.50
