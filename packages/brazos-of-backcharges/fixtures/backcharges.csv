@@ -1,0 +1,7 @@
+backcharge,job,vendor,date,description,amount,status,notice_date,deducted_amount,backup
+BC-01,24-101,Test Drywall Co,2026-10-05,Cleanup after drywall,1200,Agreed,2026-10-06,0,yes
+BC-02,24-101,Example Electric Inc,2026-10-20,Repair of damaged ceiling grid,2400,Notified,2026-11-05,0,yes
+BC-03,24-102,Example Roofing LLC,2026-10-28,Interior damage from roof leak,6500,Disputed,2026-10-29,0,yes
+BC-04,23-095,Example Storefronts LLC,2026-08-15,Glass replacement,1800,Deducted,2026-08-16,1500,yes
+BC-05,24-101,Sample Painting Co,2026-11-12,Overspray cleanup,650,Proposed,,0,no
+BC-06,24-101,Example Concrete LLC,2026-09-10,Pump truck standby,900,Deducted,2026-09-11,900,yes

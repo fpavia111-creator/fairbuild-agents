@@ -1,0 +1,56 @@
+{
+  "name": "brazos-of-backcharges",
+  "version": "0.1.0",
+  "description": "Brazos of Backcharges: backcharges to subcontractors from notice to recovery: notices sent late or not at all, agreed backcharges never deducted, deductions that differ from what was agreed, disputes dragging on, backcharges with no backup, and backcharges larger than what you still owe or hold on that subcontractor. Drafts backcharge notices and records one-click approvals to deduct. Never deducts or pays.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "brazos-of-backcharges": "bin/brazos-of-backcharges.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/brazos-of-backcharges.js demo",
+    "eval": "node bin/brazos-of-backcharges.js eval"
+  },
+  "dependencies": {
+    "fairbuild-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairbuild-agents.git",
+    "directory": "packages/brazos-of-backcharges"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/brazos-of-backcharges#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairbuild-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "construction",
+    "contractors",
+    "construction-accounting",
+    "fairbuild",
+    "backcharges",
+    "subcontractor-claims",
+    "cost-recovery"
+  ]
+}

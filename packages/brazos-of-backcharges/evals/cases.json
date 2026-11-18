@@ -1,0 +1,378 @@
+{
+  "suite": "brazos-of-backcharges",
+  "root": "..",
+  "data_note": "Fictional backcharges and subcontract balances in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "check-totals",
+      "tool": "brazos_check",
+      "args": {
+        "backcharges": "fixtures/backcharges.csv",
+        "balances": "fixtures/balances.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.backcharges": 6,
+          "result.amount": 13450,
+          "result.recovered": 2400,
+          "result.open_amount": 11050,
+          "result.at_risk_amount": 6500,
+          "result.at_risk": 1,
+          "result.action": 3,
+          "result.review": 1,
+          "result.closed": 1
+        }
+      }
+    },
+    {
+      "id": "every-planted-issue",
+      "tool": "brazos_check",
+      "args": {
+        "backcharges": "fixtures/backcharges.csv",
+        "balances": "fixtures/balances.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "contains": [
+          "unrecoverable",
+          "not_deducted",
+          "late_notice",
+          "deducted_mismatch",
+          "no_backup"
+        ]
+      }
+    },
+    {
+      "id": "explain-unrecoverable",
+      "tool": "brazos_explain",
+      "args": {
+        "backcharges": "fixtures/backcharges.csv",
+        "balances": "fixtures/balances.csv",
+        "as_of": "2026-11-16",
+        "backcharge": "BC-03"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "Open backcharges on Example Roofing LLC total 6500; you still owe or hold 0"
+        ]
+      }
+    },
+    {
+      "id": "explain-late-notice",
+      "tool": "brazos_explain",
+      "args": {
+        "backcharges": "fixtures/backcharges.csv",
+        "as_of": "2026-11-16",
+        "backcharge": "BC-02"
+      },
+      "expect": {
+        "contains": [
+          "Notice sent 2026-11-05, 16 days after the work on 2026-10-20; your subcontracts allow 7"
+        ]
+      }
+    },
+    {
+      "id": "without-balances",
+      "tool": "brazos_check",
+      "args": {
+        "backcharges": "fixtures/backcharges.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "equals": {
+          "result.at_risk": 0,
+          "result.at_risk_amount": 0
+        },
+        "not_contains": [
+          "unrecoverable"
+        ]
+      }
+    },
+    {
+      "id": "other-settings",
+      "tool": "brazos_check",
+      "args": {
+        "backcharges": "fixtures/backcharges.csv",
+        "settings": "fixtures/settings-alt.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "contains": [
+          "dispute_aging"
+        ],
+        "not_contains": [
+          "late_notice",
+          "not_deducted"
+        ]
+      }
+    },
+    {
+      "id": "settings-typo-is-named",
+      "tool": "brazos_check",
+      "args": {
+        "backcharges": "fixtures/backcharges.csv",
+        "settings": "fixtures/settings-typo.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "backcharge_settings"
+        ]
+      }
+    },
+    {
+      "id": "write-report-writes-files",
+      "tool": "brazos_write_report",
+      "args": {
+        "backcharges": "fixtures/backcharges.csv",
+        "balances": "fixtures/balances.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "length": {
+          "result.files": 2
+        }
+      }
+    },
+    {
+      "id": "draft-notice",
+      "tool": "brazos_draft_notice",
+      "mode": "auto",
+      "auto_actions": [
+        "brazos_draft_notice"
+      ],
+      "args": {
+        "backcharges": "fixtures/backcharges.csv",
+        "as_of": "2026-11-16",
+        "vendor": "Example Electric Inc"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.amount": 2400
+        },
+        "contains": [
+          "Nothing was sent"
+        ]
+      }
+    },
+    {
+      "id": "deduction-recorded",
+      "tool": "brazos_request_deduction",
+      "approve": "Dana Example",
+      "args": {
+        "backcharges": "fixtures/backcharges.csv",
+        "as_of": "2026-11-16",
+        "backcharge": "BC-01",
+        "amount": 1200
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.record.approved_amount": 1200
+        },
+        "contains": [
+          "Nothing was paid"
+        ]
+      }
+    },
+    {
+      "id": "deduction-refused-unless-agreed",
+      "tool": "brazos_request_deduction",
+      "approve": "Dana Example",
+      "args": {
+        "backcharges": "fixtures/backcharges.csv",
+        "as_of": "2026-11-16",
+        "backcharge": "BC-03",
+        "amount": 100
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "is disputed, not agreed"
+        ]
+      }
+    },
+    {
+      "id": "policy-invented-tool",
+      "tool": "brazos_pay_everything_now",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-file-outside-root",
+      "tool": "brazos_check",
+      "args": {
+        "backcharges": "../../../outside-the-root.csv",
+        "balances": "fixtures/balances.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside"
+        ]
+      }
+    },
+    {
+      "id": "policy-missing-argument-named",
+      "tool": "brazos_check",
+      "args": {},
+      "expect": {
+        "status": "error",
+        "contains": [
+          "backcharges"
+        ]
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reads",
+      "tool": "brazos_check",
+      "mode": "review",
+      "args": {
+        "backcharges": "fixtures/backcharges.csv",
+        "balances": "fixtures/balances.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reports",
+      "tool": "brazos_write_report",
+      "mode": "review",
+      "args": {
+        "backcharges": "fixtures/backcharges.csv",
+        "balances": "fixtures/balances.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-blocks-draft",
+      "tool": "brazos_draft_notice",
+      "mode": "review",
+      "args": {
+        "backcharges": "fixtures/backcharges.csv",
+        "as_of": "2026-11-16",
+        "vendor": "Example Electric Inc"
+      },
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-brazos-request-send-one-click-in-auto",
+      "tool": "brazos_request_send",
+      "mode": "auto",
+      "args": {
+        "draft": "fairbuild-out/drafts/example.md",
+        "draft_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expect": {
+        "status": "needs_approval"
+      }
+    },
+    {
+      "id": "policy-brazos-request-deduction-one-click-in-auto",
+      "tool": "brazos_request_deduction",
+      "mode": "auto",
+      "args": {
+        "backcharges": "fixtures/backcharges.csv",
+        "as_of": "2026-11-16",
+        "backcharge": "BC-01",
+        "amount": 1200
+      },
+      "expect": {
+        "status": "needs_approval"
+      }
+    },
+    {
+      "id": "policy-refuses-ap-deduct-payment",
+      "tool": "ap_deduct_payment",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-backcharge-post",
+      "tool": "backcharge_post",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-email-send",
+      "tool": "email_send",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "intl-de-check-totals",
+      "tool": "brazos_check",
+      "args": {
+        "backcharges": "fixtures/intl/de/backcharges.csv",
+        "balances": "fixtures/intl/de/balances.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.backcharges": 6,
+          "result.amount": 13450,
+          "result.recovered": 2400,
+          "result.open_amount": 11050,
+          "result.at_risk_amount": 6500,
+          "result.at_risk": 1,
+          "result.action": 3,
+          "result.review": 1,
+          "result.closed": 1
+        }
+      },
+      "note": "German export of the same data (fixtures/intl/de); must match the English case \"check-totals\"."
+    },
+    {
+      "id": "intl-ja-check-totals",
+      "tool": "brazos_check",
+      "args": {
+        "backcharges": "fixtures/intl/ja/backcharges.csv",
+        "balances": "fixtures/intl/ja/balances.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.backcharges": 6,
+          "result.amount": 13450,
+          "result.recovered": 2400,
+          "result.open_amount": 11050,
+          "result.at_risk_amount": 6500,
+          "result.at_risk": 1,
+          "result.action": 3,
+          "result.review": 1,
+          "result.closed": 1
+        }
+      },
+      "note": "Japanese export of the same data (fixtures/intl/ja); must match the English case \"check-totals\"."
+    }
+  ]
+}

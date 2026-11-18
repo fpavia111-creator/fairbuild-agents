@@ -1,0 +1,7 @@
+Belastung;Projekt;Lieferant;Datum;Beschreibung;Betrag;Zustand;notice_date;deducted_amount;backup
+BC-01;24-101;Test Drywall Co;05.10.2026;Cleanup after drywall;1.200,00;Agreed;06.10.2026;0,00;yes
+BC-02;24-101;Example Electric Inc;20.10.2026;Repair of damaged ceiling grid;2.400,00;Notified;05.11.2026;0,00;yes
+BC-03;24-102;Example Roofing LLC;28.10.2026;Interior damage from roof leak;6.500,00;Disputed;29.10.2026;0,00;yes
+BC-04;23-095;Example Storefronts LLC;15.08.2026;Glass replacement;1.800,00;Deducted;16.08.2026;1.500,00;yes
+BC-05;24-101;Sample Painting Co;12.11.2026;Overspray cleanup;650,00;Proposed;;0,00;no
+BC-06;24-101;Example Concrete LLC;10.09.2026;Pump truck standby;900,00;Deducted;11.09.2026;900,00;yes

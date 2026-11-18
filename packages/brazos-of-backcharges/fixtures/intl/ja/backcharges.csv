@@ -1,0 +1,7 @@
+相殺,工事番号,仕入先,日付,摘要,金額,ステータス,notice_date,deducted_amount,backup
+BC-01,24-101,Test Drywall Co,2026/10/05,Cleanup after drywall,"1,200.00",Agreed,2026/10/06,0.00,yes
+BC-02,24-101,Example Electric Inc,2026/10/20,Repair of damaged ceiling grid,"2,400.00",Notified,2026/11/05,0.00,yes
+BC-03,24-102,Example Roofing LLC,2026/10/28,Interior damage from roof leak,"6,500.00",Disputed,2026/10/29,0.00,yes
+BC-04,23-095,Example Storefronts LLC,2026/08/15,Glass replacement,"1,800.00",Deducted,2026/08/16,"1,500.00",yes
+BC-05,24-101,Sample Painting Co,2026/11/12,Overspray cleanup,650.00,Proposed,,0.00,no
+BC-06,24-101,Example Concrete LLC,2026/09/10,Pump truck standby,900.00,Deducted,2026/09/11,900.00,yes
