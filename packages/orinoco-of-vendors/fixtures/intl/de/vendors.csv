@@ -1,0 +1,10 @@
+Lieferantennummer;Vollständiger Name;Steuernummer;Adresse;city;Telefon;E-Mail-Adresse;bank_last4
+V100;Example Concrete LLC;12-3456789;100 Main St;Springfield;555-0100;ap@example-concrete.test;4321
+V101;Example Concrete, L.L.C.;12-3456789;100 Main Street;Springfield;555-0100;;4321
+V200;Sample Lumber Supply;98-7654321;7 Mill Rd;Riverton;555-0200;ar@sample-lumber.test;2222
+V201;Sample Lumber Supply Co;98-7654322;7 Mill Road;Riverton;555-0201;;2222
+V300;Test Drywall Co;55-1112223;22 Board Ave;Lakeside;555-0300;;3333
+V400;Example Electric Inc;44-5556667;9 Volt Way;Springfield;555-0400;;4444
+V401;Example Electrical Contractors;77-8889990;410 Ohm Blvd;Hillview;555-0410;;4141
+V500;Sample Paving Co;33-2221110;5 Tar Ln;Riverton;555-0500;;5555
+V501;Sample Paving Company;;88 Asphalt Ct;Hillview;555-0501;;

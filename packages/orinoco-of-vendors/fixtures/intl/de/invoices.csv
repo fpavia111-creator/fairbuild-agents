@@ -1,0 +1,11 @@
+Rechnungsnummer;Lieferantennummer;Lieferant;Rechnungsdatum;Betrag;Zustand;Zahlungsdatum
+EC-2210;V100;Example Concrete LLC;20.10.2026;56.000,00;Paid;25.10.2026
+EC2210;V101;Example Concrete, L.L.C.;22.10.2026;56.000,00;Paid;30.10.2026
+SL-88120;V200;Sample Lumber Supply;12.10.2026;14.400,00;Paid;15.10.2026
+0088120;V201;Sample Lumber Supply Co;12.10.2026;14.400,00;Open;
+TD-101;V300;Test Drywall Co;12.11.2026;18.000,00;Paid;14.11.2026
+TD-101;V300;Test Drywall Co;12.11.2026;18.000,00;Open;
+EE-5501;V400;Example Electric Inc;28.10.2026;45.000,00;Paid;30.10.2026
+EE-5510;V400;Example Electric Inc;30.10.2026;45.000,00;Paid;02.11.2026
+EE-5520;V400;Example Electric Inc;10.11.2026;3.000,00;Open;
+SP-12;V500;Sample Paving Co;01.11.2026;6.000,00;Paid;05.11.2026

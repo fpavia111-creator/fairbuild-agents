@@ -1,0 +1,11 @@
+invoice_number,vendor_id,vendor,invoice_date,amount,status,paid_date
+EC-2210,V100,Example Concrete LLC,2026-10-20,56000,Paid,2026-10-25
+EC2210,V101,"Example Concrete, L.L.C.",2026-10-22,56000,Paid,2026-10-30
+SL-88120,V200,Sample Lumber Supply,2026-10-12,14400,Paid,2026-10-15
+0088120,V201,Sample Lumber Supply Co,2026-10-12,14400,Open,
+TD-101,V300,Test Drywall Co,2026-11-12,18000,Paid,2026-11-14
+TD-101,V300,Test Drywall Co,2026-11-12,18000,Open,
+EE-5501,V400,Example Electric Inc,2026-10-28,45000,Paid,2026-10-30
+EE-5510,V400,Example Electric Inc,2026-10-30,45000,Paid,2026-11-02
+EE-5520,V400,Example Electric Inc,2026-11-10,3000,Open,
+SP-12,V500,Sample Paving Co,2026-11-01,6000,Paid,2026-11-05
