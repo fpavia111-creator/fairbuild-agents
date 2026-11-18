@@ -1,0 +1,19 @@
+vendor,coverage,insurer,policy_number,effective,expires,each_occurrence,aggregate,additional_insured,waiver_of_subrogation,primary_noncontributory
+Example Concrete LLC,General Liability,Example Mutual Insurance,GL-1001,2026-05-01,2027-05-01,1000000,2000000,yes,yes,yes
+Example Concrete LLC,Auto,Example Mutual Insurance,CA-1002,2026-05-01,2027-05-01,1000000,,yes,,
+Example Concrete LLC,Workers Compensation,Sample Casualty Co,WC-1003,2026-01-01,2027-01-01,500000,,,yes,
+Test Drywall Co,General Liability,Sample Casualty Co,GL-2001,2025-11-30,2026-11-30,1000000,2000000,yes,yes,yes
+Test Drywall Co,Auto,Sample Casualty Co,CA-2002,2026-03-01,2027-03-01,1000000,,yes,,
+Test Drywall Co,Workers Compensation,Sample Casualty Co,WC-2003,2026-03-01,2027-03-01,500000,,,yes,
+Example Electric Inc,General Liability,Example Mutual Insurance,GL-3001,2026-02-01,2027-02-01,1000000,2000000,no,yes,yes
+Example Electric Inc,Auto,Example Mutual Insurance,CA-3002,2026-02-01,2027-02-01,1000000,,yes,,
+Example Electric Inc,Workers Compensation,Example Mutual Insurance,WC-3003,2025-10-31,2026-10-31,500000,,,yes,
+Example Roofing LLC,General Liability,Test Assurance Group,GL-4001,2026-04-01,2027-04-01,500000,1000000,yes,yes,yes
+Example Roofing LLC,Auto,Test Assurance Group,CA-4002,2026-04-01,2027-04-01,1000000,,yes,,
+Example Roofing LLC,Workers Compensation,Test Assurance Group,WC-4003,2026-04-01,2027-04-01,500000,,,yes,
+Example Roofing LLC,Umbrella,Test Assurance Group,UM-4004,2026-04-01,2027-04-01,2000000,2000000,,,
+Sample Painting Co,General Liability,Sample Casualty Co,GL-5001,2026-09-01,2027-09-01,1000000,2000000,yes,yes,yes
+Sample Painting Co,Workers Compensation,Sample Casualty Co,WC-5003,2026-09-01,2027-09-01,500000,,,yes,
+Sample Mechanical Inc,General Liability,Example Mutual Insurance,GL-6001,2026-07-01,2027-07-01,2000000,4000000,yes,yes,yes
+Sample Mechanical Inc,Auto,Example Mutual Insurance,CA-6002,2026-07-01,2027-07-01,1000000,,yes,,
+Sample Mechanical Inc,Workers Compensation,Example Mutual Insurance,WC-6003,2026-07-01,2027-07-01,1000000,,,yes,

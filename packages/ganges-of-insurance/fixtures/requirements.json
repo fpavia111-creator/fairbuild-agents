@@ -1,0 +1,10 @@
+{
+  "required": ["GL", "Auto", "WC"],
+  "coverages": {
+    "GL": { "each_occurrence": 1000000, "aggregate": 2000000, "additional_insured": true, "waiver_of_subrogation": true, "primary_noncontributory": true },
+    "Auto": { "each_occurrence": 1000000, "additional_insured": true },
+    "WC": { "each_occurrence": 500000, "waiver_of_subrogation": true },
+    "Umbrella": { "each_occurrence": 2000000 }
+  },
+  "expiring_days": 30
+}

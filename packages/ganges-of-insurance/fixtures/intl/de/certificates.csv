@@ -1,0 +1,19 @@
+Lieferant;Versicherungsart;Versicherer;Policennummer;Gültig ab;Ablaufdatum;Deckungssumme;Versicherungssumme;additional_insured;waiver_of_subrogation;primary_noncontributory
+Example Concrete LLC;General Liability;Example Mutual Insurance;GL-1001;01.05.2026;01.05.2027;1.000.000,00;2.000.000,00;yes;yes;yes
+Example Concrete LLC;Auto;Example Mutual Insurance;CA-1002;01.05.2026;01.05.2027;1.000.000,00;;yes;;
+Example Concrete LLC;Workers Compensation;Sample Casualty Co;WC-1003;01.01.2026;01.01.2027;500.000,00;;;yes;
+Test Drywall Co;General Liability;Sample Casualty Co;GL-2001;30.11.2025;30.11.2026;1.000.000,00;2.000.000,00;yes;yes;yes
+Test Drywall Co;Auto;Sample Casualty Co;CA-2002;01.03.2026;01.03.2027;1.000.000,00;;yes;;
+Test Drywall Co;Workers Compensation;Sample Casualty Co;WC-2003;01.03.2026;01.03.2027;500.000,00;;;yes;
+Example Electric Inc;General Liability;Example Mutual Insurance;GL-3001;01.02.2026;01.02.2027;1.000.000,00;2.000.000,00;no;yes;yes
+Example Electric Inc;Auto;Example Mutual Insurance;CA-3002;01.02.2026;01.02.2027;1.000.000,00;;yes;;
+Example Electric Inc;Workers Compensation;Example Mutual Insurance;WC-3003;31.10.2025;31.10.2026;500.000,00;;;yes;
+Example Roofing LLC;General Liability;Test Assurance Group;GL-4001;01.04.2026;01.04.2027;500.000,00;1.000.000,00;yes;yes;yes
+Example Roofing LLC;Auto;Test Assurance Group;CA-4002;01.04.2026;01.04.2027;1.000.000,00;;yes;;
+Example Roofing LLC;Workers Compensation;Test Assurance Group;WC-4003;01.04.2026;01.04.2027;500.000,00;;;yes;
+Example Roofing LLC;Umbrella;Test Assurance Group;UM-4004;01.04.2026;01.04.2027;2.000.000,00;2.000.000,00;;;
+Sample Painting Co;General Liability;Sample Casualty Co;GL-5001;01.09.2026;01.09.2027;1.000.000,00;2.000.000,00;yes;yes;yes
+Sample Painting Co;Workers Compensation;Sample Casualty Co;WC-5003;01.09.2026;01.09.2027;500.000,00;;;yes;
+Sample Mechanical Inc;General Liability;Example Mutual Insurance;GL-6001;01.07.2026;01.07.2027;2.000.000,00;4.000.000,00;yes;yes;yes
+Sample Mechanical Inc;Auto;Example Mutual Insurance;CA-6002;01.07.2026;01.07.2027;1.000.000,00;;yes;;
+Sample Mechanical Inc;Workers Compensation;Example Mutual Insurance;WC-6003;01.07.2026;01.07.2027;1.000.000,00;;;yes;

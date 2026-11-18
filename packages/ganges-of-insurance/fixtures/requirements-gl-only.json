@@ -1,0 +1,1 @@
+{ "required": ["GL"], "coverages": { "GL": { "each_occurrence": 500000 } }, "expiring_days": 7 }
