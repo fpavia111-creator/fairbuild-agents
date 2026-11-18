@@ -1,0 +1,383 @@
+{
+  "suite": "mekong-of-tickets",
+  "root": "..",
+  "data_note": "Fictional suppliers, tickets, invoices and prices in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "check-totals",
+      "tool": "mekong_check",
+      "args": {
+        "tickets": "fixtures/tickets.csv",
+        "invoices": "fixtures/invoices.csv",
+        "prices": "fixtures/prices.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.invoice_lines": 6,
+          "result.billed": 29140,
+          "result.overbilled": 5380,
+          "result.to_accrue": 3000,
+          "result.tickets_not_invoiced": 1,
+          "result.overbilled_count": 4,
+          "result.review": 2,
+          "result.ok": 1
+        }
+      }
+    },
+    {
+      "id": "every-planted-issue",
+      "tool": "mekong_check",
+      "args": {
+        "tickets": "fixtures/tickets.csv",
+        "invoices": "fixtures/invoices.csv",
+        "prices": "fixtures/prices.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "contains": [
+          "ticket_billed_twice",
+          "qty_over_ticket",
+          "price_over_agreed",
+          "extension_off",
+          "no_ticket",
+          "ticket_not_invoiced"
+        ]
+      }
+    },
+    {
+      "id": "explain-billed-twice",
+      "tool": "mekong_explain",
+      "args": {
+        "tickets": "fixtures/tickets.csv",
+        "invoices": "fixtures/invoices.csv",
+        "as_of": "2026-11-16",
+        "line": "SL-88342"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "Ticket DT-504 (200 EA) was already billed on SL-88341"
+        ],
+        "equals": {
+          "result.item.findings.0.amount": 4800
+        }
+      }
+    },
+    {
+      "id": "explain-quantity-over",
+      "tool": "mekong_explain",
+      "args": {
+        "tickets": "fixtures/tickets.csv",
+        "invoices": "fixtures/invoices.csv",
+        "as_of": "2026-11-16",
+        "line": "SRM-7702"
+      },
+      "expect": {
+        "contains": [
+          "Billed 38 CY; ticket DT-502 shows 36 delivered: 2 over"
+        ],
+        "equals": {
+          "result.item.findings.0.amount": 330
+        }
+      }
+    },
+    {
+      "id": "no-ticket-suggests-match",
+      "tool": "mekong_explain",
+      "args": {
+        "tickets": "fixtures/tickets.csv",
+        "invoices": "fixtures/invoices.csv",
+        "as_of": "2026-11-16",
+        "line": "EBC-310"
+      },
+      "expect": {
+        "contains": [
+          "ticket DT-505 matches by supplier, material and quantity"
+        ]
+      }
+    },
+    {
+      "id": "without-prices",
+      "tool": "mekong_check",
+      "args": {
+        "tickets": "fixtures/tickets.csv",
+        "invoices": "fixtures/invoices.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "equals": {
+          "result.overbilled": 5230,
+          "result.to_accrue": 0,
+          "result.tickets_not_invoiced": 1
+        },
+        "not_contains": [
+          "price_over_agreed"
+        ]
+      }
+    },
+    {
+      "id": "accrual-window",
+      "tool": "mekong_check",
+      "args": {
+        "tickets": "fixtures/tickets.csv",
+        "invoices": "fixtures/invoices.csv",
+        "prices": "fixtures/prices.csv",
+        "settings": "fixtures/settings-30.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "equals": {
+          "result.tickets_not_invoiced": 0,
+          "result.review": 1
+        }
+      }
+    },
+    {
+      "id": "settings-typo-is-named",
+      "tool": "mekong_check",
+      "args": {
+        "tickets": "fixtures/tickets.csv",
+        "invoices": "fixtures/invoices.csv",
+        "settings": "fixtures/settings-typo.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "ticket_settings"
+        ]
+      }
+    },
+    {
+      "id": "write-report-writes-files",
+      "tool": "mekong_write_report",
+      "args": {
+        "tickets": "fixtures/tickets.csv",
+        "invoices": "fixtures/invoices.csv",
+        "prices": "fixtures/prices.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "length": {
+          "result.files": 2
+        }
+      }
+    },
+    {
+      "id": "draft-credit",
+      "tool": "mekong_draft_credit",
+      "mode": "auto",
+      "auto_actions": [
+        "mekong_draft_credit"
+      ],
+      "args": {
+        "tickets": "fixtures/tickets.csv",
+        "invoices": "fixtures/invoices.csv",
+        "prices": "fixtures/prices.csv",
+        "as_of": "2026-11-16",
+        "supplier": "Sample Lumber Supply"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.id": "Sample Lumber Supply",
+          "result.amount": 5050
+        },
+        "contains": [
+          "Nothing was sent"
+        ]
+      }
+    },
+    {
+      "id": "draft-credit-clean-supplier",
+      "tool": "mekong_draft_credit",
+      "mode": "auto",
+      "auto_actions": [
+        "mekong_draft_credit"
+      ],
+      "args": {
+        "tickets": "fixtures/tickets.csv",
+        "invoices": "fixtures/invoices.csv",
+        "prices": "fixtures/prices.csv",
+        "as_of": "2026-11-16",
+        "supplier": "Example Block Co"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "nothing to claim"
+        ]
+      }
+    },
+    {
+      "id": "policy-invented-tool",
+      "tool": "mekong_pay_everything_now",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-file-outside-root",
+      "tool": "mekong_check",
+      "args": {
+        "tickets": "../../../outside-the-root.csv",
+        "invoices": "fixtures/invoices.csv",
+        "prices": "fixtures/prices.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside"
+        ]
+      }
+    },
+    {
+      "id": "policy-missing-argument-named",
+      "tool": "mekong_check",
+      "args": {},
+      "expect": {
+        "status": "error",
+        "contains": [
+          "tickets"
+        ]
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reads",
+      "tool": "mekong_check",
+      "mode": "review",
+      "args": {
+        "tickets": "fixtures/tickets.csv",
+        "invoices": "fixtures/invoices.csv",
+        "prices": "fixtures/prices.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reports",
+      "tool": "mekong_write_report",
+      "mode": "review",
+      "args": {
+        "tickets": "fixtures/tickets.csv",
+        "invoices": "fixtures/invoices.csv",
+        "prices": "fixtures/prices.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-blocks-draft",
+      "tool": "mekong_draft_credit",
+      "mode": "review",
+      "args": {
+        "tickets": "fixtures/tickets.csv",
+        "invoices": "fixtures/invoices.csv",
+        "prices": "fixtures/prices.csv",
+        "as_of": "2026-11-16",
+        "supplier": "Sample Lumber Supply"
+      },
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-mekong-request-send-one-click-in-auto",
+      "tool": "mekong_request_send",
+      "mode": "auto",
+      "args": {
+        "draft": "fairbuild-out/drafts/example.md",
+        "draft_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expect": {
+        "status": "needs_approval"
+      }
+    },
+    {
+      "id": "policy-refuses-ap-pay-invoice",
+      "tool": "ap_pay_invoice",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-receiving-update",
+      "tool": "receiving_update",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-email-send",
+      "tool": "email_send",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "intl-de-check-totals",
+      "tool": "mekong_check",
+      "args": {
+        "tickets": "fixtures/intl/de/tickets.csv",
+        "invoices": "fixtures/intl/de/invoices.csv",
+        "prices": "fixtures/intl/de/prices.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.invoice_lines": 6,
+          "result.billed": 29140,
+          "result.overbilled": 5380,
+          "result.to_accrue": 3000,
+          "result.tickets_not_invoiced": 1,
+          "result.overbilled_count": 4,
+          "result.review": 2,
+          "result.ok": 1
+        }
+      },
+      "note": "German export of the same data (fixtures/intl/de); must match the English case \"check-totals\"."
+    },
+    {
+      "id": "intl-ja-check-totals",
+      "tool": "mekong_check",
+      "args": {
+        "tickets": "fixtures/intl/ja/tickets.csv",
+        "invoices": "fixtures/intl/ja/invoices.csv",
+        "prices": "fixtures/intl/ja/prices.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.invoice_lines": 6,
+          "result.billed": 29140,
+          "result.overbilled": 5380,
+          "result.to_accrue": 3000,
+          "result.tickets_not_invoiced": 1,
+          "result.overbilled_count": 4,
+          "result.review": 2,
+          "result.ok": 1
+        }
+      },
+      "note": "Japanese export of the same data (fixtures/intl/ja); must match the English case \"check-totals\"."
+    }
+  ]
+}

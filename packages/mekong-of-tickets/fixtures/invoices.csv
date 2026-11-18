@@ -1,0 +1,7 @@
+invoice_number,supplier,job,ticket,material,quantity,unit_price,amount,invoice_date
+SRM-7701,Sample Ready Mix,24-101,DT-501,Concrete 4000 psi,40,165,6600,2026-10-21
+SRM-7702,Sample Ready Mix,24-101,DT-502,Concrete 4000 psi,38,165,6270,2026-10-28
+SL-88120,Sample Lumber Supply,24-101,DT-503,2x6 studs,600,6.75,4050,2026-10-13
+SL-88341,Sample Lumber Supply,24-101,DT-504,OSB sheathing,200,24.00,4900,2026-11-04
+SL-88342,Sample Lumber Supply,24-101,DT-504,OSB sheathing,200,24.00,4800,2026-11-06
+EBC-310,Example Block Co,24-102,,CMU 8in,1200,2.10,2520,2026-11-07

@@ -1,0 +1,7 @@
+納品書番号,仕入先,工事番号,日付,material,数量,単位
+DT-501,Sample Ready Mix,24-101,2026/10/20,Concrete 4000 psi,40,CY
+DT-502,Sample Ready Mix,24-101,2026/10/27,Concrete 4000 psi,36,CY
+DT-503,Sample Lumber Supply,24-101,2026/10/12,2x6 studs,600,EA
+DT-504,Sample Lumber Supply,24-101,2026/11/03,OSB sheathing,200,EA
+DT-505,Example Block Co,24-102,2026/11/05,CMU 8in,"1,200",EA
+DT-506,Sample Ready Mix,24-102,2026/11/10,Concrete 3000 psi,20,CY
