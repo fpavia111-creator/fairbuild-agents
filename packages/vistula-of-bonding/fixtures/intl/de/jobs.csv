@@ -1,0 +1,7 @@
+Projekt;Projektname;Auftragssumme;Kalkulierte Kosten;Ist-Kosten;Bürgschaft
+24-101;Example Clinic fit-out;455.000,00;390.000,00;234.000,00;yes
+24-102;Sample Library roof;260.000,00;205.000,00;150.000,00;yes
+24-103;Example Clinic annex;200.000,00;214.000,00;160.500,00;yes
+24-104;Example Warehouse slab;300.000,00;240.000,00;60.000,00;no
+24-105;Sample Office tenant improvement;90.000,00;66.600,00;55.500,00;no
+24-301;Example County school addition;2.600.000,00;2.210.000,00;0,00;yes

@@ -1,0 +1,7 @@
+job,job_name,contract_amount,estimated_cost,cost_to_date,bonded
+24-101,Example Clinic fit-out,455000,390000,234000,yes
+24-102,Sample Library roof,260000,205000,150000,yes
+24-103,Example Clinic annex,200000,214000,160500,yes
+24-104,Example Warehouse slab,300000,240000,60000,no
+24-105,Sample Office tenant improvement,90000,66600,55500,no
+24-301,Example County school addition,2600000,2210000,0,yes

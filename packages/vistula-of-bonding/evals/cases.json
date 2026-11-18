@@ -1,0 +1,332 @@
+{
+  "suite": "vistula-of-bonding",
+  "root": "..",
+  "data_note": "Fictional jobs, made-up limits and bids in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "check-totals",
+      "tool": "vistula_check",
+      "args": {
+        "jobs": "fixtures/jobs.csv",
+        "limits": "fixtures/limits.json",
+        "pipeline": "fixtures/pipeline.csv"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.jobs": 6,
+          "result.bonded_jobs": 4,
+          "result.bonded_backlog": 2901756.1,
+          "result.total_backlog": 3141756.1,
+          "result.aggregate_used_pct": 72.5,
+          "result.aggregate_left": 1098243.9,
+          "result.largest_bonded_contract": 2600000,
+          "result.bonded_bids": 1800000,
+          "result.over": 1,
+          "result.exceeds": 2,
+          "result.review": 2,
+          "result.ok": 5
+        }
+      }
+    },
+    {
+      "id": "every-planted-issue",
+      "tool": "vistula_check",
+      "args": {
+        "jobs": "fixtures/jobs.csv",
+        "limits": "fixtures/limits.json",
+        "pipeline": "fixtures/pipeline.csv"
+      },
+      "expect": {
+        "contains": [
+          "single_over",
+          "bonded_loss",
+          "near_aggregate",
+          "pipeline_exceeds"
+        ]
+      }
+    },
+    {
+      "id": "explain-bid-that-crosses",
+      "tool": "vistula_explain",
+      "args": {
+        "jobs": "fixtures/jobs.csv",
+        "limits": "fixtures/limits.json",
+        "pipeline": "fixtures/pipeline.csv",
+        "key": "Example Library Annex"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "bonded backlog would be 4101756.1, 101756.1 over your aggregate limit; 1098243.9 was left"
+        ],
+        "equals": {
+          "result.item.findings.0.amount": 101756.1
+        }
+      }
+    },
+    {
+      "id": "unbonded-bid-not-counted",
+      "tool": "vistula_explain",
+      "args": {
+        "jobs": "fixtures/jobs.csv",
+        "limits": "fixtures/limits.json",
+        "pipeline": "fixtures/pipeline.csv",
+        "key": "Sample Parking Garage"
+      },
+      "expect": {
+        "equals": {
+          "result.item.status": "ok",
+          "result.item.bonded": false
+        }
+      }
+    },
+    {
+      "id": "larger-limits",
+      "tool": "vistula_check",
+      "args": {
+        "jobs": "fixtures/jobs.csv",
+        "limits": "fixtures/limits-large.json",
+        "pipeline": "fixtures/pipeline.csv"
+      },
+      "expect": {
+        "equals": {
+          "result.over": 0,
+          "result.exceeds": 0,
+          "result.review": 1
+        },
+        "not_contains": [
+          "near_aggregate"
+        ]
+      }
+    },
+    {
+      "id": "jobs-without-pipeline",
+      "tool": "vistula_check",
+      "args": {
+        "jobs": "fixtures/jobs.csv",
+        "limits": "fixtures/limits.json"
+      },
+      "expect": {
+        "equals": {
+          "result.bonded_bids": 0,
+          "result.exceeds": 0
+        }
+      }
+    },
+    {
+      "id": "limits-schema-error",
+      "tool": "vistula_check",
+      "args": {
+        "jobs": "fixtures/jobs.csv",
+        "limits": "fixtures/limits-typo.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "bonding_limits"
+        ]
+      }
+    },
+    {
+      "id": "write-report-writes-files",
+      "tool": "vistula_write_report",
+      "args": {
+        "jobs": "fixtures/jobs.csv",
+        "limits": "fixtures/limits.json",
+        "pipeline": "fixtures/pipeline.csv"
+      },
+      "expect": {
+        "status": "executed",
+        "length": {
+          "result.files": 2
+        }
+      }
+    },
+    {
+      "id": "draft-summary",
+      "tool": "vistula_draft_summary",
+      "mode": "auto",
+      "auto_actions": [
+        "vistula_draft_summary"
+      ],
+      "args": {
+        "jobs": "fixtures/jobs.csv",
+        "limits": "fixtures/limits.json",
+        "label": "Q4 2026"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.id": "Q4 2026"
+        },
+        "contains": [
+          "Nothing was sent"
+        ]
+      }
+    },
+    {
+      "id": "policy-invented-tool",
+      "tool": "vistula_pay_everything_now",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-file-outside-root",
+      "tool": "vistula_check",
+      "args": {
+        "jobs": "../../../outside-the-root.csv",
+        "limits": "fixtures/limits.json",
+        "pipeline": "fixtures/pipeline.csv"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside"
+        ]
+      }
+    },
+    {
+      "id": "policy-missing-argument-named",
+      "tool": "vistula_check",
+      "args": {},
+      "expect": {
+        "status": "error",
+        "contains": [
+          "jobs"
+        ]
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reads",
+      "tool": "vistula_check",
+      "mode": "review",
+      "args": {
+        "jobs": "fixtures/jobs.csv",
+        "limits": "fixtures/limits.json",
+        "pipeline": "fixtures/pipeline.csv"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reports",
+      "tool": "vistula_write_report",
+      "mode": "review",
+      "args": {
+        "jobs": "fixtures/jobs.csv",
+        "limits": "fixtures/limits.json",
+        "pipeline": "fixtures/pipeline.csv"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-blocks-draft",
+      "tool": "vistula_draft_summary",
+      "mode": "review",
+      "args": {
+        "jobs": "fixtures/jobs.csv",
+        "limits": "fixtures/limits.json",
+        "label": "Q4 2026"
+      },
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-vistula-request-send-one-click-in-auto",
+      "tool": "vistula_request_send",
+      "mode": "auto",
+      "args": {
+        "draft": "fairbuild-out/drafts/example.md",
+        "draft_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expect": {
+        "status": "needs_approval"
+      }
+    },
+    {
+      "id": "policy-refuses-bond-request",
+      "tool": "bond_request",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-surety-submit",
+      "tool": "surety_submit",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-email-send",
+      "tool": "email_send",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "intl-de-check-totals",
+      "tool": "vistula_check",
+      "args": {
+        "jobs": "fixtures/intl/de/jobs.csv",
+        "limits": "fixtures/limits.json",
+        "pipeline": "fixtures/intl/de/pipeline.csv"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.jobs": 6,
+          "result.bonded_jobs": 4,
+          "result.bonded_backlog": 2901756.1,
+          "result.total_backlog": 3141756.1,
+          "result.aggregate_used_pct": 72.5,
+          "result.aggregate_left": 1098243.9,
+          "result.largest_bonded_contract": 2600000,
+          "result.bonded_bids": 1800000,
+          "result.over": 1,
+          "result.exceeds": 2,
+          "result.review": 2,
+          "result.ok": 5
+        }
+      },
+      "note": "German export of the same data (fixtures/intl/de); must match the English case \"check-totals\"."
+    },
+    {
+      "id": "intl-ja-check-totals",
+      "tool": "vistula_check",
+      "args": {
+        "jobs": "fixtures/intl/ja/jobs.csv",
+        "limits": "fixtures/limits.json",
+        "pipeline": "fixtures/intl/ja/pipeline.csv"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.jobs": 6,
+          "result.bonded_jobs": 4,
+          "result.bonded_backlog": 2901756.1,
+          "result.total_backlog": 3141756.1,
+          "result.aggregate_used_pct": 72.5,
+          "result.aggregate_left": 1098243.9,
+          "result.largest_bonded_contract": 2600000,
+          "result.bonded_bids": 1800000,
+          "result.over": 1,
+          "result.exceeds": 2,
+          "result.review": 2,
+          "result.ok": 5
+        }
+      },
+      "note": "Japanese export of the same data (fixtures/intl/ja); must match the English case \"check-totals\"."
+    }
+  ]
+}
