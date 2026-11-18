@@ -1,0 +1,457 @@
+{
+  "suite": "platte-of-releases",
+  "root": "..",
+  "data_note": "Fictional subcontractor invoices, owner payments, waivers and subcontractor status in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "check-totals",
+      "tool": "platte_check",
+      "args": {
+        "invoices": "fixtures/invoices.csv",
+        "owner_payments": "fixtures/owner-payments.csv",
+        "waivers": "fixtures/waivers.csv",
+        "vendors": "fixtures/vendors.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.invoices": 6,
+          "result.release": 1,
+          "result.review": 1,
+          "result.hold": 4,
+          "result.releasable": 38700,
+          "result.held": 79200
+        }
+      }
+    },
+    {
+      "id": "every-planted-issue",
+      "tool": "platte_check",
+      "args": {
+        "invoices": "fixtures/invoices.csv",
+        "owner_payments": "fixtures/owner-payments.csv",
+        "waivers": "fixtures/waivers.csv",
+        "vendors": "fixtures/vendors.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "contains": [
+          "not_approved",
+          "owner_not_paid",
+          "no_conditional_waiver",
+          "coi_expired",
+          "no_w9",
+          "retainage_short"
+        ]
+      }
+    },
+    {
+      "id": "explain-retainage-short",
+      "tool": "platte_explain",
+      "args": {
+        "invoices": "fixtures/invoices.csv",
+        "vendors": "fixtures/vendors.csv",
+        "as_of": "2026-11-16",
+        "invoice_number": "EE-5502"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "Retainage withheld is 0; 10% of 3000 is 300. Release 2700, not 3000."
+        ]
+      }
+    },
+    {
+      "id": "explain-pay-when-paid",
+      "tool": "platte_explain",
+      "args": {
+        "invoices": "fixtures/invoices.csv",
+        "owner_payments": "fixtures/owner-payments.csv",
+        "as_of": "2026-11-16",
+        "invoice_number": "ER-7002"
+      },
+      "expect": {
+        "contains": [
+          "The owner has not paid job 24-102 for 2026-11"
+        ]
+      }
+    },
+    {
+      "id": "explain-coi-expired",
+      "tool": "platte_explain",
+      "args": {
+        "invoices": "fixtures/invoices.csv",
+        "vendors": "fixtures/vendors.csv",
+        "as_of": "2026-11-16",
+        "invoice_number": "SM-50"
+      },
+      "expect": {
+        "contains": [
+          "insurance certificate expired on 2026-10-31"
+        ]
+      }
+    },
+    {
+      "id": "invoices-only",
+      "tool": "platte_check",
+      "args": {
+        "invoices": "fixtures/invoices.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "equals": {
+          "result.hold": 1,
+          "result.release": 5
+        },
+        "not_contains": [
+          "owner_not_paid",
+          "coi_expired",
+          "no_w9"
+        ]
+      }
+    },
+    {
+      "id": "rules-turned-off",
+      "tool": "platte_check",
+      "args": {
+        "invoices": "fixtures/invoices.csv",
+        "owner_payments": "fixtures/owner-payments.csv",
+        "waivers": "fixtures/waivers.csv",
+        "settings": "fixtures/settings-off.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "equals": {
+          "result.settings_used.pay_when_paid": false,
+          "result.settings_used.require_waiver": false
+        },
+        "not_contains": [
+          "owner_not_paid",
+          "no_conditional_waiver"
+        ]
+      }
+    },
+    {
+      "id": "settings-typo-is-named",
+      "tool": "platte_check",
+      "args": {
+        "invoices": "fixtures/invoices.csv",
+        "settings": "fixtures/settings-typo.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "release_settings"
+        ]
+      }
+    },
+    {
+      "id": "write-report-writes-files",
+      "tool": "platte_write_report",
+      "args": {
+        "invoices": "fixtures/invoices.csv",
+        "owner_payments": "fixtures/owner-payments.csv",
+        "waivers": "fixtures/waivers.csv",
+        "vendors": "fixtures/vendors.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "length": {
+          "result.files": 2
+        }
+      }
+    },
+    {
+      "id": "draft-notice",
+      "tool": "platte_draft_notice",
+      "args": {
+        "invoices": "fixtures/invoices.csv",
+        "owner_payments": "fixtures/owner-payments.csv",
+        "waivers": "fixtures/waivers.csv",
+        "vendors": "fixtures/vendors.csv",
+        "as_of": "2026-11-16",
+        "vendor": "Sample Painting Co"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.invoices": 1
+        },
+        "contains": [
+          "Nothing was sent"
+        ]
+      },
+      "mode": "auto",
+      "auto_actions": [
+        "platte_draft_notice"
+      ]
+    },
+    {
+      "id": "draft-refused-when-nothing-held",
+      "tool": "platte_draft_notice",
+      "args": {
+        "invoices": "fixtures/invoices.csv",
+        "vendors": "fixtures/vendors.csv",
+        "as_of": "2026-11-16",
+        "vendor": "Example Concrete LLC"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "is held"
+        ]
+      },
+      "mode": "auto",
+      "auto_actions": [
+        "platte_draft_notice"
+      ]
+    },
+    {
+      "id": "release-recorded",
+      "tool": "platte_request_release",
+      "args": {
+        "invoices": "fixtures/invoices.csv",
+        "owner_payments": "fixtures/owner-payments.csv",
+        "waivers": "fixtures/waivers.csv",
+        "vendors": "fixtures/vendors.csv",
+        "as_of": "2026-11-16",
+        "invoice_number": "EC-2231",
+        "amount": 36000
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.record.approved_amount": 36000
+        },
+        "contains": [
+          "Nothing was paid"
+        ]
+      },
+      "approve": "Dana Example"
+    },
+    {
+      "id": "release-refused-when-held",
+      "tool": "platte_request_release",
+      "args": {
+        "invoices": "fixtures/invoices.csv",
+        "vendors": "fixtures/vendors.csv",
+        "as_of": "2026-11-16",
+        "invoice_number": "TD-101",
+        "amount": 1000
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "is held (no_w9)"
+        ]
+      },
+      "approve": "Dana Example"
+    },
+    {
+      "id": "release-refused-above-releasable",
+      "tool": "platte_request_release",
+      "args": {
+        "invoices": "fixtures/invoices.csv",
+        "vendors": "fixtures/vendors.csv",
+        "as_of": "2026-11-16",
+        "invoice_number": "EE-5502",
+        "amount": 3000
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "more than the releasable 2700"
+        ]
+      },
+      "approve": "Dana Example"
+    },
+    {
+      "id": "policy-invented-tool",
+      "tool": "platte_pay_everything_now",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-file-outside-root",
+      "tool": "platte_check",
+      "args": {
+        "invoices": "../../../outside-the-root.csv",
+        "owner_payments": "fixtures/owner-payments.csv",
+        "waivers": "fixtures/waivers.csv",
+        "vendors": "fixtures/vendors.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside"
+        ]
+      }
+    },
+    {
+      "id": "policy-missing-argument-named",
+      "tool": "platte_check",
+      "args": {},
+      "expect": {
+        "status": "error",
+        "contains": [
+          "invoices"
+        ]
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reads",
+      "tool": "platte_check",
+      "mode": "review",
+      "args": {
+        "invoices": "fixtures/invoices.csv",
+        "owner_payments": "fixtures/owner-payments.csv",
+        "waivers": "fixtures/waivers.csv",
+        "vendors": "fixtures/vendors.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reports",
+      "tool": "platte_write_report",
+      "mode": "review",
+      "args": {
+        "invoices": "fixtures/invoices.csv",
+        "owner_payments": "fixtures/owner-payments.csv",
+        "waivers": "fixtures/waivers.csv",
+        "vendors": "fixtures/vendors.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-blocks-draft",
+      "tool": "platte_draft_notice",
+      "mode": "review",
+      "args": {
+        "invoices": "fixtures/invoices.csv",
+        "owner_payments": "fixtures/owner-payments.csv",
+        "waivers": "fixtures/waivers.csv",
+        "vendors": "fixtures/vendors.csv",
+        "as_of": "2026-11-16",
+        "vendor": "Sample Painting Co"
+      },
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-platte-request-send-one-click-in-auto",
+      "tool": "platte_request_send",
+      "mode": "auto",
+      "args": {
+        "draft": "fairbuild-out/drafts/example.md",
+        "draft_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expect": {
+        "status": "needs_approval"
+      }
+    },
+    {
+      "id": "policy-platte-request-release-one-click-in-auto",
+      "tool": "platte_request_release",
+      "mode": "auto",
+      "args": {
+        "invoices": "fixtures/invoices.csv",
+        "owner_payments": "fixtures/owner-payments.csv",
+        "waivers": "fixtures/waivers.csv",
+        "vendors": "fixtures/vendors.csv",
+        "as_of": "2026-11-16",
+        "invoice_number": "EC-2231",
+        "amount": 36000
+      },
+      "expect": {
+        "status": "needs_approval"
+      }
+    },
+    {
+      "id": "policy-refuses-ap-pay-invoice",
+      "tool": "ap_pay_invoice",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-payment-batch-release",
+      "tool": "payment_batch_release",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-email-send",
+      "tool": "email_send",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "intl-de-check-totals",
+      "tool": "platte_check",
+      "args": {
+        "invoices": "fixtures/intl/de/invoices.csv",
+        "owner_payments": "fixtures/intl/de/owner-payments.csv",
+        "waivers": "fixtures/intl/de/waivers.csv",
+        "vendors": "fixtures/intl/de/vendors.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.invoices": 6,
+          "result.release": 1,
+          "result.review": 1,
+          "result.hold": 4,
+          "result.releasable": 38700,
+          "result.held": 79200
+        }
+      },
+      "note": "German export of the same data (fixtures/intl/de); must match the English case \"check-totals\"."
+    },
+    {
+      "id": "intl-ja-check-totals",
+      "tool": "platte_check",
+      "args": {
+        "invoices": "fixtures/intl/ja/invoices.csv",
+        "owner_payments": "fixtures/intl/ja/owner-payments.csv",
+        "waivers": "fixtures/intl/ja/waivers.csv",
+        "vendors": "fixtures/intl/ja/vendors.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.invoices": 6,
+          "result.release": 1,
+          "result.review": 1,
+          "result.hold": 4,
+          "result.releasable": 38700,
+          "result.held": 79200
+        }
+      },
+      "note": "Japanese export of the same data (fixtures/intl/ja); must match the English case \"check-totals\"."
+    }
+  ]
+}

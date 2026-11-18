@@ -1,0 +1,7 @@
+Rechnungsnummer;Lieferant;Projekt;Auftragsnummer NU;Rechnungsdatum;Betrag;Einbehalt;PL-Freigabe
+EC-2231;Example Concrete LLC;24-101;SC-101;10.11.2026;40.000,00;4.000,00;yes
+TD-101;Test Drywall Co;24-101;SC-102;12.11.2026;18.000,00;1.800,00;yes
+EE-5502;Example Electric Inc;24-101;SC-103;14.11.2026;3.000,00;0,00;yes
+ER-7002;Example Roofing LLC;24-102;SC-104;07.11.2026;55.000,00;5.500,00;yes
+SP-13;Sample Painting Co;24-102;SC-105;14.11.2026;3.000,00;300,00;no
+SM-50;Sample Mechanical Inc;23-090;SC-201;05.11.2026;12.000,00;1.200,00;yes

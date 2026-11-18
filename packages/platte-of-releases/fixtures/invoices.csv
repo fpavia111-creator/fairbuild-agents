@@ -1,0 +1,7 @@
+invoice_number,vendor,job,commitment,invoice_date,amount,retainage,pm_approved
+EC-2231,Example Concrete LLC,24-101,SC-101,2026-11-10,40000,4000,yes
+TD-101,Test Drywall Co,24-101,SC-102,2026-11-12,18000,1800,yes
+EE-5502,Example Electric Inc,24-101,SC-103,2026-11-14,3000,0,yes
+ER-7002,Example Roofing LLC,24-102,SC-104,2026-11-07,55000,5500,yes
+SP-13,Sample Painting Co,24-102,SC-105,2026-11-14,3000,300,no
+SM-50,Sample Mechanical Inc,23-090,SC-201,2026-11-05,12000,1200,yes
