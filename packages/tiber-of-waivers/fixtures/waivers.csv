@@ -1,0 +1,9 @@
+vendor,job,waiver_type,through_date,amount,received_date,check_number,signed
+Example Concrete LLC,24-101,Conditional progress,2026-10-20,50400,2026-10-22,CK-5001,yes
+Example Concrete LLC,24-101,Unconditional progress,2026-10-20,50400,2026-11-02,CK-5001,yes
+Example Concrete LLC,24-101,Conditional progress,2026-11-10,36000,2026-11-11,CK-5002,yes
+Test Drywall Co,24-101,Conditional progress,2026-11-12,16200,2026-11-13,CK-5003,no
+Sample Lumber Supply,24-101,Conditional progress,2026-10-12,14400,2026-10-14,,yes
+Example Roofing LLC,24-102,Conditional progress,2026-11-07,130000,2026-11-08,CK-5006,yes
+Sample Sheet Metal,24-102,Conditional progress,2026-08-20,9500,2026-08-24,CK-5007,yes
+Sample Sheet Metal,24-102,Unconditional progress,2026-08-20,9500,2026-09-05,CK-5007,yes

@@ -1,0 +1,8 @@
+Zahlungsnummer;Lieferant;Projekt;Datum;Betrag;final
+CK-5001;Example Concrete LLC;24-101;25.10.2026;50.400,00;no
+CK-5002;Example Concrete LLC;24-101;12.11.2026;36.000,00;no
+CK-5003;Test Drywall Co;24-101;14.11.2026;16.200,00;no
+CK-5004;Example Electric Inc;24-101;30.10.2026;40.500,00;no
+CK-5005;Sample Lumber Supply;24-101;15.10.2026;14.400,00;no
+CK-5006;Example Roofing LLC;24-102;09.11.2026;136.500,00;no
+CK-5007;Sample Sheet Metal;24-102;25.08.2026;9.500,00;yes

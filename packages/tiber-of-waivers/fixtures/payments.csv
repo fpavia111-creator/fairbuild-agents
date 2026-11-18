@@ -1,0 +1,8 @@
+check_number,vendor,job,date,amount,final
+CK-5001,Example Concrete LLC,24-101,2026-10-25,50400,no
+CK-5002,Example Concrete LLC,24-101,2026-11-12,36000,no
+CK-5003,Test Drywall Co,24-101,2026-11-14,16200,no
+CK-5004,Example Electric Inc,24-101,2026-10-30,40500,no
+CK-5005,Sample Lumber Supply,24-101,2026-10-15,14400,no
+CK-5006,Example Roofing LLC,24-102,2026-11-09,136500,no
+CK-5007,Sample Sheet Metal,24-102,2026-08-25,9500,yes
