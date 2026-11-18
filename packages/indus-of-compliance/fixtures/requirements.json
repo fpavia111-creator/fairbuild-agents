@@ -1,0 +1,8 @@
+{
+  "required": ["W-9", "Signed subcontract", "Contractor license", "Safety program", "EMR letter"],
+  "by_trade": { "Electrical": ["Electrical license"], "Roofing": ["Fall protection plan"] },
+  "expiring_days": 30,
+  "review_days": 30,
+  "max_emr": 1.2,
+  "document_aliases": { "W9": "W-9" }
+}

@@ -1,0 +1,26 @@
+vendor,document_type,status,received_date,expires,value
+Example Concrete LLC,W-9,Approved,2026-05-20,,
+Example Concrete LLC,Signed subcontract,Approved,2026-06-01,,
+Example Concrete LLC,Contractor license,Approved,2026-01-10,2027-01-31,
+Example Concrete LLC,Safety program,Approved,2026-05-20,,
+Example Concrete LLC,EMR letter,Approved,2026-05-20,2027-05-01,0.92
+Test Drywall Co,W9,Approved,2026-08-10,,
+Test Drywall Co,Signed subcontract,Pending,2026-08-20,,
+Test Drywall Co,Contractor license,Approved,2026-08-10,2026-12-01,
+Test Drywall Co,Safety program,Approved,2026-08-10,,
+Test Drywall Co,EMR letter,Approved,2026-08-10,2027-08-01,1.35
+Example Electric Inc,Signed subcontract,Approved,2026-06-10,,
+Example Electric Inc,Contractor license,Approved,2026-06-01,2027-06-30,
+Example Electric Inc,Electrical license,Approved,2025-10-01,2026-09-30,
+Example Electric Inc,Safety program,Approved,2026-06-01,,
+Example Electric Inc,EMR letter,Approved,2026-06-01,2027-06-01,0.88
+Example Roofing LLC,W-9,Approved,2026-04-20,,
+Example Roofing LLC,Signed subcontract,Approved,2026-05-01,,
+Example Roofing LLC,Contractor license,Approved,2026-04-20,2027-04-30,
+Example Roofing LLC,Safety program,Approved,2026-04-20,,
+Example Roofing LLC,Fall protection plan,Rejected,2026-04-25,,
+Example Roofing LLC,EMR letter,Approved,2026-04-20,2027-04-01,1.0
+Sample Painting Co,W-9,Approved,2026-09-20,,
+Sample Painting Co,Signed subcontract,Approved,2026-10-01,,
+Sample Painting Co,Contractor license,Approved,2026-09-20,2027-09-30,
+Sample Rebar Co,W-9,Approved,2026-02-01,,

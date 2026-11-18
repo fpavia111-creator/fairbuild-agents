@@ -1,0 +1,56 @@
+{
+  "name": "indus-of-compliance",
+  "version": "0.1.0",
+  "description": "Indus of Compliance: each active subcontractor's compliance documents against your list and the extra ones its trade needs (W-9, signed subcontract, licences, safety program, EMR letter and others you name): missing, expired, expiring, rejected, waiting too long for review, and safety ratings above your limit. Drafts document requests. Never approves or blocks a vendor.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "indus-of-compliance": "bin/indus-of-compliance.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/indus-of-compliance.js demo",
+    "eval": "node bin/indus-of-compliance.js eval"
+  },
+  "dependencies": {
+    "fairbuild-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairbuild-agents.git",
+    "directory": "packages/indus-of-compliance"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/indus-of-compliance#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairbuild-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "construction",
+    "contractors",
+    "construction-accounting",
+    "fairbuild",
+    "subcontractor-compliance",
+    "prequalification",
+    "vendor-onboarding"
+  ]
+}
