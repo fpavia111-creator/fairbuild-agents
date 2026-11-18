@@ -36,10 +36,12 @@ export function checkWaivers({ paymentRows, waiverRows, settings = {}, asOf }) {
   const used = new Set();
   const items = [];
   const payments = sortBy(paymentRows.filter((p) => str(p.check_number) || num(p.amount) !== null), [(p) => isoDate(p.date) || '', 1], [(p) => str(p.check_number), 1]);
+  // Waivers indexed by vendor, in file order (a scan of every waiver per payment grew with the square of the file).
+  const byVendor = new Map(); for (const w of waivers) { if (!byVendor.has(w.vkey)) byVendor.set(w.vkey, []); byVendor.get(w.vkey).push(w); }
   for (const p of payments) {
     const f = [];
     const vkey = partyKey(p.vendor); const job = jobKey(p.job); const amount = num(p.amount) ?? 0; const date = isoDate(p.date); const check = str(p.check_number).toUpperCase(); const isFinal = readYesNo(p.final) === true;
-    const mine = waivers.filter((w) => !used.has(w.i) && w.vkey === vkey && (!w.job || !job || w.job === job) && (w.check ? w.check === check : w.amount !== null && Math.abs(w.amount - amount) <= tol));
+    const mine = (byVendor.get(vkey) || []).filter((w) => !used.has(w.i) && (!w.job || !job || w.job === job) && (w.check ? w.check === check : w.amount !== null && Math.abs(w.amount - amount) <= tol));
     const pick = (cond) => sortBy(mine.filter((w) => w.conditional === cond && (!isFinal || w.final)), [(w) => (w.check === check ? 0 : 1), 1], [(w) => w.received || '', 1])[0] || null;
     const cw = pick(true); const uw = pick(false);
     for (const w of [cw, uw]) if (w) used.add(w.i);

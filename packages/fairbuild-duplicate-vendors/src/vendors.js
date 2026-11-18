@@ -1,5 +1,5 @@
 // Fairbuild Duplicate Vendors: duplicate vendors in the vendor master and duplicate AP invoices. Pure functions, no I/O.
-import { num, str, round2, isoDate, daysBetween, partyKey, partySimilarity, statusOf, levenshtein, normalizeAddress, finding, orderFindings, byFinding, sortBy } from 'fairbuild-core';
+import { num, str, round2, isoDate, daysBetween, partyKey, partySimilarity, statusOf, levenshtein, normalizeAddress, normalizeName, finding, orderFindings, byFinding, sortBy } from 'fairbuild-core';
 
 const t = (aliases, extra = {}) => ({ aliases, ...extra });
 export const VENDOR_MASTER_FIELDS = Object.freeze({
@@ -38,8 +38,20 @@ export function findDuplicates({ vendorRows = null, invoiceRows = null, settings
   const vendors = (vendorRows || []).filter((v) => str(v.vendor_id)).map((v) => ({ id: str(v.vendor_id), name: str(v.name), tax: digitsOf(v.tax_id), bank: str(v.bank_last4), addr: normalizeAddress(`${str(v.address)} ${str(v.city)}`), phone: digitsOf(v.phone) }));
   const items = []; const parent = new Map(vendors.map((v) => [v.id, v.id]));
   const root = (x) => { while (parent.get(x) !== x) x = parent.get(x); return x; };
-  for (let i = 0; i < vendors.length; i++) for (let j = i + 1; j < vendors.length; j++) {
-    const [a, b] = [vendors[i], vendors[j]].sort((p, q) => (p.id < q.id ? -1 : 1)); const f = [];
+  // Only vendors that share something are compared (tax id, bank, address, phone, or the start of
+  // a name word): every-pair comparison took more than three minutes at 10,000 vendors. A name word
+  // shared by more than 200 vendors ("construction") is too common to pair them on its own.
+  const blocks = new Map(); const put = (k, i) => { if (!blocks.has(k)) blocks.set(k, []); blocks.get(k).push(i); };
+  vendors.forEach((v, i) => {
+    if (v.tax) put(`t:${v.tax}`, i); if (v.bank) put(`b:${v.bank}`, i); if (v.addr && v.addr.length > 6) put(`a:${v.addr}`, i); if (v.phone && v.phone.length >= 7) put(`p:${v.phone}`, i);
+    const nn = normalizeName(v.name) || ''; if (nn) put(`n:${nn.slice(0, 5)}`, i);
+    for (const w of new Set(nn.split(' ').filter((x) => x.length >= 3))) put(`w:${w.slice(0, 5)}`, i);
+  });
+  const pairs = new Set();
+  for (const [k, list] of blocks) { if ((k[0] === 'n' || k[0] === 'w') && list.length > 200) continue; for (let x = 0; x < list.length; x++) for (let y = x + 1; y < list.length; y++) pairs.add(list[x] * vendors.length + list[y]); }
+  for (const p of [...pairs].sort((x, y) => x - y)) {
+    const i = Math.floor(p / vendors.length), j = p % vendors.length;
+    const [a, b] = [vendors[i], vendors[j]].sort((p2, q) => (p2.id < q.id ? -1 : 1)); const f = [];
     const sim = partySimilarity(a.name, b.name);
     if (a.tax && a.tax === b.tax) f.push(finding('same_tax_id', null, `Both have tax id ending ${a.tax.slice(-4)}.`));
     if (a.bank && a.bank === b.bank && (sim >= 0.8 || (a.addr && a.addr === b.addr))) f.push(finding('same_bank', null, `Both pay to a bank account ending ${a.bank}.`));
@@ -54,12 +66,13 @@ export function findDuplicates({ vendorRows = null, invoiceRows = null, settings
   const group = (inv) => { const id = str(inv.vendor_id); if (id && parent.has(id)) return root(id); return `name:${partyKey(inv.vendor)}`; };
   const invs = sortBy((invoiceRows || []).filter((i) => str(i.invoice_number)), [(i) => isoDate(i.invoice_date) || '', 1], [(i) => str(i.invoice_number), 1], [(i) => str(i.vendor_id), 1]);
   const used = new Set();
+  // Invoices are compared only inside their vendor group (same order as before, far fewer pairs).
+  const byGroup = new Map(); const gOf = invs.map((x, k) => { const g = group(x); if (!byGroup.has(g)) byGroup.set(g, []); byGroup.get(g).push(k); return g; });
   for (let i = 0; i < invs.length; i++) {
     if (used.has(i)) continue;
     const a = invs[i]; const same = [i]; const f = [];
-    for (let j = i + 1; j < invs.length; j++) {
-      if (used.has(j)) continue; const b = invs[j];
-      if (group(a) !== group(b)) continue;
+    for (const j of byGroup.get(gOf[i])) {
+      if (j <= i || used.has(j)) continue; const b = invs[j];
       const amtA = num(a.amount), amtB = num(b.amount);
       if (numKey(a.invoice_number) === numKey(b.invoice_number) || (digitsOf(a.invoice_number).length >= 4 && digitsOf(a.invoice_number) === digitsOf(b.invoice_number) && amtA === amtB)) { same.push(j); if (!f.some((x) => x.code === 'same_number')) f.push(finding('same_number', null, `Invoice number ${str(a.invoice_number)} is entered ${str(b.invoice_number) !== str(a.invoice_number) ? `also as ${str(b.invoice_number)}` : 'more than once'}${str(a.vendor_id) !== str(b.vendor_id) ? ` under vendor records ${str(a.vendor_id)} and ${str(b.vendor_id)}` : ''}.`)); continue; }
       const d = daysBetween(a.invoice_date, b.invoice_date);

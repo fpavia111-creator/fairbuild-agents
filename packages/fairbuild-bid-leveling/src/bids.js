@@ -37,7 +37,8 @@ const stamp = (v) => { const s = str(v).replace(' ', 'T'); return /^\d{4}-\d{2}-
 
 export function levelBids({ bidRows, scopeRows = null, settings = {} }) {
   const addenda = num(settings.addenda_required) ?? 0; const bondReq = settings.require_bond === true; const due = stamp(settings.due_at); const out_pct = num(settings.outlier_pct) ?? 15;
-  const scope = new Map(); if (scopeRows) for (const s of scopeRows) { const p = norm(s.bid_package); if (!p || !str(s.item)) continue; if (!scope.has(p)) scope.set(p, []); scope.get(p).push({ item: str(s.item), plug: num(s.plug_value) ?? 0 }); }
+  // Each scope item counts once per package (a sheet listing it twice must not double its plug); the higher plug wins, whatever the row order.
+  const scope = new Map(); const seenItem = new Map(); if (scopeRows) for (const s of scopeRows) { const p = norm(s.bid_package); if (!p || !str(s.item)) continue; const ik = `${p}|${norm(s.item)}`; const plug = num(s.plug_value) ?? 0; if (seenItem.has(ik)) { const e = seenItem.get(ik); e.plug = Math.max(e.plug, plug); continue; } const e = { item: str(s.item), key: norm(s.item), plug }; seenItem.set(ik, e); if (!scope.has(p)) scope.set(p, []); scope.get(p).push(e); }
   const packages = new Map(); for (const b of bidRows) { const p = norm(b.bid_package); if (!p || !str(b.bidder)) continue; if (!packages.has(p)) packages.set(p, { name: str(b.bid_package), bids: [] }); packages.get(p).bids.push(b); }
   const items = []; const byPackage = {};
   for (const [p, pk] of [...packages].sort(([a], [b]) => (a < b ? -1 : 1))) {
@@ -45,7 +46,7 @@ export function levelBids({ bidRows, scopeRows = null, settings = {} }) {
     const list = [];
     for (const b of pk.bids) {
       const f = []; const base = num(b.base_bid) ?? 0;
-      const inc = new Set(str(b.includes).split(/[;,|]/).map(norm).filter(Boolean)); const missing = (scope.get(p) || []).filter((s) => !inc.has(norm(s.item)));
+      const inc = new Set(str(b.includes).split(/[;,|]/).map(norm).filter(Boolean)); const missing = (scope.get(p) || []).filter((s) => !inc.has(s.key));
       const plugs = round2(missing.reduce((a, s) => a + s.plug, 0));
       if (missing.length) f.push(finding('scope_gap', plugs, `Does not include ${missing.map((s) => `${s.item} (plug ${s.plug})`).join(', ')}; leveled bid is ${round2(base + plugs)}.`));
       const ack = num(b.addenda_acknowledged) ?? 0; if (ack < addenda) f.push(finding('missing_addenda', null, `Acknowledges ${ack} of ${addenda} addenda.`));

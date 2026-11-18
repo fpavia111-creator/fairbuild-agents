@@ -1,5 +1,5 @@
 // Fairbuild Warranty Callbacks: warranty callbacks by job, trade and subcontractor. Pure functions, no I/O.
-import { num, str, round2, isoDate, daysBetween, statusOf, jobKey, finding, orderFindings, byFinding, sortBy } from 'fairbuild-core';
+import { num, str, round2, isoDate, daysBetween, addDays, statusOf, jobKey, finding, orderFindings, byFinding, sortBy } from 'fairbuild-core';
 
 const t = (aliases, extra = {}) => ({ aliases, ...extra });
 export const CALLBACK_FIELDS = Object.freeze({
@@ -37,14 +37,21 @@ export function checkWarranty({ callbackRows, jobRows = null, settings = {}, asO
   const selfWords = (settings.self_performed || ['self', 'in-house', 'own crew']).map((w) => w.toLowerCase());
   const jobs = new Map(); if (jobRows) for (const j of jobRows) { const d = isoDate(j.completion_date); if (!str(j.job) || !d) continue; jobs.set(jobKey(j.job), { completion: d, ends: addMonths(d, num(j.warranty_months) ?? months) }); }
   const rows = sortBy(callbackRows.filter((c) => str(c.callback_id)), [(c) => isoDate(c.date_reported) || '', 1], [(c) => str(c.callback_id), 1]);
-  const items = [];
-  for (const [n, c] of rows.entries()) {
+  const items = []; const seenByKey = new Map();
+  for (const c of rows) {
     const f = []; const rep = isoDate(c.date_reported); const cost = num(c.cost) ?? 0; const vendor = str(c.vendor); const own = !vendor || selfWords.some((w) => vendor.toLowerCase().includes(w));
     const j = jobs.get(jobKey(c.job)); const closed = statusOf(c.status) === 'closed' || !!isoDate(c.closed_date);
     if (j && rep && rep > j.ends) f.push(finding('out_of_warranty', cost, `Reported ${rep}; the warranty on job ${str(c.job)} ended ${j.ends}. The repair may be billable to the owner.`));
     else if (!own && cost > 0) f.push(finding('backcharge_candidate', cost, `${vendor} did the ${str(c.trade).toLowerCase() || 'work'}; ${cost} of callback cost to recover under its subcontract warranty.`));
-    const earlier = rows.slice(0, n).filter((x) => jobKey(x.job) === jobKey(c.job) && str(x.trade).toLowerCase() === str(c.trade).toLowerCase() && str(c.trade) && rep && isoDate(x.date_reported) && daysBetween(isoDate(x.date_reported), rep) <= repeatDays);
-    if (earlier.length) f.push(finding('repeat_callback', null, `The same trade was called back on job ${str(c.job)} ${daysBetween(isoDate(earlier.at(-1).date_reported), rep)} day(s) earlier (${earlier.map((x) => str(x.callback_id)).join(', ')}). The first repair may not have fixed it.`));
+    // Earlier callbacks on the same job and trade, kept per job and trade (a scan of every earlier row took a minute at 10,000 rows).
+    // Rows are in date order, so the ones inside the window are the latest ones: walk back only that far.
+    const tk = `${jobKey(c.job)}|${str(c.trade).toLowerCase()}`; const prior = seenByKey.get(tk) || [];
+    let from = prior.length;
+    if (str(c.trade) && rep) { const cut = addDays(rep, -repeatDays); let lo = 0, hi = prior.length; while (lo < hi) { const mid = (lo + hi) >> 1; if ((prior[mid].date || '') >= cut) hi = mid; else lo = mid + 1; } from = lo; }
+    const inWindow = prior.length - from; const earlier = prior.slice(Math.max(from, prior.length - 5));
+    prior.push({ id: str(c.callback_id), date: rep }); seenByKey.set(tk, prior);
+    const named = `${earlier.map((x) => x.id).join(', ')}${inWindow > 5 ? ` and ${inWindow - 5} more` : ''}`;
+    if (inWindow) f.push(finding('repeat_callback', null, `The same trade was called back on job ${str(c.job)} ${daysBetween(earlier.at(-1).date, rep)} day(s) earlier (${named}). The first repair may not have fixed it.`));
     if (!closed && rep) { const open = daysBetween(rep, asOf); if (open > respDays) f.push(finding('open_too_long', null, `Open ${open} days since ${rep}.`)); }
     if (!str(c.trade) || (!vendor && !own)) f.push(finding('no_responsible_party', null, 'No trade or responsible party recorded.'));
     else if (!vendor) f.push(finding('no_responsible_party', null, `No one recorded as responsible for the ${str(c.trade).toLowerCase()} repair.`));

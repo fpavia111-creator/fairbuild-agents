@@ -46,6 +46,7 @@ export function checkTickets({ ticketRows, lineRows, priceRows = null, settings 
   const prices = new Map(); if (priceRows) for (const p of priceRows) prices.set(`${partyKey(p.supplier)}|${mkey(p.material)}`, num(p.unit_price));
   const lines = sortBy(lineRows.filter((l) => str(l.invoice_number)), [(l) => isoDate(l.invoice_date) || '', 1], [(l) => str(l.invoice_number), 1], [(l) => str(l.ticket), 1], [(l) => str(l.material), 1]);
   const billed = new Map(); const probable = new Set(); const items = [];
+  let bySupMat = null;
   for (const l of lines) {
     const f = []; const q = num(l.quantity) ?? 0; const p = num(l.unit_price); const amt = num(l.amount) ?? (p !== null ? round2(q * p) : 0);
     const agreed = prices.get(`${partyKey(l.supplier)}|${mkey(l.material)}`) ?? null; const price = p ?? (q ? round2(amt / q) : null);
@@ -53,7 +54,9 @@ export function checkTickets({ ticketRows, lineRows, priceRows = null, settings 
     if (p !== null && Math.abs(round2(q * p) - amt) > tol) f.push(finding('extension_off', amt - round2(q * p), `${q} × ${p} is ${round2(q * p)}; the line says ${amt}.`));
     if (agreed !== null && price !== null && price - agreed > ptol) f.push(finding('price_over_agreed', round2((price - agreed) * q), `Billed ${price} a unit; the agreed price for ${str(l.material)} is ${agreed}.`));
     if (!str(l.ticket) || !ticket) {
-      const guess = [...tickets.values()].find((x) => partyKey(x.supplier) === partyKey(l.supplier) && mkey(x.material) === mkey(l.material) && Math.abs(x.quantity - q) < 0.001 && (!str(l.job) || jobKey(x.job) === jobKey(l.job)));
+      // Candidates come from an index by supplier and material, in ticket order (a scan of every ticket per line took 36 s at 10,000 rows).
+      if (!bySupMat) { bySupMat = new Map(); for (const x of tickets.values()) { const k2 = `${partyKey(x.supplier)}|${mkey(x.material)}`; if (!bySupMat.has(k2)) bySupMat.set(k2, []); bySupMat.get(k2).push(x); } }
+      const guess = (bySupMat.get(`${partyKey(l.supplier)}|${mkey(l.material)}`) || []).find((x) => Math.abs(x.quantity - q) < 0.001 && (!str(l.job) || jobKey(x.job) === jobKey(l.job)));
       if (guess) probable.add(`${tkey(guess.ticket)}|${mkey(guess.material)}`);
       f.push(finding('no_ticket', null, `${str(l.ticket) ? `Ticket ${str(l.ticket)} for ${str(l.material)} is not in the delivery tickets` : 'No delivery ticket on this line'}${guess ? `; ticket ${guess.ticket} matches by supplier, material and quantity` : ''}. Get the signed ticket before approving.`));
     } else {

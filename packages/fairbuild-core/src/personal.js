@@ -140,14 +140,19 @@ export class PersonalMasker {
     for (const r of rows) if (r && typeof r === 'object') for (const [k, kind] of cols) if (r[k] !== null && r[k] !== undefined && r[k] !== '') this.register(kind, r[k]);
   }
 
+  // Index: first word → value length → exact value. At each word of a text, one lookup per distinct
+  // length (longest first) instead of a scan of every value with that first word, which was
+  // quadratic with thousands of homeowners sharing first names (a minute at 10,000 rows).
   #buildIndex() {
     const idx = new Map();
     for (const [low, e] of this.seen) {
       const first = (/[a-z0-9À-￿]+/.exec(low) || [low])[0];
-      if (!idx.has(first)) idx.set(first, []);
-      idx.get(first).push({ low, ...e });
+      if (!idx.has(first)) idx.set(first, { lens: [], byLen: new Map() });
+      const b = idx.get(first);
+      if (!b.byLen.has(low.length)) { b.byLen.set(low.length, new Map()); b.lens.push(low.length); }
+      b.byLen.get(low.length).set(low, { low, ...e });
     }
-    for (const list of idx.values()) list.sort((a, b) => b.low.length - a.low.length);
+    for (const b of idx.values()) b.lens.sort((x, y) => y - x);
     this.index = idx;
   }
 
@@ -163,9 +168,10 @@ export class PersonalMasker {
     while ((m = word.exec(low))) {
       if (m.index < i) continue;
       const before = m.index === 0 || !/[a-z0-9À-￿]/.test(low[m.index - 1]);
-      const cands = before ? this.index.get(m[0]) : null;
-      if (cands) {
-        const hit = cands.find((c) => low.startsWith(c.low, m.index) && !/[a-z0-9À-￿]/.test(low[m.index + c.low.length] || ' '));
+      const b = before ? this.index.get(m[0]) : null;
+      if (b) {
+        let hit = null;
+        for (const L of b.lens) { const c = b.byLen.get(L).get(low.substr(m.index, L)); if (c && !/[a-z0-9À-￿]/.test(low[m.index + L] || ' ')) { hit = c; break; } }
         if (hit) { res += out.slice(i, m.index) + hit.rep; i = m.index + hit.low.length; word.lastIndex = i; this.counts.text = (this.counts.text || 0) + 1; continue; }
       }
     }

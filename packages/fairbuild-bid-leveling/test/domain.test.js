@@ -44,3 +44,11 @@ test('the spread is between the lowest and highest responsive leveled bids', () 
   const r = run([bid('A Co', 100000), bid('B Co', 110000)]);
   assert.equal(r.by_package.Roofing.spread_pct, 10);
 });
+
+test('a scope item listed twice counts once, at the higher plug, whatever the row order', () => {
+  const dup = [...scope, { bid_package: 'Roofing', item: 'Flashing ', plug_value: 9000 }];
+  for (const rows of [dup, [...dup].reverse()]) {
+    const r = levelBids({ bidRows: [bid('A Co', 100000, { includes: 'membrane' })], scopeRows: rows, settings: {} });
+    assert.deepEqual(one(r, 'A Co').findings.filter((f) => f.code === 'scope_gap').map((f) => f.amount), [9000]);
+  }
+});

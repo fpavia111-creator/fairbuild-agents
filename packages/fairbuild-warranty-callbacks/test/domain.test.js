@@ -42,3 +42,10 @@ test('homeowner names and phone numbers are masked in what the model sees', asyn
   const r = await new AgentRuntime(manifest, { root: fileURLToPath(new URL('../fixtures', import.meta.url)), audit: false }).call('warranty_check', { callbacks: 'callbacks.csv', as_of: '2026-11-16' });
   const txt = JSON.stringify(r); assert.doesNotMatch(txt, /Avery Example|555-0111/); assert.ok(r.personal_data.masked.name > 0);
 });
+
+test('a repeat names the five latest earlier callbacks inside the window and counts the rest', () => {
+  const rows = [cb('A', { date_reported: '2026-06-01' }), ...['B', 'C', 'D', 'E', 'F', 'G', 'H'].map((id, k) => cb(id, { date_reported: `2026-10-0${k + 1}` })), cb('Z', { date_reported: '2026-10-20' })];
+  const z = run(rows).items.find((i) => i.callback_id === 'Z').findings.find((f) => f.code === 'repeat_callback');
+  assert.match(z.detail, /\(D, E, F, G, H and 2 more\)/);
+  assert.match(z.detail, /13 day\(s\) earlier/);
+});
