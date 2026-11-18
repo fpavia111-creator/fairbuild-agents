@@ -40,7 +40,7 @@ export function levelBids({ bidRows, scopeRows = null, settings = {} }) {
   const scope = new Map(); if (scopeRows) for (const s of scopeRows) { const p = norm(s.bid_package); if (!p || !str(s.item)) continue; if (!scope.has(p)) scope.set(p, []); scope.get(p).push({ item: str(s.item), plug: num(s.plug_value) ?? 0 }); }
   const packages = new Map(); for (const b of bidRows) { const p = norm(b.bid_package); if (!p || !str(b.bidder)) continue; if (!packages.has(p)) packages.set(p, { name: str(b.bid_package), bids: [] }); packages.get(p).bids.push(b); }
   const items = []; const byPackage = {};
-  for (const [p, pk] of packages) {
+  for (const [p, pk] of [...packages].sort(([a], [b]) => (a < b ? -1 : 1))) {
     const med = median(pk.bids.map((b) => num(b.base_bid)).filter((x) => x !== null));
     const list = [];
     for (const b of pk.bids) {
