@@ -1,0 +1,11 @@
+job,change_order,co_type,status,description,amount,cost,submitted_date,approved_date,billed
+24-101,CO-001,Owner,Approved,Added outlets in exam rooms,5000,3800,2026-08-01,2026-08-20,5000
+24-101,CO-002,Owner,Approved,Upgraded lighting,8000,6100,2026-09-05,2026-09-30,3000
+24-101,PCO-003,PCO,Pending,Unforeseen rock excavation,12500,9600,2026-09-10,,0
+24-101,PCO-004,PCO,Pending,Owner-requested door hardware,,1200,2026-11-02,,0
+24-101,CO-005,Owner,Pending,Added soffit framing,4200,3000,2026-10-01,,2000
+24-102,CO-101,Owner,Approved,Roof drain relocation,6500,7200,2026-07-15,2026-08-01,6500
+24-102,CO-102,Owner,Approved,Additional crickets,3000,2100,2026-08-20,2026-09-02,3600
+24-102,PCO-103,PCO,Rejected,Deck repair,9000,4800,2026-06-01,,0
+24-102,CO-104,Owner,Approved,Parapet cap,2500,1900,2026-10-10,2026-10-20,2500
+24-102,CO-104,Owner,Approved,Parapet cap entered twice,2500,1900,2026-10-10,2026-10-20,0

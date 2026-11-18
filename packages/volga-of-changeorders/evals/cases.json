@@ -1,0 +1,370 @@
+{
+  "suite": "volga-of-changeorders",
+  "root": "..",
+  "data_note": "Fictional jobs and change orders in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "check-totals",
+      "tool": "volga_check",
+      "args": {
+        "change_orders": "fixtures/change-orders.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.change_orders": 9,
+          "result.approved": 25000,
+          "result.pending": 16700,
+          "result.billed": 22600,
+          "result.unbilled": 5000,
+          "result.billing_error": 2,
+          "result.unbilled_count": 1,
+          "result.review": 5,
+          "result.ok": 1,
+          "result.pending_over_days": 2
+        }
+      }
+    },
+    {
+      "id": "every-planted-issue",
+      "tool": "volga_check",
+      "args": {
+        "change_orders": "fixtures/change-orders.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "contains": [
+          "duplicate_number",
+          "billed_not_approved",
+          "over_billed",
+          "approved_unbilled",
+          "negative_margin",
+          "pending_aging",
+          "no_price",
+          "rejected_with_cost"
+        ]
+      }
+    },
+    {
+      "id": "explain-billed-before-approval",
+      "tool": "volga_explain",
+      "args": {
+        "change_orders": "fixtures/change-orders.csv",
+        "as_of": "2026-11-16",
+        "change_order": "CO-005"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "2000 has been billed on CO-005, which is pending",
+          "Pending 46 days since 2026-10-01"
+        ],
+        "equals": {
+          "result.item.status": "billing_error"
+        }
+      }
+    },
+    {
+      "id": "explain-unbilled",
+      "tool": "volga_explain",
+      "args": {
+        "change_orders": "fixtures/change-orders.csv",
+        "as_of": "2026-11-16",
+        "change_order": "CO-002"
+      },
+      "expect": {
+        "equals": {
+          "result.item.unbilled": 5000,
+          "result.item.status": "unbilled"
+        }
+      }
+    },
+    {
+      "id": "duplicate-counted-once",
+      "tool": "volga_explain",
+      "args": {
+        "change_orders": "fixtures/change-orders.csv",
+        "as_of": "2026-11-16",
+        "change_order": "CO-104"
+      },
+      "expect": {
+        "contains": [
+          "appears 2 times on job 24-102"
+        ],
+        "equals": {
+          "result.item.amount": 2500,
+          "result.item.billed": 2500
+        }
+      }
+    },
+    {
+      "id": "pending-days-setting",
+      "tool": "volga_check",
+      "args": {
+        "change_orders": "fixtures/change-orders.csv",
+        "settings": "fixtures/settings-90.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "equals": {
+          "result.pending_over_days": 0,
+          "result.settings_used.pending_days": 90
+        },
+        "not_contains": [
+          "pending_aging"
+        ]
+      }
+    },
+    {
+      "id": "buildertrend-export",
+      "tool": "volga_check",
+      "args": {
+        "change_orders": "fixtures/exports/buildertrend-change-orders.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "equals": {
+          "result.change_orders": 3,
+          "result.approved": 13000,
+          "result.pending": 12500,
+          "result.unbilled": 13000
+        },
+        "contains": [
+          "buildertrend_change_orders"
+        ]
+      }
+    },
+    {
+      "id": "settings-typo-is-named",
+      "tool": "volga_check",
+      "args": {
+        "change_orders": "fixtures/change-orders.csv",
+        "settings": "fixtures/settings-typo.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "co_settings"
+        ]
+      }
+    },
+    {
+      "id": "write-report-writes-files",
+      "tool": "volga_write_report",
+      "args": {
+        "change_orders": "fixtures/change-orders.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "length": {
+          "result.files": 2
+        }
+      }
+    },
+    {
+      "id": "draft-followup",
+      "tool": "volga_draft_followup",
+      "mode": "auto",
+      "auto_actions": [
+        "volga_draft_followup"
+      ],
+      "args": {
+        "change_orders": "fixtures/change-orders.csv",
+        "as_of": "2026-11-16",
+        "job": "24-101"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.id": "24-101",
+          "result.change_orders": 3,
+          "result.amount": 16700
+        },
+        "contains": [
+          "Nothing was sent"
+        ]
+      }
+    },
+    {
+      "id": "draft-followup-nothing-pending",
+      "tool": "volga_draft_followup",
+      "mode": "auto",
+      "auto_actions": [
+        "volga_draft_followup"
+      ],
+      "args": {
+        "change_orders": "fixtures/exports/buildertrend-change-orders.csv",
+        "as_of": "2026-11-16",
+        "job": "24-999"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "not in the change order log"
+        ]
+      }
+    },
+    {
+      "id": "policy-invented-tool",
+      "tool": "volga_pay_everything_now",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-file-outside-root",
+      "tool": "volga_check",
+      "args": {
+        "change_orders": "../../../outside-the-root.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside"
+        ]
+      }
+    },
+    {
+      "id": "policy-missing-argument-named",
+      "tool": "volga_check",
+      "args": {},
+      "expect": {
+        "status": "error",
+        "contains": [
+          "change_orders"
+        ]
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reads",
+      "tool": "volga_check",
+      "mode": "review",
+      "args": {
+        "change_orders": "fixtures/change-orders.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reports",
+      "tool": "volga_write_report",
+      "mode": "review",
+      "args": {
+        "change_orders": "fixtures/change-orders.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-blocks-draft",
+      "tool": "volga_draft_followup",
+      "mode": "review",
+      "args": {
+        "change_orders": "fixtures/change-orders.csv",
+        "as_of": "2026-11-16",
+        "job": "24-101"
+      },
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-volga-request-send-one-click-in-auto",
+      "tool": "volga_request_send",
+      "mode": "auto",
+      "args": {
+        "draft": "fairbuild-out/drafts/example.md",
+        "draft_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expect": {
+        "status": "needs_approval"
+      }
+    },
+    {
+      "id": "policy-refuses-change-order-approve",
+      "tool": "change_order_approve",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-invoice-create",
+      "tool": "invoice_create",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-email-send",
+      "tool": "email_send",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "intl-de-check-totals",
+      "tool": "volga_check",
+      "args": {
+        "change_orders": "fixtures/intl/de/change-orders.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.change_orders": 9,
+          "result.approved": 25000,
+          "result.pending": 16700,
+          "result.billed": 22600,
+          "result.unbilled": 5000,
+          "result.billing_error": 2,
+          "result.unbilled_count": 1,
+          "result.review": 5,
+          "result.ok": 1,
+          "result.pending_over_days": 2
+        }
+      },
+      "note": "German export of the same data (fixtures/intl/de); must match the English case \"check-totals\"."
+    },
+    {
+      "id": "intl-ja-check-totals",
+      "tool": "volga_check",
+      "args": {
+        "change_orders": "fixtures/intl/ja/change-orders.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.change_orders": 9,
+          "result.approved": 25000,
+          "result.pending": 16700,
+          "result.billed": 22600,
+          "result.unbilled": 5000,
+          "result.billing_error": 2,
+          "result.unbilled_count": 1,
+          "result.review": 5,
+          "result.ok": 1,
+          "result.pending_over_days": 2
+        }
+      },
+      "note": "Japanese export of the same data (fixtures/intl/ja); must match the English case \"check-totals\"."
+    }
+  ]
+}

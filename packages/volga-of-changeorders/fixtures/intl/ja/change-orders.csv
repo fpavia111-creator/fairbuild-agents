@@ -1,0 +1,11 @@
+工事番号,変更番号,変更区分,ステータス,摘要,金額,原価,提出日,承認日,請求済
+24-101,CO-001,Owner,Approved,Added outlets in exam rooms,"5,000.00","3,800.00",2026/08/01,2026/08/20,"5,000.00"
+24-101,CO-002,Owner,Approved,Upgraded lighting,"8,000.00","6,100.00",2026/09/05,2026/09/30,"3,000.00"
+24-101,PCO-003,PCO,Pending,Unforeseen rock excavation,"12,500.00","9,600.00",2026/09/10,,0.00
+24-101,PCO-004,PCO,Pending,Owner-requested door hardware,,"1,200.00",2026/11/02,,0.00
+24-101,CO-005,Owner,Pending,Added soffit framing,"4,200.00","3,000.00",2026/10/01,,"2,000.00"
+24-102,CO-101,Owner,Approved,Roof drain relocation,"6,500.00","7,200.00",2026/07/15,2026/08/01,"6,500.00"
+24-102,CO-102,Owner,Approved,Additional crickets,"3,000.00","2,100.00",2026/08/20,2026/09/02,"3,600.00"
+24-102,PCO-103,PCO,Rejected,Deck repair,"9,000.00","4,800.00",2026/06/01,,0.00
+24-102,CO-104,Owner,Approved,Parapet cap,"2,500.00","1,900.00",2026/10/10,2026/10/20,"2,500.00"
+24-102,CO-104,Owner,Approved,Parapet cap entered twice,"2,500.00","1,900.00",2026/10/10,2026/10/20,0.00
