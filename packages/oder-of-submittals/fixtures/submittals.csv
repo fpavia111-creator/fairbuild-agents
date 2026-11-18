@@ -1,0 +1,9 @@
+submittal,revision,spec_section,title,vendor,status,ball_in_court,submitted_date,returned_date,required_on_site,lead_time_days,review_days
+S-033000-01,0,03 30 00,Concrete mix designs,Example Concrete LLC,Approved,,2026-05-20,2026-06-01,2026-06-15,7,10
+S-081113-01,0,08 11 13,Hollow metal doors and frames,Example Door Co,Submitted,Architect,2026-10-20,,2027-01-15,56,10
+S-083323-01,0,08 33 23,Overhead coiling doors,Sample Door Supply,Open,Subcontractor,,,2026-12-15,42,10
+S-092900-01,0,09 29 00,Gypsum board,Test Drywall Co,Revise and resubmit,Subcontractor,2026-08-01,2026-08-10,2027-01-10,14,10
+S-092900-01,1,09 29 00,Gypsum board,Test Drywall Co,Revise and resubmit,Subcontractor,2026-09-01,2026-09-09,2027-01-10,14,10
+S-092900-01,2,09 29 00,Gypsum board,Test Drywall Co,Revise and resubmit,Subcontractor,2026-10-01,2026-10-08,2027-01-10,14,10
+S-260500-01,0,26 05 00,Electrical gear,Example Electric Inc,Approved as noted,,2026-08-25,2026-09-10,2026-10-01,30,10
+S-233000-01,0,23 30 00,HVAC ductwork,Sample Mechanical Inc,Submitted,Engineer,2026-11-10,,2027-02-01,30,10

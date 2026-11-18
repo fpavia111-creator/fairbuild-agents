@@ -1,0 +1,364 @@
+{
+  "suite": "oder-of-submittals",
+  "root": "..",
+  "data_note": "A fictional submittal register in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "check-totals",
+      "tool": "oder_check",
+      "args": {
+        "submittals": "fixtures/submittals.csv",
+        "specs": "fixtures/specs.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.submittals": 6,
+          "result.sections_without_submittal": 2,
+          "result.late": 3,
+          "result.review": 3,
+          "result.in_progress": 1,
+          "result.done": 1,
+          "result.by_ball_in_court.Architect.oldest_days": 27
+        }
+      }
+    },
+    {
+      "id": "every-planted-issue",
+      "tool": "oder_check",
+      "args": {
+        "submittals": "fixtures/submittals.csv",
+        "specs": "fixtures/specs.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "contains": [
+          "submit_late",
+          "review_overdue",
+          "resubmit_overdue",
+          "approved_too_late",
+          "resubmittal_loop",
+          "no_submittal_for_section"
+        ]
+      }
+    },
+    {
+      "id": "explain-submit-late",
+      "tool": "oder_explain",
+      "args": {
+        "submittals": "fixtures/submittals.csv",
+        "as_of": "2026-11-16",
+        "submittal": "S-083323-01"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "it had to be submitted by 2026-10-24"
+        ],
+        "equals": {
+          "result.item.order_by": "2026-11-03",
+          "result.item.submit_by": "2026-10-24"
+        }
+      }
+    },
+    {
+      "id": "latest-revision-used",
+      "tool": "oder_explain",
+      "args": {
+        "submittals": "fixtures/submittals.csv",
+        "as_of": "2026-11-16",
+        "submittal": "S-092900-01"
+      },
+      "expect": {
+        "contains": [
+          "Revision 2: this is submission 3",
+          "on 2026-10-08 and not resubmitted after 39 days"
+        ],
+        "equals": {
+          "result.item.revision": 2
+        }
+      }
+    },
+    {
+      "id": "approved-after-order-by",
+      "tool": "oder_explain",
+      "args": {
+        "submittals": "fixtures/submittals.csv",
+        "as_of": "2026-11-16",
+        "submittal": "S-260500-01"
+      },
+      "expect": {
+        "contains": [
+          "Approved 2026-09-10, after the order-by date 2026-09-01"
+        ]
+      }
+    },
+    {
+      "id": "lenient-settings",
+      "tool": "oder_check",
+      "args": {
+        "submittals": "fixtures/submittals.csv",
+        "settings": "fixtures/settings-lenient.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "contains": [
+          "review_overdue"
+        ],
+        "not_contains": [
+          "resubmit_overdue",
+          "resubmittal_loop"
+        ]
+      },
+      "note": "review_days in settings is only the default for rows that give none; these rows give 10."
+    },
+    {
+      "id": "procore-submittal-log",
+      "tool": "oder_check",
+      "args": {
+        "submittals": "fixtures/exports/procore-submittals.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "equals": {
+          "result.submittals": 2,
+          "result.late": 2
+        },
+        "contains": [
+          "procore_submittals"
+        ]
+      }
+    },
+    {
+      "id": "settings-typo-is-named",
+      "tool": "oder_check",
+      "args": {
+        "submittals": "fixtures/submittals.csv",
+        "settings": "fixtures/settings-typo.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "submittal_settings"
+        ]
+      }
+    },
+    {
+      "id": "write-report-writes-files",
+      "tool": "oder_write_report",
+      "args": {
+        "submittals": "fixtures/submittals.csv",
+        "specs": "fixtures/specs.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "length": {
+          "result.files": 2
+        }
+      }
+    },
+    {
+      "id": "draft-reminder",
+      "tool": "oder_draft_reminder",
+      "mode": "auto",
+      "auto_actions": [
+        "oder_draft_reminder"
+      ],
+      "args": {
+        "submittals": "fixtures/submittals.csv",
+        "as_of": "2026-11-16",
+        "party": "Architect"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.id": "Architect",
+          "result.submittals": 1
+        },
+        "contains": [
+          "Nothing was sent"
+        ]
+      }
+    },
+    {
+      "id": "draft-reminder-nothing-late",
+      "tool": "oder_draft_reminder",
+      "mode": "auto",
+      "auto_actions": [
+        "oder_draft_reminder"
+      ],
+      "args": {
+        "submittals": "fixtures/submittals.csv",
+        "as_of": "2026-11-16",
+        "party": "Engineer"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "nothing late"
+        ]
+      }
+    },
+    {
+      "id": "policy-invented-tool",
+      "tool": "oder_pay_everything_now",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-file-outside-root",
+      "tool": "oder_check",
+      "args": {
+        "submittals": "../../../outside-the-root.csv",
+        "specs": "fixtures/specs.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside"
+        ]
+      }
+    },
+    {
+      "id": "policy-missing-argument-named",
+      "tool": "oder_check",
+      "args": {},
+      "expect": {
+        "status": "error",
+        "contains": [
+          "submittals"
+        ]
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reads",
+      "tool": "oder_check",
+      "mode": "review",
+      "args": {
+        "submittals": "fixtures/submittals.csv",
+        "specs": "fixtures/specs.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reports",
+      "tool": "oder_write_report",
+      "mode": "review",
+      "args": {
+        "submittals": "fixtures/submittals.csv",
+        "specs": "fixtures/specs.csv",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-blocks-draft",
+      "tool": "oder_draft_reminder",
+      "mode": "review",
+      "args": {
+        "submittals": "fixtures/submittals.csv",
+        "as_of": "2026-11-16",
+        "party": "Architect"
+      },
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-oder-request-send-one-click-in-auto",
+      "tool": "oder_request_send",
+      "mode": "auto",
+      "args": {
+        "draft": "fairbuild-out/drafts/example.md",
+        "draft_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expect": {
+        "status": "needs_approval"
+      }
+    },
+    {
+      "id": "policy-refuses-submittal-approve",
+      "tool": "submittal_approve",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-procore-update",
+      "tool": "procore_update",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-email-send",
+      "tool": "email_send",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "intl-de-check-totals",
+      "tool": "oder_check",
+      "args": {
+        "submittals": "fixtures/intl/de/submittals.csv",
+        "specs": "fixtures/intl/de/specs.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.submittals": 6,
+          "result.sections_without_submittal": 2,
+          "result.late": 3,
+          "result.review": 3,
+          "result.in_progress": 1,
+          "result.done": 1,
+          "result.by_ball_in_court.Architect.oldest_days": 27
+        }
+      },
+      "note": "German export of the same data (fixtures/intl/de); must match the English case \"check-totals\"."
+    },
+    {
+      "id": "intl-ja-check-totals",
+      "tool": "oder_check",
+      "args": {
+        "submittals": "fixtures/intl/ja/submittals.csv",
+        "specs": "fixtures/intl/ja/specs.csv",
+        "settings": "fixtures/settings.json",
+        "as_of": "2026-11-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.submittals": 6,
+          "result.sections_without_submittal": 2,
+          "result.late": 3,
+          "result.review": 3,
+          "result.in_progress": 1,
+          "result.done": 1,
+          "result.by_ball_in_court.Architect.oldest_days": 27
+        }
+      },
+      "note": "Japanese export of the same data (fixtures/intl/ja); must match the English case \"check-totals\"."
+    }
+  ]
+}

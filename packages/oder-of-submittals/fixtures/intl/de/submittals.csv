@@ -1,0 +1,9 @@
+Referenz;Belegnummer;LV-Abschnitt;title;Lieferant;Zustand;Liegt bei;Eingereicht am;returned_date;required_on_site;Lieferzeit (Tage);review_days
+S-033000-01;0;03 30 00;Concrete mix designs;Example Concrete LLC;Approved;;20.05.2026;01.06.2026;15.06.2026;7;10
+S-081113-01;0;08 11 13;Hollow metal doors and frames;Example Door Co;Submitted;Architect;20.10.2026;;15.01.2027;56;10
+S-083323-01;0;08 33 23;Overhead coiling doors;Sample Door Supply;Open;Subcontractor;;;15.12.2026;42;10
+S-092900-01;0;09 29 00;Gypsum board;Test Drywall Co;Revise and resubmit;Subcontractor;01.08.2026;10.08.2026;10.01.2027;14;10
+S-092900-01;1;09 29 00;Gypsum board;Test Drywall Co;Revise and resubmit;Subcontractor;01.09.2026;09.09.2026;10.01.2027;14;10
+S-092900-01;2;09 29 00;Gypsum board;Test Drywall Co;Revise and resubmit;Subcontractor;01.10.2026;08.10.2026;10.01.2027;14;10
+S-260500-01;0;26 05 00;Electrical gear;Example Electric Inc;Approved as noted;;25.08.2026;10.09.2026;01.10.2026;30;10
+S-233000-01;0;23 30 00;HVAC ductwork;Sample Mechanical Inc;Submitted;Engineer;10.11.2026;;01.02.2027;30;10
