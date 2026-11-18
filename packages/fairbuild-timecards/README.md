@@ -27,7 +27,7 @@ What `timecards_check` flags, each with the first example it finds in the fictio
 
 | Code | Example from the fixtures |
 |---|---|
-| `not_assigned` | PERSON-f3796398 was not assigned to job 24-102 on 2026-11-10; 8 hour(s) charged to it. |
+| `not_assigned` | PERSON-3b315c05 was not assigned to job 24-102 on 2026-11-10; 8 hour(s) charged to it. |
 | `closed_job` | 7 hour(s) on 23-095 01-500, a job that is closed (completed 2026-06-30). |
 | `long_day` | 16 hours on 2026-11-10 across 2 entries, more than 14. Check for a typing error or a missing split. |
 | `invalid_cost_code` | Cost code 05-120 has no budget on job 24-101; 8 hour(s) charged to it. |
@@ -46,18 +46,18 @@ Fairbuild Timecards demo (fictional workers and jobs; names are masked in result
 ▶ Check a week of timecards
   status: executed  decision: allow
   8 worker-day(s) for 4 worker(s), 70 hour(s): 3 with hours on the wrong job, a closed job or an unbudgeted code (23 hour(s)), 2 to review.
-    2026-11-10 PERSON-78702393     8h  misallocated  not_assigned
-    2026-11-10 PERSON-5807ba5a    16h  misallocated  closed_job, not_assigned, long_day
-    2026-11-11 PERSON-571c5563     8h  misallocated  invalid_cost_code
-    2026-11-12 PERSON-571c5563     8h  review        duplicate_entry
-    2026-11-14 PERSON-7bc0a042     6h  review        weekend
-    2026-11-09 PERSON-7bc0a042     8h  ok            
-    2026-11-10 PERSON-7bc0a042     8h  ok            
-    2026-11-16 PERSON-78702393     8h  ok            
+    2026-11-10 PERSON-1b1e325a     8h  misallocated  not_assigned
+    2026-11-10 PERSON-11115dd4    16h  misallocated  closed_job, not_assigned, long_day
+    2026-11-11 PERSON-28f0d7f4     8h  misallocated  invalid_cost_code
+    2026-11-12 PERSON-28f0d7f4     8h  review        duplicate_entry
+    2026-11-14 PERSON-57ef1a81     6h  review        weekend
+    2026-11-09 PERSON-57ef1a81     8h  ok            
+    2026-11-10 PERSON-57ef1a81     8h  ok            
+    2026-11-16 PERSON-1b1e325a     8h  ok            
 
 ▶ Explain the first worker-day
   status: executed  decision: allow
-  PERSON-78702393 on 2026-11-10: misallocated. 8 hour(s): 24-102 07-500 8h. PERSON-78702393 was not assigned to job 24-102 on 2026-11-10; 8 hour(s) charged to it.
+  PERSON-1b1e325a on 2026-11-10: misallocated. 8 hour(s): 24-102 07-500 8h. PERSON-1b1e325a was not assigned to job 24-102 on 2026-11-10; 8 hour(s) charged to it.
 
 ▶ Write the worklist (the files keep the real names)
   status: executed  decision: allow

@@ -44,13 +44,13 @@ Fairbuild Service Tickets demo (fictional technicians and tickets; names are mas
   7 completed ticket(s) by 3 technician(s), 4039 invoiced or due: 2 ticket(s) not billed or billed at zero (620 unbilled). Utilisation 61.7%; 1 technician(s) below target or with a high recall rate.
     ticket     ST-9003               0 util        unbilled zero_invoice
     ticket     ST-9005             620 util        unbilled completed_not_invoiced
-    technician PERSON-601fe4bb     970 util    45  review   low_utilisation, high_recall_rate
-    technician PERSON-8e371b62     669 util    65  ok       
-    technician PERSON-73163f94    2400 util    75  ok       
+    technician PERSON-06b7c0d3     970 util    45  review   low_utilisation, high_recall_rate
+    technician PERSON-0f5864c4     669 util    65  ok       
+    technician PERSON-c2c281fc    2400 util    75  ok       
 
 ▶ Explain ticket ST-9005
   status: executed  decision: allow
-  Ticket ST-9005 (PERSON-601fe4bb, Repair) 2026-11-10: unbilled, 620. Completed 2026-11-10 for 620 with no invoice number.
+  Ticket ST-9005 (PERSON-06b7c0d3, Repair) 2026-11-10: unbilled, 620. Completed 2026-11-10 for 620 with no invoice number.
 
 ▶ Write the worklist
   status: executed  decision: allow
