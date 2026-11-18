@@ -1,0 +1,347 @@
+{
+  "suite": "shannon-of-service",
+  "root": "..",
+  "data_note": "Fictional technicians, tickets and timesheets in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "check-totals",
+      "tool": "shannon_check",
+      "args": {
+        "tickets": "fixtures/tickets.csv",
+        "timesheets": "fixtures/timesheets.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.technicians": 3,
+          "result.completed": 7,
+          "result.revenue": 4039,
+          "result.unbilled": 620,
+          "result.tickets_flagged": 2,
+          "result.utilisation_pct": 61.7,
+          "result.technicians_flagged": 1
+        }
+      }
+    },
+    {
+      "id": "every-planted-issue",
+      "tool": "shannon_check",
+      "args": {
+        "tickets": "fixtures/tickets.csv",
+        "timesheets": "fixtures/timesheets.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "contains": [
+          "completed_not_invoiced",
+          "zero_invoice",
+          "low_utilisation",
+          "high_recall_rate"
+        ],
+        "not_contains": [
+          "ST-9006",
+          "ST-9008"
+        ]
+      }
+    },
+    {
+      "id": "technicians-masked",
+      "tool": "shannon_check",
+      "args": {
+        "tickets": "fixtures/tickets.csv",
+        "timesheets": "fixtures/timesheets.csv"
+      },
+      "expect": {
+        "not_contains": [
+          "Alex Example",
+          "Blake Sample",
+          "Casey Test"
+        ],
+        "contains": [
+          "PERSON-"
+        ]
+      }
+    },
+    {
+      "id": "explain-unbilled-ticket",
+      "tool": "shannon_explain",
+      "args": {
+        "tickets": "fixtures/tickets.csv",
+        "key": "ST-9005"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "Completed 2026-11-10 for 620 with no invoice number"
+        ]
+      }
+    },
+    {
+      "id": "explain-technician-by-real-name",
+      "tool": "shannon_explain",
+      "args": {
+        "tickets": "fixtures/tickets.csv",
+        "timesheets": "fixtures/timesheets.csv",
+        "settings": "fixtures/settings.json",
+        "key": "Blake Sample"
+      },
+      "expect": {
+        "contains": [
+          "18 working hour(s) of 40 paid: 45% utilisation",
+          "1 recall(s) on 3 completed ticket(s): 33.3%"
+        ],
+        "not_contains": [
+          "Blake Sample"
+        ]
+      }
+    },
+    {
+      "id": "tickets-alone",
+      "tool": "shannon_check",
+      "args": {
+        "tickets": "fixtures/tickets.csv"
+      },
+      "expect": {
+        "equals": {
+          "result.utilisation_pct": null,
+          "result.technicians_flagged": 1
+        },
+        "not_contains": [
+          "low_utilisation"
+        ]
+      }
+    },
+    {
+      "id": "lenient-settings",
+      "tool": "shannon_check",
+      "args": {
+        "tickets": "fixtures/tickets.csv",
+        "timesheets": "fixtures/timesheets.csv",
+        "settings": "fixtures/settings-lenient.json"
+      },
+      "expect": {
+        "equals": {
+          "result.technicians_flagged": 0
+        }
+      }
+    },
+    {
+      "id": "servicetitan-jobs",
+      "tool": "shannon_check",
+      "args": {
+        "tickets": "fixtures/exports/servicetitan-jobs.csv"
+      },
+      "expect": {
+        "equals": {
+          "result.completed": 3,
+          "result.unbilled": 620,
+          "result.tickets_flagged": 1
+        },
+        "contains": [
+          "servicetitan_jobs"
+        ]
+      }
+    },
+    {
+      "id": "settings-typo-is-named",
+      "tool": "shannon_check",
+      "args": {
+        "tickets": "fixtures/tickets.csv",
+        "settings": "fixtures/settings-typo.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "service_settings"
+        ]
+      }
+    },
+    {
+      "id": "write-report-writes-files",
+      "tool": "shannon_write_report",
+      "args": {
+        "tickets": "fixtures/tickets.csv",
+        "timesheets": "fixtures/timesheets.csv"
+      },
+      "expect": {
+        "status": "executed",
+        "length": {
+          "result.files": 2
+        }
+      }
+    },
+    {
+      "id": "draft-followup",
+      "tool": "shannon_draft_followup",
+      "mode": "auto",
+      "auto_actions": [
+        "shannon_draft_followup"
+      ],
+      "args": {
+        "tickets": "fixtures/tickets.csv",
+        "label": "week of 2026-11-09"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.amount": 620
+        },
+        "contains": [
+          "Nothing was sent"
+        ]
+      }
+    },
+    {
+      "id": "policy-invented-tool",
+      "tool": "shannon_pay_everything_now",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-file-outside-root",
+      "tool": "shannon_check",
+      "args": {
+        "tickets": "../../../outside-the-root.csv",
+        "timesheets": "fixtures/timesheets.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside"
+        ]
+      }
+    },
+    {
+      "id": "policy-missing-argument-named",
+      "tool": "shannon_check",
+      "args": {},
+      "expect": {
+        "status": "error",
+        "contains": [
+          "tickets"
+        ]
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reads",
+      "tool": "shannon_check",
+      "mode": "review",
+      "args": {
+        "tickets": "fixtures/tickets.csv",
+        "timesheets": "fixtures/timesheets.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-still-reports",
+      "tool": "shannon_write_report",
+      "mode": "review",
+      "args": {
+        "tickets": "fixtures/tickets.csv",
+        "timesheets": "fixtures/timesheets.csv"
+      },
+      "expect": {
+        "status": "executed"
+      }
+    },
+    {
+      "id": "policy-review-mode-blocks-draft",
+      "tool": "shannon_draft_followup",
+      "mode": "review",
+      "args": {
+        "tickets": "fixtures/tickets.csv",
+        "label": "week of 2026-11-09"
+      },
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-shannon-request-send-one-click-in-auto",
+      "tool": "shannon_request_send",
+      "mode": "auto",
+      "args": {
+        "draft": "fairbuild-out/drafts/example.md",
+        "draft_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expect": {
+        "status": "needs_approval"
+      }
+    },
+    {
+      "id": "policy-refuses-invoice-create",
+      "tool": "invoice_create",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-payroll-run",
+      "tool": "payroll_run",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "policy-refuses-email-send",
+      "tool": "email_send",
+      "args": {},
+      "expect": {
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "intl-de-check-totals",
+      "tool": "shannon_check",
+      "args": {
+        "tickets": "fixtures/intl/de/tickets.csv",
+        "timesheets": "fixtures/intl/de/timesheets.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.technicians": 3,
+          "result.completed": 7,
+          "result.revenue": 4039,
+          "result.unbilled": 620,
+          "result.tickets_flagged": 2,
+          "result.utilisation_pct": 61.7,
+          "result.technicians_flagged": 1
+        }
+      },
+      "note": "German export of the same data (fixtures/intl/de); must match the English case \"check-totals\"."
+    },
+    {
+      "id": "intl-ja-check-totals",
+      "tool": "shannon_check",
+      "args": {
+        "tickets": "fixtures/intl/ja/tickets.csv",
+        "timesheets": "fixtures/intl/ja/timesheets.csv",
+        "settings": "fixtures/settings.json"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.technicians": 3,
+          "result.completed": 7,
+          "result.revenue": 4039,
+          "result.unbilled": 620,
+          "result.tickets_flagged": 2,
+          "result.utilisation_pct": 61.7,
+          "result.technicians_flagged": 1
+        }
+      },
+      "note": "Japanese export of the same data (fixtures/intl/ja); must match the English case \"check-totals\"."
+    }
+  ]
+}

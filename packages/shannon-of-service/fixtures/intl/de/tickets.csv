@@ -1,0 +1,9 @@
+Lieferschein;Techniker;Datum;business_unit;job_type;Zustand;invoice_total;Rechnungsnummer;recall_of;warranty
+ST-9001;Alex Example;09.11.2026;HVAC Service;Repair;Completed;480,00;INV-77001;;no
+ST-9002;Alex Example;10.11.2026;HVAC Service;Maintenance;Completed;189,00;INV-77002;;no
+ST-9003;Alex Example;11.11.2026;HVAC Service;Repair;Completed;0,00;;;no
+ST-9004;Blake Sample;09.11.2026;Plumbing;Repair;Completed;350,00;INV-77004;;no
+ST-9005;Blake Sample;10.11.2026;Plumbing;Repair;Completed;620,00;;;no
+ST-9006;Blake Sample;12.11.2026;Plumbing;Recall;Completed;0,00;;ST-9004;no
+ST-9007;Casey Test;10.11.2026;Electrical;Install;Completed;2.400,00;INV-77007;;no
+ST-9008;Casey Test;11.11.2026;Electrical;Repair;Canceled;0,00;;;no

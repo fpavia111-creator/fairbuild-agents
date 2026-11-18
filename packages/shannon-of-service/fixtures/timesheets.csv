@@ -1,0 +1,12 @@
+technician,date,code,hours
+Alex Example,2026-11-09,Working,26
+Alex Example,2026-11-09,Driving,8
+Alex Example,2026-11-09,Idle,4
+Alex Example,2026-11-09,Shop,2
+Blake Sample,2026-11-09,Working,18
+Blake Sample,2026-11-09,Driving,10
+Blake Sample,2026-11-09,Idle,10
+Blake Sample,2026-11-09,Shop,2
+Casey Test,2026-11-09,Working,30
+Casey Test,2026-11-09,Driving,6
+Casey Test,2026-11-09,Training,4
