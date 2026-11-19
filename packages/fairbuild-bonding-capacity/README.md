@@ -19,9 +19,21 @@ npx -y fairbuild-bonding-capacity mcp --root ./exports
 
 Only `jobs` and `limits` are required. Each optional file turns on the checks that need it.
 
+## What it refuses, and what waits for a person
+
+Refused in every mode (the tool is listed so an assistant can see it, and every call is blocked):
+
+- `bond_request`: Fairbuild Bonding Capacity never requests a bid, performance or payment bond.
+- `surety_submit`: Fairbuild Bonding Capacity never sends financial statements or WIP to a surety or broker.
+- `email_send`: Fairbuild Bonding Capacity never sends the summary; a person sends the approved draft.
+
+Waits for one named person's click, even in Auto mode (nothing is sent, paid or posted by the agent; the click is recorded for the person who acts):
+
+- `bonding_request_send`: Approve the summary (one click)
+
 ## Checks
 
-What `bonding_check` flags, each with the first example it finds in the fictional fixtures (eval case `check-totals`):
+What `bonding_check` flags, each with the first example it finds in the fictional fixtures (the eval cases for `bonding_check`):
 
 | Code | Example from the fixtures |
 |---|---|

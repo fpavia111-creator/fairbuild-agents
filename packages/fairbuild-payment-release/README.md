@@ -21,9 +21,22 @@ npx -y fairbuild-payment-release mcp --root ./exports
 
 Only `invoices` is required. Each optional file turns on the checks that need it.
 
+## What it refuses, and what waits for a person
+
+Refused in every mode (the tool is listed so an assistant can see it, and every call is blocked):
+
+- `ap_pay_invoice`: Fairbuild Payment Release never pays; accounts payable pays after a recorded release approval.
+- `payment_batch_release`: Fairbuild Payment Release never releases a payment batch in your accounting or banking system.
+- `email_send`: Fairbuild Payment Release never sends the notice; a person sends the approved draft.
+
+Waits for one named person's click, even in Auto mode (nothing is sent, paid or posted by the agent; the click is recorded for the person who acts):
+
+- `payment_release_request_send`: Approve the notice (one click)
+- `payment_release_request_release`: Approve releasing a subcontractor payment (one click)
+
 ## Checks
 
-What `payment_release_check` flags, each with the first example it finds in the fictional fixtures (eval case `check-totals`):
+What `payment_release_check` flags, each with the first example it finds in the fictional fixtures (the eval cases for `payment_release_check`):
 
 | Code | Example from the fixtures |
 |---|---|

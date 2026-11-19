@@ -19,9 +19,21 @@ npx -y fairbuild-service-tickets mcp --root ./exports
 
 Only `tickets` is required. Each optional file turns on the checks that need it.
 
+## What it refuses, and what waits for a person
+
+Refused in every mode (the tool is listed so an assistant can see it, and every call is blocked):
+
+- `invoice_create`: Fairbuild Service Tickets never creates or sends a customer invoice.
+- `payroll_run`: Fairbuild Service Tickets never runs payroll or changes technician pay.
+- `email_send`: Fairbuild Service Tickets never sends the follow-up; a person sends the approved draft.
+
+Waits for one named person's click, even in Auto mode (nothing is sent, paid or posted by the agent; the click is recorded for the person who acts):
+
+- `service_request_send`: Approve the followup (one click)
+
 ## Checks
 
-What `service_check` flags, each with the first example it finds in the fictional fixtures (eval case `check-totals`):
+What `service_check` flags, each with the first example it finds in the fictional fixtures (the eval cases for `service_check`):
 
 | Code | Example from the fixtures |
 |---|---|

@@ -19,9 +19,21 @@ npx -y fairbuild-punch-lists mcp --root ./exports
 
 Only `punch` is required. Each optional file turns on the checks that need it.
 
+## What it refuses, and what waits for a person
+
+Refused in every mode (the tool is listed so an assistant can see it, and every call is blocked):
+
+- `punch_close`: Fairbuild Punch Lists never closes, reassigns or edits a punch item.
+- `backcharge_post`: Fairbuild Punch Lists never charges a subcontractor for punch work.
+- `email_send`: Fairbuild Punch Lists never sends the notice; a person sends the approved draft.
+
+Waits for one named person's click, even in Auto mode (nothing is sent, paid or posted by the agent; the click is recorded for the person who acts):
+
+- `punch_list_request_send`: Approve the notice (one click)
+
 ## Checks
 
-What `punch_list_check` flags, each with the first example it finds in the fictional fixtures (eval case `check-totals`):
+What `punch_list_check` flags, each with the first example it finds in the fictional fixtures (the eval cases for `punch_list_check`):
 
 | Code | Example from the fixtures |
 |---|---|

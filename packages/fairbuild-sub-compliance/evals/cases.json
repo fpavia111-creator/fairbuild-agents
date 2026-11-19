@@ -22,7 +22,7 @@
           "result.review": 2,
           "result.expiring": 1,
           "result.ok": 19,
-          "result.vendors_compliant": 1
+          "result.vendors_complete": 1
         }
       }
     },
@@ -114,7 +114,7 @@
           "result.documents": 10,
           "result.missing": 1,
           "result.review": 0,
-          "result.vendors_compliant": 4
+          "result.vendors_complete": 4
         }
       }
     },
@@ -342,7 +342,7 @@
           "result.review": 2,
           "result.expiring": 1,
           "result.ok": 19,
-          "result.vendors_compliant": 1
+          "result.vendors_complete": 1
         }
       },
       "note": "German export of the same data (fixtures/intl/de); must match the English case \"check-totals\"."
@@ -366,7 +366,7 @@
           "result.review": 2,
           "result.expiring": 1,
           "result.ok": 19,
-          "result.vendors_compliant": 1
+          "result.vendors_complete": 1
         }
       },
       "note": "Japanese export of the same data (fixtures/intl/ja); must match the English case \"check-totals\"."

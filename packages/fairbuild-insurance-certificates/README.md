@@ -19,9 +19,21 @@ npx -y fairbuild-insurance-certificates mcp --root ./exports
 
 Only `certificates` and `requirements` are required. Each optional file turns on the checks that need it.
 
+## What it refuses, and what waits for a person
+
+Refused in every mode (the tool is listed so an assistant can see it, and every call is blocked):
+
+- `vendor_block`: Fairbuild Insurance Certificates never blocks a vendor or holds payments in your accounting system; a person decides.
+- `insurer_contact`: Fairbuild Insurance Certificates never contacts an insurer or an agent.
+- `email_send`: Fairbuild Insurance Certificates never sends the request; a person sends the approved draft.
+
+Waits for one named person's click, even in Auto mode (nothing is sent, paid or posted by the agent; the click is recorded for the person who acts):
+
+- `coi_request_send`: Approve the request (one click)
+
 ## Checks
 
-What `coi_check` flags, each with the first example it finds in the fictional fixtures (eval case `check-totals`):
+What `coi_check` flags, each with the first example it finds in the fictional fixtures (the eval cases for `coi_check`):
 
 | Code | Example from the fixtures |
 |---|---|

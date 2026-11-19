@@ -20,9 +20,21 @@ npx -y fairbuild-job-cost mcp --root ./exports
 
 Only `budget` is required. Each optional file turns on the checks that need it.
 
+## What it refuses, and what waits for a person
+
+Refused in every mode (the tool is listed so an assistant can see it, and every call is blocked):
+
+- `budget_update`: Fairbuild Job Cost never changes a budget or moves budget between cost codes; accounting enters approved budget transfers.
+- `cost_recode`: Fairbuild Job Cost never recodes or reverses job cost entries.
+- `email_send`: Fairbuild Job Cost never sends the memo; a person sends the approved draft.
+
+Waits for one named person's click, even in Auto mode (nothing is sent, paid or posted by the agent; the click is recorded for the person who acts):
+
+- `job_cost_request_send`: Approve the memo (one click)
+
 ## Checks
 
-What `job_cost_check` flags, each with the first example it finds in the fictional fixtures (eval case `check-totals`):
+What `job_cost_check` flags, each with the first example it finds in the fictional fixtures (the eval cases for `job_cost_check`):
 
 | Code | Example from the fixtures |
 |---|---|

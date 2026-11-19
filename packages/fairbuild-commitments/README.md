@@ -19,9 +19,22 @@ npx -y fairbuild-commitments mcp --root ./exports
 
 Only `commitments` is required. Each optional file turns on the checks that need it.
 
+## What it refuses, and what waits for a person
+
+Refused in every mode (the tool is listed so an assistant can see it, and every call is blocked):
+
+- `po_close`: Fairbuild Commitments never closes or reduces a commitment in your accounting system; a person does after the vendor confirms.
+- `po_change`: Fairbuild Commitments never issues or changes a subcontract, PO or change order.
+- `ap_pay_invoice`: Fairbuild Commitments never pays vendors.
+- `email_send`: Fairbuild Commitments never sends letters; a person sends the approved draft.
+
+Waits for one named person's click, even in Auto mode (nothing is sent, paid or posted by the agent; the click is recorded for the person who acts):
+
+- `commitments_request_send`: Approve the letter (one click)
+
 ## Checks
 
-What `commitments_check` flags, each with the first example it finds in the fictional fixtures (eval case `check-totals`):
+What `commitments_check` flags, each with the first example it finds in the fictional fixtures (the eval cases for `commitments_check`):
 
 | Code | Example from the fixtures |
 |---|---|

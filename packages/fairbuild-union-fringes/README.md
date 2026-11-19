@@ -20,9 +20,22 @@ npx -y fairbuild-union-fringes mcp --root ./exports
 
 Only `hours` and `rates` and `remittances` are required. Each optional file turns on the checks that need it.
 
+## What it refuses, and what waits for a person
+
+Refused in every mode (the tool is listed so an assistant can see it, and every call is blocked):
+
+- `fund_portal_submit`: Fairbuild Union Fringes never logs in to or files with a fund portal.
+- `ach_pay`: Fairbuild Union Fringes never pays a fund; accounts payable pays after a recorded approval.
+- `email_send`: Fairbuild Union Fringes never sends the letter; a person sends the approved draft.
+
+Waits for one named person's click, even in Auto mode (nothing is sent, paid or posted by the agent; the click is recorded for the person who acts):
+
+- `fringes_request_send`: Approve the letter (one click)
+- `fringes_request_payment`: Approve paying a fund shortfall (one click)
+
 ## Checks
 
-What `fringes_check` flags, each with the first example it finds in the fictional fixtures (eval case `check-totals`):
+What `fringes_check` flags, each with the first example it finds in the fictional fixtures (the eval cases for `fringes_check`):
 
 | Code | Example from the fixtures |
 |---|---|

@@ -18,9 +18,21 @@ npx -y fairbuild-change-orders mcp --root ./exports
 
 Only `change_orders` is required. Each optional file turns on the checks that need it.
 
+## What it refuses, and what waits for a person
+
+Refused in every mode (the tool is listed so an assistant can see it, and every call is blocked):
+
+- `change_order_approve`: Fairbuild Change Orders never approves, rejects or changes a change order in your system.
+- `invoice_create`: Fairbuild Change Orders never creates or submits a pay application or invoice.
+- `email_send`: Fairbuild Change Orders never sends the follow-up; a person sends the approved draft.
+
+Waits for one named person's click, even in Auto mode (nothing is sent, paid or posted by the agent; the click is recorded for the person who acts):
+
+- `change_orders_request_send`: Approve the followup (one click)
+
 ## Checks
 
-What `change_orders_check` flags, each with the first example it finds in the fictional fixtures (eval case `check-totals`):
+What `change_orders_check` flags, each with the first example it finds in the fictional fixtures (the eval cases for `change_orders_check`):
 
 | Code | Example from the fixtures |
 |---|---|

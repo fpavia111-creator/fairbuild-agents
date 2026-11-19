@@ -53,6 +53,9 @@ for (const n of readdirSync(PK).filter((x) => /^fairbuild-(?!core$)/.test(x) && 
   if (!keys.includes('advice')) limits.push(LIMITS.advice);
   const props = check.inputSchema.properties; const req = new Set(check.inputSchema.required || []);
   const inputs = Object.entries(props).filter(([k]) => !['as_of', 'out_dir', 'lang'].includes(k));
+  const ruleOf = (t) => m.policy.rules.find((r) => r.tool === t.name) || {};
+  const refused = m.tools.filter((t) => ruleOf(t).decision === 'block');
+  const oneClick = m.tools.filter((t) => /_request_/.test(t.name) && ruleOf(t).decision === 'ask');
   const L = [
     `# ${titleOf(n)} (\`${n}\`)`, '',
     m.description, '',
@@ -62,8 +65,13 @@ for (const n of readdirSync(PK).filter((x) => /^fairbuild-(?!core$)/.test(x) && 
     '| Argument | What to give it |', '|---|---|',
     ...inputs.map(([k, v]) => `| \`${k}\`${req.has(k) ? ' (required)' : ''} | ${esc(v.description)} |`), '',
     `Only ${[...req].map((k) => `\`${k}\``).join(' and ')} ${req.size > 1 ? 'are' : 'is'} required. Each optional file turns on the checks that need it.`, '',
+    '## What it refuses, and what waits for a person', '',
+    'Refused in every mode (the tool is listed so an assistant can see it, and every call is blocked):', '',
+    ...refused.map((t) => `- \`${t.name}\`: ${t.description.replace(/^Listed so agents can see it is refused\.\s*/, '')}`), '',
+    'Waits for one named person\'s click, even in Auto mode (nothing is sent, paid or posted by the agent; the click is recorded for the person who acts):', '',
+    ...oneClick.map((t) => `- \`${t.name}\`: ${t.title || t.description.split('. ')[0]}`), '',
     '## Checks', '',
-    `What \`${check.name}\` flags, each with the first example it finds in the fictional fixtures (eval case \`${c.id}\`):`, '',
+    `What \`${check.name}\` flags, each with the first example it finds in the fictional fixtures (the eval cases for \`${check.name}\`):`, '',
     '| Code | Example from the fixtures |', '|---|---|',
     ...[...codes].map(([code, detail]) => `| \`${code}\` | ${esc(detail)} |`), '',
     '## Limits', '',

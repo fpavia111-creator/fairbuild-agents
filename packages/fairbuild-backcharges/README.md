@@ -19,9 +19,22 @@ npx -y fairbuild-backcharges mcp --root ./exports
 
 Only `backcharges` is required. Each optional file turns on the checks that need it.
 
+## What it refuses, and what waits for a person
+
+Refused in every mode (the tool is listed so an assistant can see it, and every call is blocked):
+
+- `ap_deduct_payment`: Fairbuild Backcharges never changes or reduces a payment; accounts payable deducts after a recorded approval.
+- `backcharge_post`: Fairbuild Backcharges never posts a backcharge in your accounting system.
+- `email_send`: Fairbuild Backcharges never sends the notice; a person sends the approved draft.
+
+Waits for one named person's click, even in Auto mode (nothing is sent, paid or posted by the agent; the click is recorded for the person who acts):
+
+- `backcharges_request_send`: Approve the notice (one click)
+- `backcharges_request_deduction`: Approve deducting a backcharge from a payment (one click)
+
 ## Checks
 
-What `backcharges_check` flags, each with the first example it finds in the fictional fixtures (eval case `check-totals`):
+What `backcharges_check` flags, each with the first example it finds in the fictional fixtures (the eval cases for `backcharges_check`):
 
 | Code | Example from the fixtures |
 |---|---|

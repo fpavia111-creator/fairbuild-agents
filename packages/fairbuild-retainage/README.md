@@ -19,9 +19,22 @@ npx -y fairbuild-retainage mcp --root ./exports
 
 Only `receivable` is required. Each optional file turns on the checks that need it.
 
+## What it refuses, and what waits for a person
+
+Refused in every mode (the tool is listed so an assistant can see it, and every call is blocked):
+
+- `ap_pay_retainage`: Fairbuild Retainage never pays a subcontractor; AP pays after a recorded approval.
+- `invoice_create`: Fairbuild Retainage never creates or submits a retainage invoice.
+- `email_send`: Fairbuild Retainage never sends the release request; a person sends the approved draft.
+
+Waits for one named person's click, even in Auto mode (nothing is sent, paid or posted by the agent; the click is recorded for the person who acts):
+
+- `retainage_request_send`: Approve the release (one click)
+- `retainage_request_payment`: Approve releasing a subcontractor's retainage (one click)
+
 ## Checks
 
-What `retainage_check` flags, each with the first example it finds in the fictional fixtures (eval case `check-totals`):
+What `retainage_check` flags, each with the first example it finds in the fictional fixtures (the eval cases for `retainage_check`):
 
 | Code | Example from the fixtures |
 |---|---|

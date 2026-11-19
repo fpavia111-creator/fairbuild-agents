@@ -19,9 +19,21 @@ npx -y fairbuild-sub-compliance mcp --root ./exports
 
 Only `documents` and `requirements` are required. Each optional file turns on the checks that need it.
 
+## What it refuses, and what waits for a person
+
+Refused in every mode (the tool is listed so an assistant can see it, and every call is blocked):
+
+- `vendor_approve`: Fairbuild Sub Compliance never approves a subcontractor or changes its status in your systems.
+- `vendor_block`: Fairbuild Sub Compliance never blocks a vendor or holds payments.
+- `email_send`: Fairbuild Sub Compliance never sends the request; a person sends the approved draft.
+
+Waits for one named person's click, even in Auto mode (nothing is sent, paid or posted by the agent; the click is recorded for the person who acts):
+
+- `sub_compliance_request_send`: Approve the request (one click)
+
 ## Checks
 
-What `sub_compliance_check` flags, each with the first example it finds in the fictional fixtures (eval case `check-totals`):
+What `sub_compliance_check` flags, each with the first example it finds in the fictional fixtures (the eval cases for `sub_compliance_check`):
 
 | Code | Example from the fixtures |
 |---|---|
@@ -43,7 +55,7 @@ Fairbuild Sub Compliance demo (fictional subcontractors and documents), Auto mod
 
 ▶ Check five active subcontractors against your document list
   status: executed  decision: allow
-  5 active subcontractor(s), 27 required document(s) as of 2026-11-16: 5 missing, expired or rejected, 2 to review, 1 expiring soon. 1 subcontractor(s) fully compliant.
+  5 active subcontractor(s), 27 required document(s) as of 2026-11-16: 5 missing, expired or rejected, 2 to review, 1 expiring soon. 1 subcontractor(s) with every required document on file and current.
     Example Electric Inc   Electrical license     missing   document_expired
     Example Electric Inc   W-9                    missing   document_missing
     Example Roofing LLC    Fall protection plan   missing   document_rejected
@@ -59,7 +71,7 @@ Fairbuild Sub Compliance demo (fictional subcontractors and documents), Auto mod
 
 ▶ Write the worklist
   status: executed  decision: allow
-  Worklist written: 5 active subcontractor(s), 27 required document(s) as of 2026-11-16: 5 missing, expired or rejected, 2 to review, 1 expiring soon. 1 subcontractor(s) fully compliant.
+  Worklist written: 5 active subcontractor(s), 27 required document(s) as of 2026-11-16: 5 missing, expired or rejected, 2 to review, 1 expiring soon. 1 subcontractor(s) with every required document on file and current.
 
 ▶ Draft a document request (Auto is opted in for drafts here)
   status: executed  decision: allow  (auto)

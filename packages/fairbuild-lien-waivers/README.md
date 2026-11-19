@@ -19,9 +19,21 @@ npx -y fairbuild-lien-waivers mcp --root ./exports
 
 Only `payments` and `waivers` are required. Each optional file turns on the checks that need it.
 
+## What it refuses, and what waits for a person
+
+Refused in every mode (the tool is listed so an assistant can see it, and every call is blocked):
+
+- `lien_file`: Fairbuild Lien Waivers never files, records or releases a lien or a bond claim.
+- `ap_pay_invoice`: Fairbuild Lien Waivers never pays or holds a payment itself; a person decides.
+- `email_send`: Fairbuild Lien Waivers never sends the request; a person sends the approved draft.
+
+Waits for one named person's click, even in Auto mode (nothing is sent, paid or posted by the agent; the click is recorded for the person who acts):
+
+- `lien_waivers_request_send`: Approve the request (one click)
+
 ## Checks
 
-What `lien_waivers_check` flags, each with the first example it finds in the fictional fixtures (eval case `check-totals`):
+What `lien_waivers_check` flags, each with the first example it finds in the fictional fixtures (the eval cases for `lien_waivers_check`):
 
 | Code | Example from the fixtures |
 |---|---|

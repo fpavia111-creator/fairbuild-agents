@@ -21,9 +21,21 @@ npx -y fairbuild-timecards mcp --root ./exports
 
 Only `timecards` is required. Each optional file turns on the checks that need it.
 
+## What it refuses, and what waits for a person
+
+Refused in every mode (the tool is listed so an assistant can see it, and every call is blocked):
+
+- `timecard_edit`: Fairbuild Timecards never edits, approves or deletes a timecard.
+- `payroll_run`: Fairbuild Timecards never runs payroll.
+- `email_send`: Fairbuild Timecards never sends the request; a person sends the approved draft.
+
+Waits for one named person's click, even in Auto mode (nothing is sent, paid or posted by the agent; the click is recorded for the person who acts):
+
+- `timecards_request_send`: Approve the recode (one click)
+
 ## Checks
 
-What `timecards_check` flags, each with the first example it finds in the fictional fixtures (eval case `check-totals`):
+What `timecards_check` flags, each with the first example it finds in the fictional fixtures (the eval cases for `timecards_check`):
 
 | Code | Example from the fixtures |
 |---|---|

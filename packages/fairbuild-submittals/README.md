@@ -19,9 +19,21 @@ npx -y fairbuild-submittals mcp --root ./exports
 
 Only `submittals` is required. Each optional file turns on the checks that need it.
 
+## What it refuses, and what waits for a person
+
+Refused in every mode (the tool is listed so an assistant can see it, and every call is blocked):
+
+- `submittal_approve`: Fairbuild Submittals never approves, returns or changes a submittal.
+- `procore_update`: Fairbuild Submittals never writes to your project management system.
+- `email_send`: Fairbuild Submittals never sends the reminder; a person sends the approved draft.
+
+Waits for one named person's click, even in Auto mode (nothing is sent, paid or posted by the agent; the click is recorded for the person who acts):
+
+- `submittals_request_send`: Approve the reminder (one click)
+
 ## Checks
 
-What `submittals_check` flags, each with the first example it finds in the fictional fixtures (eval case `check-totals`):
+What `submittals_check` flags, each with the first example it finds in the fictional fixtures (the eval cases for `submittals_check`):
 
 | Code | Example from the fixtures |
 |---|---|

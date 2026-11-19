@@ -19,9 +19,21 @@ npx -y fairbuild-bid-leveling mcp --root ./exports
 
 Only `bids` is required. Each optional file turns on the checks that need it.
 
+## What it refuses, and what waits for a person
+
+Refused in every mode (the tool is listed so an assistant can see it, and every call is blocked):
+
+- `award_contract`: Fairbuild Bid Leveling never awards a bid or issues a subcontract.
+- `bid_reject_notice`: Fairbuild Bid Leveling never rejects or notifies a bidder.
+- `email_send`: Fairbuild Bid Leveling never sends the clarification; a person sends the approved draft.
+
+Waits for one named person's click, even in Auto mode (nothing is sent, paid or posted by the agent; the click is recorded for the person who acts):
+
+- `bid_leveling_request_send`: Approve the clarification (one click)
+
 ## Checks
 
-What `bid_leveling_check` flags, each with the first example it finds in the fictional fixtures (eval case `check-totals`):
+What `bid_leveling_check` flags, each with the first example it finds in the fictional fixtures (the eval cases for `bid_leveling_check`):
 
 | Code | Example from the fixtures |
 |---|---|

@@ -20,9 +20,22 @@ npx -y fairbuild-three-way-match mcp --root ./exports
 
 Only `invoices` and `commitments` are required. Each optional file turns on the checks that need it.
 
+## What it refuses, and what waits for a person
+
+Refused in every mode (the tool is listed so an assistant can see it, and every call is blocked):
+
+- `ap_pay_invoice`: Fairbuild Three-Way Match never pays; accounts payable pays after a recorded approval.
+- `invoice_post`: Fairbuild Three-Way Match never posts or codes invoices in your accounting system.
+- `email_send`: Fairbuild Three-Way Match never sends the notice; a person sends the approved draft.
+
+Waits for one named person's click, even in Auto mode (nothing is sent, paid or posted by the agent; the click is recorded for the person who acts):
+
+- `three_way_match_request_send`: Approve the notice (one click)
+- `three_way_match_request_approval`: Approve an invoice for payment (one click)
+
 ## Checks
 
-What `three_way_match_check` flags, each with the first example it finds in the fictional fixtures (eval case `check-totals`):
+What `three_way_match_check` flags, each with the first example it finds in the fictional fixtures (the eval cases for `three_way_match_check`):
 
 | Code | Example from the fixtures |
 |---|---|

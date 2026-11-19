@@ -19,9 +19,21 @@ npx -y fairbuild-duplicate-vendors mcp --root ./exports
 
 Only `vendors` is required. Each optional file turns on the checks that need it.
 
+## What it refuses, and what waits for a person
+
+Refused in every mode (the tool is listed so an assistant can see it, and every call is blocked):
+
+- `vendor_merge`: Fairbuild Duplicate Vendors never merges, deactivates or edits vendor records.
+- `payment_void`: Fairbuild Duplicate Vendors never voids, stops or reissues a payment.
+- `email_send`: Fairbuild Duplicate Vendors never sends the recovery letter; a person sends the approved draft.
+
+Waits for one named person's click, even in Auto mode (nothing is sent, paid or posted by the agent; the click is recorded for the person who acts):
+
+- `duplicates_request_send`: Approve the recovery (one click)
+
 ## Checks
 
-What `duplicates_check` flags, each with the first example it finds in the fictional fixtures (eval case `check-totals`):
+What `duplicates_check` flags, each with the first example it finds in the fictional fixtures (the eval cases for `duplicates_check`):
 
 | Code | Example from the fixtures |
 |---|---|

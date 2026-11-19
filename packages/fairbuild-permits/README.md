@@ -19,9 +19,21 @@ npx -y fairbuild-permits mcp --root ./exports
 
 Only `permits` is required. Each optional file turns on the checks that need it.
 
+## What it refuses, and what waits for a person
+
+Refused in every mode (the tool is listed so an assistant can see it, and every call is blocked):
+
+- `permit_portal_submit`: Fairbuild Permits never applies for, renews or closes a permit with a jurisdiction.
+- `inspection_schedule`: Fairbuild Permits never books or cancels an inspection.
+- `email_send`: Fairbuild Permits never sends the notice; a person sends the approved draft.
+
+Waits for one named person's click, even in Auto mode (nothing is sent, paid or posted by the agent; the click is recorded for the person who acts):
+
+- `permits_request_send`: Approve the notice (one click)
+
 ## Checks
 
-What `permits_check` flags, each with the first example it finds in the fictional fixtures (eval case `check-totals`):
+What `permits_check` flags, each with the first example it finds in the fictional fixtures (the eval cases for `permits_check`):
 
 | Code | Example from the fixtures |
 |---|---|

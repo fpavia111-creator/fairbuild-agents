@@ -8,9 +8,9 @@ const doc = (type, extra = {}) => ({ vendor: 'Example Sub LLC', document_type: t
 const run = (docs, opts = {}) => checkCompliance({ vendorRows: opts.vendors || null, docRows: docs, requirements: opts.requirements || req, asOf: opts.asOf || '2026-11-16' });
 const find = (r, d) => r.items.find((i) => i.document === d);
 
-test('a complete file is compliant', () => {
+test('a complete, current file has nothing to chase', () => {
   const r = run([doc('W-9'), doc('Signed subcontract')]);
-  assert.equal(r.vendors_compliant, 1); assert.equal(r.ok, 2);
+  assert.equal(r.vendors_complete, 1); assert.equal(r.ok, 2);
 });
 
 test('document names match whatever the punctuation, and through your aliases', () => {

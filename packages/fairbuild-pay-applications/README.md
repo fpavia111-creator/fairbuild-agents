@@ -20,9 +20,21 @@ npx -y fairbuild-pay-applications mcp --root ./exports
 
 Only `lines` is required. Each optional file turns on the checks that need it.
 
+## What it refuses, and what waits for a person
+
+Refused in every mode (the tool is listed so an assistant can see it, and every call is blocked):
+
+- `payapp_submit`: Fairbuild Pay Applications never submits a pay application to an owner or a portal.
+- `payapp_approve`: Fairbuild Pay Applications never approves a subcontractor pay application for payment.
+- `email_send`: Fairbuild Pay Applications never sends the correction note; a person sends the approved draft.
+
+Waits for one named person's click, even in Auto mode (nothing is sent, paid or posted by the agent; the click is recorded for the person who acts):
+
+- `pay_apps_request_send`: Approve the corrections (one click)
+
 ## Checks
 
-What `pay_apps_check` flags, each with the first example it finds in the fictional fixtures (eval case `check-totals`):
+What `pay_apps_check` flags, each with the first example it finds in the fictional fixtures (the eval cases for `pay_apps_check`):
 
 | Code | Example from the fixtures |
 |---|---|

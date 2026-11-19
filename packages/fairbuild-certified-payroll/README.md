@@ -19,9 +19,21 @@ npx -y fairbuild-certified-payroll mcp --root ./exports
 
 Only `payroll` and `rates` are required. Each optional file turns on the checks that need it.
 
+## What it refuses, and what waits for a person
+
+Refused in every mode (the tool is listed so an assistant can see it, and every call is blocked):
+
+- `payroll_submit`: Fairbuild Certified Payroll never signs or submits a certified payroll to an agency or owner.
+- `payroll_run`: Fairbuild Certified Payroll never runs payroll or pays restitution.
+- `email_send`: Fairbuild Certified Payroll never sends the correction note; a person sends the approved draft.
+
+Waits for one named person's click, even in Auto mode (nothing is sent, paid or posted by the agent; the click is recorded for the person who acts):
+
+- `certified_payroll_request_send`: Approve the corrections (one click)
+
 ## Checks
 
-What `certified_payroll_check` flags, each with the first example it finds in the fictional fixtures (eval case `check-totals`):
+What `certified_payroll_check` flags, each with the first example it finds in the fictional fixtures (the eval cases for `certified_payroll_check`):
 
 | Code | Example from the fixtures |
 |---|---|

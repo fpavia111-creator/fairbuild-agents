@@ -19,9 +19,21 @@ npx -y fairbuild-wip-schedule mcp --root ./exports
 
 Only `wip` is required. Each optional file turns on the checks that need it.
 
+## What it refuses, and what waits for a person
+
+Refused in every mode (the tool is listed so an assistant can see it, and every call is blocked):
+
+- `gl_post`: Fairbuild WIP Schedule never posts journal entries; your accountant posts the reviewed entry.
+- `estimate_update`: Fairbuild WIP Schedule never changes a job's estimate or contract amount.
+- `email_send`: Fairbuild WIP Schedule never sends the schedule or the journal.
+
+Waits for one named person's click, even in Auto mode (nothing is sent, paid or posted by the agent; the click is recorded for the person who acts):
+
+- `wip_request_post`: Approve the journal (one click)
+
 ## Checks
 
-What `wip_check` flags, each with the first example it finds in the fictional fixtures (eval case `check-totals`):
+What `wip_check` flags, each with the first example it finds in the fictional fixtures (the eval cases for `wip_check`):
 
 | Code | Example from the fixtures |
 |---|---|

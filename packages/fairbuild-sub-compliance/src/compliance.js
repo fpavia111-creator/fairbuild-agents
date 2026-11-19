@@ -73,10 +73,10 @@ export function checkCompliance({ vendorRows = null, docRows, requirements, asOf
   const count = (st) => out.filter((i) => i.status === st).length;
   const r = {
     vendors: Object.keys(byVendor).length, inactive_skipped: [...vendors.values()].filter((v) => !v.active).length, documents: out.length,
-    missing: count('missing'), review: count('review'), expiring: count('expiring'), ok: count('ok'), vendors_compliant: Object.values(byVendor).filter((v) => !v.problems).length,
+    missing: count('missing'), review: count('review'), expiring: count('expiring'), ok: count('ok'), vendors_complete: Object.values(byVendor).filter((v) => !v.problems).length,
     as_of: asOf, settings_used: { required: requirements.required, expiring_days: soon, review_days: reviewDays, max_emr: maxEmr }, by_vendor: byVendor, by_document: byDoc, by_finding: byFinding(out), items: out,
   };
-  r.summary = `${r.vendors} active subcontractor(s), ${r.documents} required document(s) as of ${asOf}: ${r.missing} missing, expired or rejected, ${r.review} to review, ${r.expiring} expiring soon. ${r.vendors_compliant} subcontractor(s) fully compliant.`;
+  r.summary = `${r.vendors} active subcontractor(s), ${r.documents} required document(s) as of ${asOf}: ${r.missing} missing, expired or rejected, ${r.review} to review, ${r.expiring} expiring soon. ${r.vendors_complete} subcontractor(s) with every required document on file and current.`;
   return r;
 }
 

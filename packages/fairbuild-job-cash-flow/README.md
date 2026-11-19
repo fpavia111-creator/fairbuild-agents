@@ -20,9 +20,21 @@ npx -y fairbuild-job-cash-flow mcp --root ./exports
 
 Only `receipts` and `disbursements` are required. Each optional file turns on the checks that need it.
 
+## What it refuses, and what waits for a person
+
+Refused in every mode (the tool is listed so an assistant can see it, and every call is blocked):
+
+- `bank_transfer`: Fairbuild Job Cash Flow never moves money between accounts or jobs.
+- `ap_hold_payments`: Fairbuild Job Cash Flow never holds or releases payments in your accounting system.
+- `email_send`: Fairbuild Job Cash Flow never sends the collection letter; a person sends the approved draft.
+
+Waits for one named person's click, even in Auto mode (nothing is sent, paid or posted by the agent; the click is recorded for the person who acts):
+
+- `cash_flow_request_send`: Approve the collection (one click)
+
 ## Checks
 
-What `cash_flow_check` flags, each with the first example it finds in the fictional fixtures (eval case `check-totals`):
+What `cash_flow_check` flags, each with the first example it finds in the fictional fixtures (the eval cases for `cash_flow_check`):
 
 | Code | Example from the fixtures |
 |---|---|
