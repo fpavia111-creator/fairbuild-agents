@@ -27,7 +27,8 @@
     "columns:check": "node scripts/column-words-check.mjs",
     "readme:agents": "node scripts/agent-readmes.mjs",
     "readme:i18n": "node scripts/readme-i18n.mjs",
-    "masking": "node scripts/masking-check.mjs"
+    "masking": "node scripts/masking-check.mjs",
+    "accuracy": "node scripts/accuracy.mjs"
   },
   "engines": {
     "node": ">=20"
