@@ -92,9 +92,7 @@ for (const n of readdirSync(PK).filter((x) => /^fairbuild-(?!core$)/.test(x) && 
   const f = join(PK, n, 'README.md'); if (!existsSync(f)) continue;
   const block = section(n, manifest, demoText(n));
   // Line ends are compared as LF: a Windows checkout may have CRLF.
-  const before = readFileSync(f, 'utf8').replace(/
-/g, '
-'); let txt = before;
+  const before = readFileSync(f, 'utf8').replace(/\r\n/g, '\n'); let txt = before;
   // The hand-written tool table is replaced by the generated one.
   if (!txt.includes(START)) txt = txt.replace(/\n## Tools\n[\s\S]*?(?=\n## )/, '\n');
   const next = txt.includes(START) ? txt.replace(new RegExp(`${START}[\\s\\S]*?${END}`), block) : txt.includes('\n## Limits') ? txt.replace(/\n## Limits\b/, `\n${block}\n\n## Limits`) : `${txt.trimEnd()}\n\n${block}\n`;
