@@ -24,6 +24,7 @@ export const PERMIT_SETTINGS_SCHEMA = Object.freeze({
   properties: {
     expiring_days: { type: 'integer', minimum: 0, maximum: 365, description: 'A permit expiring within this many days is flagged (default 30)' },
     upcoming_days: { type: 'integer', minimum: 0, maximum: 365, description: 'Inspections within this many days are listed as coming up (default 14)' },
+    latest_per_job_and_type: { type: 'boolean', description: 'When the same job has several permits of the same type, only the one that expires last is checked for expiry; the others are treated as replaced by a renewal (default true)' },
     reminder_days: { type: 'array', items: { type: 'integer', minimum: 0, maximum: 90 }, maxItems: 5, description: 'Calendar reminders, days before each event (default [7, 1])' },
   },
 });
@@ -34,10 +35,20 @@ export function checkPermits({ permitRows, inspectionRows = [], settings = {}, a
   const soonDays = num(settings.expiring_days) ?? 30; const upDays = num(settings.upcoming_days) ?? 14;
   const permits = new Map(); for (const p of permitRows) { const k = str(p.permit_number).toUpperCase(); if (k) permits.set(k, p); }
   const items = []; const events = [];
+  // Renewals: many jurisdictions issue a new permit row when a permit is renewed. Per job and permit
+  // type only the row that expires last is checked (found on NYC DOB public data, where older rows of
+  // renewed permits were flagged as expired). A setting turns this off.
+  const latestOnly = settings.latest_per_job_and_type !== false; const latest = new Map();
+  const gk = (p) => `${jobKey(p.job)}|${str(p.type).toLowerCase()}|${str(p.jurisdiction).toLowerCase()}`;
+  if (latestOnly) for (const p of permits.values()) { const e = isoDate(p.expires); if (str(p.job) && e && (!latest.has(gk(p)) || e > latest.get(gk(p)))) latest.set(gk(p), e); }
   for (const [k, p] of permits) {
-    const f = []; const exp = isoDate(p.expires); const st = statusOf(p.status); const closed = st === 'closed' || st === 'void';
-    if (exp && !closed) { const left = daysBetween(asOf, exp); if (left < 0) f.push(finding('permit_expired', null, `${str(p.type)} permit ${str(p.permit_number)} expired on ${exp} and is not closed out. Renew it or close it out with ${str(p.jurisdiction) || 'the jurisdiction'}.`)); else if (left <= soonDays) f.push(finding('permit_expiring', null, `${str(p.type)} permit ${str(p.permit_number)} expires on ${exp}, in ${left} day(s).`)); if (left >= 0) events.push({ date: exp, summary: `Permit ${str(p.permit_number)} expires (${str(p.type)}, job ${str(p.job)})`, description: `${str(p.jurisdiction)}`, categories: ['permit'] }); }
-    items.push({ kind: 'permit', key: str(p.permit_number), job: str(p.job), permit_number: str(p.permit_number), type: str(p.type), jurisdiction: str(p.jurisdiction), date: exp, result: null, status: '', findings: orderFindings(f, ORDER) });
+    const f = []; const exp = isoDate(p.expires); const st = statusOf(p.status);
+    // A permit that is finaled, withdrawn or aborted needs no renewal (found on City of Austin public data:
+    // 736 finaled permits were flagged as expired). The core reads "final" as approved, so it is named here.
+    const closed = st === 'closed' || st === 'void' || /^\s*(final(ed)?|withdrawn|aborted)\b/i.test(str(p.status)); // only a status that starts with the word: "Pending Final Inspection" is still open
+    const superseded = latestOnly && exp && str(p.job) && latest.get(gk(p)) > exp;
+    if (exp && !closed && !superseded) { const left = daysBetween(asOf, exp); if (left < 0) f.push(finding('permit_expired', null, `${str(p.type)} permit ${str(p.permit_number)} expired on ${exp} and is not closed out. Renew it or close it out with ${str(p.jurisdiction) || 'the jurisdiction'}.`)); else if (left <= soonDays) f.push(finding('permit_expiring', null, `${str(p.type)} permit ${str(p.permit_number)} expires on ${exp}, in ${left} day(s).`)); if (left >= 0) events.push({ date: exp, summary: `Permit ${str(p.permit_number)} expires (${str(p.type)}, job ${str(p.job)})`, description: `${str(p.jurisdiction)}`, categories: ['permit'] }); }
+    items.push({ kind: 'permit', key: str(p.permit_number), job: str(p.job), permit_number: str(p.permit_number), type: str(p.type), jurisdiction: str(p.jurisdiction), date: exp, result: null, status: '', superseded: !!superseded, findings: orderFindings(f, ORDER) });
   }
   const insp = sortBy(inspectionRows.filter((i) => str(i.inspection_type)), [(i) => isoDate(i.scheduled_date) || '', 1], [(i) => str(i.inspection_type), 1]);
   for (const [n, i] of insp.entries()) {

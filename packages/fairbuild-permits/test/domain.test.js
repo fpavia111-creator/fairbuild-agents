@@ -48,3 +48,17 @@ test('the calendar file is valid iCalendar with one event per expiry and booked 
   const ics = readFileSync(join(root, r.result.files[0]), 'utf8');
   assert.equal((ics.match(/BEGIN:VEVENT/g) || []).length, 5); const v = validateIcs(ics); assert.deepEqual(v.errors, []); assert.equal(v.ok, true);
 });
+
+test('a finaled, withdrawn or aborted permit is not flagged as expired; "Pending Final Inspection" still is', () => {
+  for (const status of ['Final', 'Finaled', 'Withdrawn', 'Aborted']) assert.deepEqual(checkPermits({ permitRows: [permit({ expires: '2026-01-01', status })], asOf: '2026-11-16' }).items[0].findings, [], status);
+  assert.equal(checkPermits({ permitRows: [permit({ expires: '2026-01-01', status: 'Pending Final Inspection' })], asOf: '2026-11-16' }).items[0].findings[0].code, 'permit_expired');
+});
+
+test('an older permit of the same job and type is replaced by its renewal unless the setting is off', () => {
+  const rows = [permit({ permit_number: 'P-1', expires: '2026-01-01' }), permit({ permit_number: 'P-2', expires: '2027-01-01' })];
+  const r = checkPermits({ permitRows: rows, asOf: '2026-11-16' });
+  assert.deepEqual(r.items.flatMap((i) => i.findings.map((f) => f.code)), []);
+  assert.equal(r.items.find((i) => i.permit_number === 'P-1').superseded, true);
+  const off = checkPermits({ permitRows: rows, settings: { latest_per_job_and_type: false }, asOf: '2026-11-16' });
+  assert.deepEqual(off.items.flatMap((i) => i.findings.map((f) => f.code)), ['permit_expired']);
+});

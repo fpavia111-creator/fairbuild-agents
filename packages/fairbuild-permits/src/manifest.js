@@ -8,7 +8,7 @@ const OUT = 'fairbuild-out/permits';
 const props = {
   permits: { type: 'string', description: 'Permit log under --root (CSV, Excel or JSON): permit number, job, type, jurisdiction, issued, expires, status' },
   inspections: { type: 'string', description: 'Optional inspection log: job, permit, inspection type, scheduled date, result, completed date. Procore inspection exports are recognised by their columns' },
-  settings: { type: 'string', description: 'Optional settings JSON (permit_settings schema): expiring_days, upcoming_days, reminder_days' },
+  settings: { type: 'string', description: 'Optional settings JSON (permit_settings schema): expiring_days, upcoming_days, reminder_days, latest_per_job_and_type' },
   as_of: { type: 'string', maxLength: 30, description: 'Date the log is judged on, YYYY-MM-DD (default today)' },
 };
 const run = (a, ctx) => checkPermits({ permitRows: ctx.records(a.permits, 'permits'), inspectionRows: a.inspections ? ctx.records(a.inspections, 'inspections') : [], settings: a.settings ? ctx.readJson(a.settings, 'permit_settings') : {}, asOf: asOfDate(a.as_of) });
@@ -27,7 +27,7 @@ const std = standardTools({
       { title: 'By job', rows: Object.entries(r.by_job).map(([job, v]) => ({ job, ...v })), columns: ['job', 'permits', 'inspections', 'action'] },
       { title: 'By finding', rows: Object.entries(r.by_finding).map(([code, v]) => ({ code, ...v })), columns: ['code', 'count'] },
     ],
-    limits: ['files', 'settings', 'advice', 'Fairbuild Permits reads your permit and inspection logs. It does not check a jurisdiction\'s portal; a permit can expire on other rules (no inspection in a set time) that only the jurisdiction knows.'] },
+    limits: ['files', 'settings', 'advice', 'Fairbuild Permits reads your permit and inspection logs. It does not check a jurisdiction\'s portal; a permit can expire on other rules (no inspection in a set time) that only the jurisdiction knows.', 'When a job has several permits of the same type, only the one that expires last is checked and the others count as replaced by a renewal; set latest_per_job_and_type to false if a job really holds several permits of one type.'] },
 });
 const calendar = {
   name: 'permits_write_calendar', kind: 'report', title: 'Write the permit and inspection calendar',

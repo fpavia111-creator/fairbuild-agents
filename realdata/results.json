@@ -1,0 +1,83 @@
+{
+  "ran_at": "2026-11-19T05:49:54.045Z",
+  "agent": "fairbuild-permits",
+  "note": "Counts only. The downloaded files stay in _realdata/ (git-ignored).",
+  "results": [
+    {
+      "source": "City of Austin, Issued Construction Permits",
+      "page": "https://data.austintexas.gov/Building-and-Development/Issued-Construction-Permits/3syk-w9eu",
+      "downloaded": "2026-11-19T05:47:00.190Z",
+      "data_updated": "2026-11-17T18:08:21.000Z",
+      "license": "Public Domain U.S. Government",
+      "attribution": "City of Austin, Texas - data.austintexas.gov",
+      "as_of": "2026-11-19",
+      "read": {
+        "rows": 5000,
+        "permits": 5000,
+        "with_expiry": 5000,
+        "closed_by_status": 4
+      },
+      "findings": {
+        "permit_expired": 1,
+        "permit_expiring": 4
+      },
+      "raw_status_of_flagged": {
+        "permit_expired": {
+          "Expired": 1
+        },
+        "permit_expiring": {
+          "Active": 4
+        }
+      },
+      "raw_statuses": {
+        "Active": 4209,
+        "VOID": 3,
+        "Final": 770,
+        "Expired": 1,
+        "Inactive Pending Revision": 8,
+        "Cancelled - Contractor Required": 1,
+        "Withdrawn": 4,
+        "On Hold": 3,
+        "Pending": 1
+      },
+      "warnings": [],
+      "sources": []
+    },
+    {
+      "source": "NYC Department of Buildings, DOB Permit Issuance",
+      "page": "https://data.cityofnewyork.us/Housing-Development/DOB-Permit-Issuance/ipu4-2q9a",
+      "downloaded": "2026-11-19T05:49:53.558Z",
+      "data_updated": "2026-11-18T00:38:31.000Z",
+      "license": "no licence in the portal metadata; NYC Open Data terms of use",
+      "attribution": "Department of Buildings (DOB)",
+      "as_of": "2026-11-19",
+      "read": {
+        "rows": 5000,
+        "permits": 5000,
+        "with_expiry": 5000,
+        "closed_by_status": 0
+      },
+      "findings": {
+        "permit_expired": 221,
+        "permit_expiring": 63
+      },
+      "raw_status_of_flagged": {
+        "permit_expired": {
+          "ISSUED": 220,
+          "RE-ISSUED": 1
+        },
+        "permit_expiring": {
+          "ISSUED": 62,
+          "RE-ISSUED": 1
+        }
+      },
+      "raw_statuses": {
+        "ISSUED": 4972,
+        "RE-ISSUED": 25,
+        "(blank)": 3
+      },
+      "warnings": [],
+      "sources": []
+    }
+  ]
+}

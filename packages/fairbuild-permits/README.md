@@ -15,7 +15,7 @@ npx -y fairbuild-permits mcp --root ./exports
 |---|---|
 | `permits` (required) | Permit log under --root (CSV, Excel or JSON): permit number, job, type, jurisdiction, issued, expires, status |
 | `inspections` | Optional inspection log: job, permit, inspection type, scheduled date, result, completed date. Procore inspection exports are recognised by their columns |
-| `settings` | Optional settings JSON (permit_settings schema): expiring_days, upcoming_days, reminder_days |
+| `settings` | Optional settings JSON (permit_settings schema): expiring_days, upcoming_days, reminder_days, latest_per_job_and_type |
 
 Only `permits` is required. Each optional file turns on the checks that need it.
 
@@ -190,6 +190,7 @@ Every call is written to `.fairbuild/audit.jsonl` under the root: hash-chained J
 ## Limits
 
 - Fairbuild Permits reads your permit and inspection logs. It does not check a jurisdiction's portal; a permit can expire on other rules (no inspection in a set time) that only the jurisdiction knows.
+- When a job has several permits of the same type, only the one that expires last is checked and the others count as replaced by a renewal; set latest_per_job_and_type to false if a job really holds several permits of one type.
 - Reads only the files you give it. It does not log in to your accounting system, project management system, bank, surety, insurer or any government portal.
 - Thresholds, percentages, rates and dates come from the settings file you supply; the defaults it used are listed in the result.
 - Not legal, tax, lien, insurance, surety or accounting advice. A person decides what to bill, pay, hold, send or file.
