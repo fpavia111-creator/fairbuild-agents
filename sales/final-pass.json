@@ -1,0 +1,72 @@
+{
+  "product": "Fairbuild",
+  "repo": "https://github.com/fpavia111-creator/fairbuild-agents",
+  "try_it": [
+    "git clone https://github.com/fpavia111-creator/fairbuild-agents",
+    "cd fairbuild-agents",
+    "npm install",
+    "node packages/fairbuild-job-cost/bin/fairbuild-job-cost.js demo"
+  ],
+  "accuracy": {
+    "agents": 30,
+    "planted_found": 170,
+    "planted_total": 170,
+    "clean_rows": 67,
+    "clean_false_positives": 0,
+    "mutation_cases": 46,
+    "mutation_caught": 46,
+    "note": "On fictional test data, 19 Nov 2026. Planted: the problem types put into each agent's test files when it was built. Clean: the rows each agent passed, run again on their own. Mutations: one clean row changed to carry one known problem. Real exports have not been measured."
+  },
+  "real_data": [
+    ["City of Austin, Issued Construction Permits", "https://data.austintexas.gov/Building-and-Development/Issued-Construction-Permits/3syk-w9eu", "19 Nov 2026", "Public domain (U.S. government works)", "Fairbuild Permits on 5,000 permits: 1 expired (the city's own status says Expired) and 4 expiring within 30 days. The first run wrongly flagged 736 finaled permits as expired; fixed before this run."],
+    ["NYC Department of Buildings, DOB Permit Issuance", "https://data.cityofnewyork.us/Housing-Development/DOB-Permit-Issuance/ipu4-2q9a", "19 Nov 2026", "NYC Open Data terms of use", "Fairbuild Permits on 5,000 permits issued in 2026: 221 past their expiry with no renewal in the file and 63 expiring. Renewed permits are no longer flagged (377 of 598 past-date rows). The data has no sign-off status, so the 221 cannot be confirmed either way."]
+  ],
+  "formats": [
+    ["Procore", "Budget (export to CSV)", "written from documentation"],
+    ["Procore", "Commitments: subcontracts and purchase orders (export to CSV)", "written from documentation"],
+    ["Procore", "Change Orders (export to CSV)", "written from documentation"],
+    ["Procore", "Submittals log (export to CSV)", "written from documentation"],
+    ["Procore", "Punch List (export to CSV)", "written from documentation"],
+    ["Procore", "Inspections (export to CSV)", "written from documentation"],
+    ["Sage 300 Construction and Real Estate", "Job cost detail report", "written from documentation"],
+    ["Sage 300 Construction and Real Estate", "AP invoice register", "written from documentation"],
+    ["Sage 300 Construction and Real Estate", "Payroll timecard entry export", "written from documentation"],
+    ["Sage 100 Contractor", "Job cost records (job cost journal)", "written from documentation"],
+    ["Foundation", "Job cost detail export", "written from documentation"],
+    ["Vista", "JC estimates by phase and cost type", "written from documentation"],
+    ["Vista", "JC cost detail", "written from documentation"],
+    ["QuickBooks", "Job Estimates vs. Actuals Detail", "written from documentation"],
+    ["Buildertrend", "Purchase Orders list", "written from documentation"],
+    ["Buildertrend", "Bills list", "written from documentation"],
+    ["Buildertrend", "Change Orders list", "written from documentation"],
+    ["ServiceTitan", "Jobs report", "written from documentation"],
+    ["ServiceTitan", "Technician timesheet report", "written from documentation"],
+    ["U.S. Department of Labor", "WH-347 certified payroll column order", "written from documentation"],
+    ["City open data (Austin, New York)", "Issued building permits CSV", "tested on a public sample"],
+    ["Any spreadsheet or CSV", "Your own columns, named once in fairbuild-sources.json", "tested on a public sample"]
+  ],
+  "human_review": [
+    ["Job cost and WIP pack", "Which overruns are real, what to re-forecast, and posting the WIP journal: the agent drafts it, a person posts it."],
+    ["Billing and retainage pack", "Submitting, approving and billing every pay application and retainage release."],
+    ["Subcontractor payment pack", "Whether to pay, hold or deduct each subcontractor invoice; one named person approves, accounts payable pays."],
+    ["Payables cleanup pack", "Which duplicates are real, which credits and tax refunds to request, and merging vendor records."],
+    ["Payroll and labor pack", "Wage determination, classification and fringe questions; the payroll team corrects and submits payroll."],
+    ["Field and closeout pack", "Renewals and inspections with the jurisdiction, submittal approvals by the design team, punch and closeout sign-off."],
+    ["Bids, backlog and bonding pack", "Awarding bids, changing estimates, and anything said to the surety."],
+    ["Service and warranty pack", "Which callbacks to charge to a subcontractor or bill to a homeowner, and invoicing."],
+    ["Whole back office", "Everything above: every payment, filing, submission, posting and message stays a person's decision."],
+    ["Partner rollout", "Everything above, for each company, by that company's own staff."]
+  ],
+  "common_problems": [
+    "Subcontractors paid without a conditional lien waiver, or with no unconditional waiver after the check cleared.",
+    "Invoices billed past the subcontract or PO value, or past the work the project manager approved.",
+    "Approved change orders never billed, and billing on changes that are not approved yet.",
+    "Job cost over or projected over budget, and cost charged to codes with no budget.",
+    "Insurance certificates expired, below your limits, or ending before the subcontractor's work does.",
+    "Certified payroll below the wage determination, or overtime not paid as overtime.",
+    "Retainage withheld at the wrong rate, or due to bill and not billed.",
+    "The same vendor or invoice entered twice, including invoices already paid twice."
+  ],
+  "reaches_the_model": "When an assistant calls a tool, the agent reads your exported files on your computer and returns its result to the assistant: amounts, dates, job numbers, cost codes, company names (owners, subcontractors, suppliers) and its findings, in clear. Worker and technician names, worker ids, Social Security numbers, homeowner names and contacts, and your own staff named on records (project manager, superintendent, foreman, estimator) are replaced by stable pseudonyms first, also inside sentences and error messages. Text you typed into description or notes fields is sent as written, apart from those values and anything that looks like an SSN, e-mail address or phone number. Results go to whatever model your assistant uses; for sensitive records use a local model or one covered by your agreements. The report files written on your computer keep the real names.",
+  "rules_maintained": "No wage rate, tax rate or insurance minimum is built in. Prevailing wage rates from the job's wage determination, union fringe rates, sales tax rates, insurance requirements, compliance document lists, surety limits and retainage rates are files and settings you keep next to your exports, and every result lists the values it used. The built-in defaults (overtime after 40 hours a week at 1.5 times the base rate, 10% retainage, 30-day notice and renewal windows) are settings too. When a rule changes you edit that file or setting; with support, we do it for you. The agents never fetch rules from the internet."
+}
