@@ -34,9 +34,10 @@ const keys = (kind, list) => list.map((k) => [norm(k), kind]);
 // Field names (any case or punctuation) → kind. Kinds marked strict are masked only in strict mode.
 // Names of companies (vendors, subcontractors, owners, general contractors) are business data and
 // are not masked; the people below are: workers on a payroll or timecard, technicians, homeowners
-// and the contacts of a residential service call or warranty claim.
+// and the contacts of a residential service call or warranty claim, and the contractor's own staff
+// named on a record (project manager, superintendent, foreman, estimator).
 const KEY_KIND = new Map([
-  ...keys('name', ['worker', 'worker_name', 'employee', 'employee_name', 'technician', 'tech', 'tech_name', 'technician_name', 'homeowner', 'homeowner_name', 'contact_name', 'first_name', 'last_name', 'middle_name', 'caller', 'caller_name', 'resident', 'resident_name']),
+  ...keys('name', ['project_manager', 'superintendent', 'foreman', 'estimator', 'worker', 'worker_name', 'employee', 'employee_name', 'technician', 'tech', 'tech_name', 'technician_name', 'homeowner', 'homeowner_name', 'contact_name', 'first_name', 'last_name', 'middle_name', 'caller', 'caller_name', 'resident', 'resident_name']),
   ...keys('worker_id', ['worker_id', 'employee_id', 'employee_number', 'badge', 'badge_number', 'payroll_id', 'person_id', 'emp_id']),
   ...keys('ssn', ['ssn', 'social_security_number', 'social_security', 'worker_ssn', 'ssn_last4', 'sin', 'national_id']),
   ...keys('address', ['home_address', 'service_address', 'homeowner_address', 'worker_address', 'street', 'street_address', 'address1', 'address2', 'address_line_1', 'address_line_2']),
