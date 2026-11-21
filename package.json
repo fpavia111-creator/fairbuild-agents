@@ -4,6 +4,7 @@
   "description": "Fairbuild: construction and trades back-office agents monorepo (30 MCP agents on fairbuild-core).",
   "license": "MIT",
   "workspaces": [
+    "vendor/fair-agent-core",
     "packages/fairbuild-core",
     "packages/*"
   ],
