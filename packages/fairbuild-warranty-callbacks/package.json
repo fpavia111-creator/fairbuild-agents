@@ -40,7 +40,7 @@
     "url": "git+https://github.com/fpavia111-creator/fairbuild-agents.git",
     "directory": "packages/fairbuild-warranty-callbacks"
   },
-  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/fairbuild-warranty-callbacks#readme",
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/master/packages/fairbuild-warranty-callbacks#readme",
   "bugs": {
     "url": "https://github.com/fpavia111-creator/fairbuild-agents/issues"
   },
