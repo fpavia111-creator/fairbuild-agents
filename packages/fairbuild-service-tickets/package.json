@@ -40,7 +40,7 @@
     "url": "git+https://github.com/fpavia111-creator/fairbuild-agents.git",
     "directory": "packages/fairbuild-service-tickets"
   },
-  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/main/packages/fairbuild-service-tickets#readme",
+  "homepage": "https://github.com/fpavia111-creator/fairbuild-agents/tree/master/packages/fairbuild-service-tickets#readme",
   "bugs": {
     "url": "https://github.com/fpavia111-creator/fairbuild-agents/issues"
   },
